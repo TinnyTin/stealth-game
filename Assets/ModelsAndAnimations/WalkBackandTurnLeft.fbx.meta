@@ -33,7 +33,7 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: _10_a_U1_M_P_WalkBackwardTurnRight_NtrlMedium__Fb_Dia2m_No_0_PJ_0
+      name: WalkBackwardTurnLeft
       takeName: _10_a_U1_M_P_WalkBackwardTurnRight_NtrlMedium__Fb_Dia2m_No_0_PJ_0
       internalID: 6743939574110694705
       firstFrame: 62
@@ -53,7 +53,7 @@ ModelImporter:
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
       heightFromFeet: 0
-      mirror: 0
+      mirror: 1
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events: []
