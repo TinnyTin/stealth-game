@@ -83,6 +83,7 @@ public class AI : MonoBehaviour
     // https://www.youtube.com/watch?v=uAGjKxH4sDQ
     private void SynchronizeAnimatorAndAgent()
     {
+
         // delta position to the agent.next position
         Vector3 worldDeltaPosition = agent.nextPosition - transform.position;
         worldDeltaPosition.y = 0; // always synched b2ween agent and rootmotion on OnAnimatorMove()
@@ -113,7 +114,6 @@ public class AI : MonoBehaviour
         anim.SetBool("move", shouldMove);
         anim.SetFloat("velx", Velocity.x);
         anim.SetFloat("vely", Velocity.y);
-
 
         // check if model and agent are too far away from each other.
         // prevents walking too far away from the navmesh
