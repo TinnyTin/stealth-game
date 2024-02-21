@@ -80,6 +80,7 @@ public class AI : MonoBehaviour
         return retval;
     }
 
+    // https://www.youtube.com/watch?v=uAGjKxH4sDQ
     private void SynchronizeAnimatorAndAgent()
     {
         // delta position to the agent.next position
