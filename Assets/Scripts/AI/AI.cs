@@ -12,14 +12,21 @@ public enum AIState
 public class AI : MonoBehaviour
 {
     // public
+    [Header("Initialize AI State")]
     public AIState aistate;
+    
+
+    [Header("Idle Settings")]
     public float WaypointDistanceTolerance = 1.0f;
-    
     public GameObject[] waypoints;
-    
+
+    [Header("Hostile Settings")]
+    public Vector3 lastThreat;
+
     // private
     private Animator anim;
-    private NavMeshAgent agent;
+    [HideInInspector]
+    public NavMeshAgent agent;
     
     // navmeshagent velocity and movement smoothing
     private Vector2 Velocity;
@@ -41,13 +48,7 @@ public class AI : MonoBehaviour
         currWaypoint = -1;
         setNextWaypoint();
      }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
+    
     // Update is called once per frame
     void Update()
     {
@@ -97,8 +98,10 @@ public class AI : MonoBehaviour
         float smooth = Mathf.Min(1, Time.deltaTime / 0.1f);
         SmoothDeltaPosition = Vector2.Lerp(SmoothDeltaPosition, deltaPosition, smooth);
 
+
         // calculate velocity (based on smooth position / time)
         Velocity = SmoothDeltaPosition / Time.deltaTime;
+        //Velocity = deltaPosition;
 
         // smooth out velocity when approaching the stopping distance
         if (agent.remainingDistance <= agent.stoppingDistance)
@@ -140,5 +143,21 @@ public class AI : MonoBehaviour
         // update navmesh agent with new animation root position
         agent.nextPosition = rootPosition;
 
-   }
+   
+}
+
+
+    public void RequestBehaviorInvestigate()
+    {
+        Debug.Log("RequestBehaviorInvestigate Called");
+    }
+
+    public void RequestBehaviorPursuit()
+    {
+        Debug.Log("RequestBehaviorPursuit Called");
+    }
+    public void RequestBehaviorIdle()
+    {
+        Debug.Log("RequestBehaviorIdle Called");
+    }
 }
