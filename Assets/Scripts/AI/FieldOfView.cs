@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-
+[RequireComponent(typeof(ThreatMeter))]
 public class FieldOfView : MonoBehaviour
 {
+    [Header("FOV settings")]
+    public float refreshInterval = 0.2f;
     public float viewRadius;
     [Range(0,360)]
     public float viewAngle;
+    [Header("Visual Field of View")]
     public float meshResolution = 1;
     public MeshFilter viewMeshFilter;
-
+    [Header("Layer Masks")]
     public LayerMask targetMask;
     public LayerMask obstacleMask;
 
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
+    private List<Transform> lastVisibleTargets = new List<Transform>();
 
     // private
     private Mesh viewMesh;
+    private ThreatMeter threatmeter;
 
     // TODO remove this secion and add in fixedupdate...?
     private void Start()
@@ -27,8 +32,9 @@ public class FieldOfView : MonoBehaviour
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
+        threatmeter = GetComponent<ThreatMeter>();
 
-        StartCoroutine("FindTargetsWithDelay", .2f);
+        StartCoroutine("FindTargetsWithDelay", refreshInterval);
     }
     IEnumerator FindTargetsWithDelay(float delay)
     {
@@ -66,6 +72,20 @@ public class FieldOfView : MonoBehaviour
                 }
             }
         }
+        foreach(Transform t in lastVisibleTargets)
+        {
+            if (visibleTargets.Contains(t))
+            {
+                threatmeter.onSightThreat(t, refreshInterval);
+            }
+        }
+        lastVisibleTargets.Clear();
+        lastVisibleTargets.AddRange(visibleTargets);
+    }
+
+    bool checkTargetVisible(Transform t)
+    {
+        return visibleTargets.Contains(t) ? true : false;
     }
 
     // convert Angle into vector3 direction
