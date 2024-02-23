@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(LineRenderer))]
-public class AgentLineRenderer : MonoBehaviour
+public class PathDebugger : MonoBehaviour
 {
     [SerializeField]
     private NavMeshAgent agentToDebug;

@@ -77,7 +77,7 @@ public class AI : MonoBehaviour
             retval = true;
         }
         agent.SetDestination(waypoints[currWaypoint].transform.position);
-        Debug.Log("Set the destionation to waypoint " + currWaypoint);
+        //Debug.Log("Set the destination to waypoint " + currWaypoint);
         return retval;
     }
 
@@ -149,15 +149,15 @@ public class AI : MonoBehaviour
 
     public void RequestBehaviorInvestigate()
     {
-        Debug.Log("RequestBehaviorInvestigate Called");
+        Debug.Log("Investigate Called");
     }
 
     public void RequestBehaviorPursuit()
     {
-        Debug.Log("RequestBehaviorPursuit Called");
+        Debug.Log("Pursuit Called");
     }
     public void RequestBehaviorIdle()
     {
-        Debug.Log("RequestBehaviorIdle Called");
+        Debug.Log("Idle Called");
     }
 }
