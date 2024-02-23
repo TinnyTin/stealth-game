@@ -2325,9 +2325,9 @@ MonoBehaviour:
   threatBar: {fileID: 596517577}
   minThreatMeter: 0
   maxThreatMeter: 100
-  sightThreatRate: 40
+  sightThreatRate: 35
   NeuroticMultiplier: 1
-  DegredationRate: 50
+  DegredationRate: 10
   threatLevel: 0
   BehaviorIdx: 0
   ThreatBehaviorList:
