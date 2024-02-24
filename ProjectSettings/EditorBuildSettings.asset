@@ -20,4 +20,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ai-algorithm.unity
     guid: 636a5fa2f526dce40b3bbc4f33a595f9
+  - enabled: 1
+    path: Assets/Scenes/player-control.unity
+    guid: 486778c3b82d3d14db80fd63d56000af
   m_configObjects: {}
