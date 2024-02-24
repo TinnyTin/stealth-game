@@ -5,7 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/SampleScene.unity
     guid: 99c9720ab356a0642a771bea13969a05
+  - enabled: 1
+    path: Assets/Scenes/Global Scene.unity
+    guid: b381005b7a5a1684fae5096204be6193
+  - enabled: 1
+    path: Assets/Scenes/Tom/Scene1.unity
+    guid: aa0fc272d7c0e6c4fa070847b599d48c
+  - enabled: 1
+    path: Assets/Scenes/Tom/Scene2.unity
+    guid: da94a6b0eec9e884eaa04157fabb786f
+  - enabled: 1
+    path: Assets/Scenes/ai-algorithm.unity
+    guid: 636a5fa2f526dce40b3bbc4f33a595f9
   m_configObjects: {}
