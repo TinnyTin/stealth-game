@@ -36,5 +36,15 @@ public class PlayerInput : MonoBehaviour
     curTurnVal = Mathf.Lerp(curTurnVal, inputH, Time.deltaTime * maxTurnInput);
     // clamp?
     playerTurn = curTurnVal;
+
+    // For debug, exit if the Escape key is pressed.
+    if (Input.GetKeyUp(KeyCode.Escape))
+    {
+#if UNITY_EDITOR
+      UnityEditor.EditorApplication.isPlaying = false;
+#else
+         Application.Quit();
+#endif      
+    }
   }
 }

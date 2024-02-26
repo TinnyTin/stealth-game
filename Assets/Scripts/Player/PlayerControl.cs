@@ -98,8 +98,14 @@ public class PlayerControl : MonoBehaviour
     Quaternion newRot = anim.rootRotation;
     Vector3 newPos = anim.rootPosition;
 
+    Vector3 newRotEuler = newRot.eulerAngles;
+    newRotEuler.x = 0f; 
+    newRotEuler.z = 0f;
+    newRot.eulerAngles = newRotEuler;
+
     this.transform.position = newPos;
     this.transform.rotation = newRot;
+
 
     // allow faster transitions
     //newPos = Vector3.LerpUnclamped(this.transform.position, newPos, rootMovementSpeed);
