@@ -20,12 +20,12 @@ public class GameEventListenerBase : MonoBehaviour
     [Space] private int _spacer; 
 
     public void OnEnable() 
-    {
-        gameEvent.RegisterListener(this);
+    {   
+        gameEvent?.RegisterListener(this);
     }
 
     public void OnDisable() 
     {
-        gameEvent.UnregisterListener(this);
+        gameEvent?.UnregisterListener(this);
     }
 }
