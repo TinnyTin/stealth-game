@@ -18,28 +18,23 @@ public class CanvasLookatCamera : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        FindMainCamera();
     }
 
     // Update is called once per frame
     void Update()
     {
+        FindMainCamera();
+
         this.transform.LookAt(this.transform.position - (tcam.transform.position - this.transform.position));
     }
 
     private void FindMainCamera()
     {
         // Find the main camera in the global scene
-        GameObject[] globalSceneGameObjects = SceneManager.GetSceneAt(0).GetRootGameObjects();
-        
-        foreach (GameObject gameObject in globalSceneGameObjects)
-        {
-            tcam = gameObject.GetComponent<Camera>();
-            if (tcam != null)
-                break;
-        }
+        GameObject activeCamera = SceneController.Instance.GetActiveCameraGameObject(); 
+        tcam = activeCamera.GetComponent<Camera>();
 
         if (tcam == null)
-            Debug.LogError("Cannot find Main Camera in Global Scene");
+            Debug.LogError("Could not get camera from SceneController. Canvas will not face camera.");
     }
 }
