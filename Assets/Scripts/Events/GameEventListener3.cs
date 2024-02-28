@@ -12,8 +12,9 @@ using UnityEngine.Events;
  *                      https://www.youtube.com/watch?v=7_dyDmF0Ktw&ab_channel=ThisisGameDev
  */
 
-// 3 Parameter GameEvent Listener
-public class GameEventListener3 : GameEventListenerBase
+// Generic 3 Parameter Event Listener
+[AddComponentMenu("Generic 3 Param Event Listener")]
+public class GameEventListener3 : GameEventListenerBase, I3ParamEventListener<object, object, object>
 {
     [System.Serializable]
     public class CustomGameEvent3 : UnityEvent<Component, object, object, object> {}
@@ -22,8 +23,8 @@ public class GameEventListener3 : GameEventListenerBase
     [Tooltip("Response to invoke when Event with GameData is raised.")]
     public CustomGameEvent3 response;
 
-    public void OnEventRaised(Component sender, object data1, object data2, object data3) 
+    public void OnEventRaised(Component sender, object param1, object param2, object param3) 
     {
-        response.Invoke(sender, data1, data2, data3);
+        response.Invoke(sender, param1, param2, param3);
     }
 }

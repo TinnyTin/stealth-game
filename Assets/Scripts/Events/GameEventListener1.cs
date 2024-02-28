@@ -5,26 +5,26 @@ using UnityEngine.Events;
  * CS6457 Attributions
  * Tiny Brain
  * Original Author:     Tom
- * Contributors:
+ * Contributors:        
  *
  * External
  * Source Credit:       https://www.gamedev.lu/s/EventSystem_v10.zip
  *                      https://www.youtube.com/watch?v=7_dyDmF0Ktw&ab_channel=ThisisGameDev
  */
 
-// Generic 2 Parameter Event Listener
-[AddComponentMenu("Generic 2 Param Event Listener")]
-public class GameEventListener2 : GameEventListenerBase, I2ParamEventListener<object, object>
+// Generic Single Parameter GameEvent Listener
+[AddComponentMenu("Generic 1 Param Event Listener")]
+public class GameEventListener1 : GameEventListenerBase, I1ParamEventListener<object>
 {
     [System.Serializable]
-    public class CustomGameEvent2 : UnityEvent<Component, object, object> { }
+    public class CustomGameEvent : UnityEvent<Component, object> { }
 
     [Header("Response Method To Invoke:")]
     [Tooltip("Response to invoke when Event with GameData is raised.")]
-    public CustomGameEvent2 response;
+    public CustomGameEvent response;
 
-    public void OnEventRaised(Component sender, object param1, object param2) 
+    public void OnEventRaised(Component sender, object param1) 
     {
-        response.Invoke(sender, param1, param1);
+        response.Invoke(sender, param1);
     }
 }

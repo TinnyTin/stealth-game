@@ -12,7 +12,7 @@
  */
 
 // Event Listener Base
-public class GameEventListenerBase : MonoBehaviour
+public abstract class GameEventListenerBase : MonoBehaviour
 {
     [Header("Event To Listen For:")]
     public GameEvent gameEvent;

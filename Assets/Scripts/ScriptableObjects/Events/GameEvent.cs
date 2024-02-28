@@ -21,48 +21,54 @@ public class GameEvent : ScriptableObject
 
     // Raise event through different method signatures
     // ############################################################
-    public void Raise() 
-    {
-        Raise(null, null);
-    }
+    //public void Raise() 
+    //{
+    //    Raise(null, null);
+    //}
 
-    public void Raise(object data) 
-    {
-        Raise(null, data);
-    }
+    //public void Raise(object data) 
+    //{
+    //    Raise(null, data);
+    //}
 
     public void Raise(Component sender) 
     {
-        Raise(sender, null);
+        for (int i = listeners.Count - 1; i >= 0; i--)
+        {
+            if (listeners[i] is IEventListener listener)
+            {
+                listener.OnEventRaised(sender);
+            }
+        }
     }
 
-    public void Raise(Component sender, object param1)
+    public void Raise<T>(Component sender, T param1)
     {
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
-            if (listeners[i] is GameEventListener listener)
+            if (listeners[i] is I1ParamEventListener<T> listener)
             {
                 listener.OnEventRaised(sender, param1);
             }
         }
     }
 
-    public void Raise(Component sender, object param1, object param2)
+    public void Raise<T1, T2>(Component sender, T1 param1, T2 param2)
     {
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
-            if (listeners[i] is GameEventListener2 listener)
+            if (listeners[i] is I2ParamEventListener<T1, T2> listener)
             {
                 listener.OnEventRaised(sender, param1, param2);
             }
         }
     }
 
-    public void Raise(Component sender, object param1, object param2, object param3)
+    public void Raise<T1, T2, T3>(Component sender, T1 param1, T2 param2, T3 param3)
     {
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
-            if (listeners[i] is GameEventListener3 listener)
+            if (listeners[i] is I3ParamEventListener<T1, T2, T3> listener)
             {
                 listener.OnEventRaised(sender, param1, param2, param3);
             }
