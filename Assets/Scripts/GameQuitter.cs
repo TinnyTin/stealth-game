@@ -24,5 +24,6 @@ public class GameQuitter : MonoBehaviour
         UnityEditor.EditorApplication.isPlaying = false;
         #endif
         Application.Quit();
+        Debug.Log("exit");
     }
 }
