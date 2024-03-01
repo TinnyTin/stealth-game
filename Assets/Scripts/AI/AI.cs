@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public enum AIState
-{ 
-    Patrol,
-    Seek
-};
-
 public class AI : MonoBehaviour
 {
     // public
     [Header("Initialize AI State")]
     public AIState aistate;
-    
+    // private idleState idlestate;
+    private investigateState investigatestate;
+    private pursuitState pursuitstate;
+
 
     [Header("Idle Settings")]
     public float WaypointDistanceTolerance = 1.0f;
@@ -27,7 +24,7 @@ public class AI : MonoBehaviour
     private Animator anim;
     [HideInInspector]
     public NavMeshAgent agent;
-    
+
     // navmeshagent velocity and movement smoothing
     private Vector2 Velocity;
     private Vector2 SmoothDeltaPosition;
@@ -36,8 +33,8 @@ public class AI : MonoBehaviour
     private int currWaypoint = 0;
 
     // use awake() for object self-initialization, vs start() for communication to other gameobjects
-     private void Awake()
-     {
+    private void Awake()
+    {
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
 
@@ -46,30 +43,106 @@ public class AI : MonoBehaviour
         agent.updateRotation = false; // let rootmotion handle this
 
         currWaypoint = -1;
+        investigatestate = investigateState.surprised;
         setNextWaypoint();
-     }
-    
+    }
+
     // Update is called once per frame
     void Update()
     {
         SynchronizeAnimatorAndAgent();
+        aiFSM();
+    }
+
+    // ======================================================
+    // AI FSM / behavior things
+    // ======================================================
+
+    public void RequestBehaviorInvestigate()
+    {
+        aistate = AIState.Investigate;
+        Debug.Log("Investigate Called");
+    }
+
+    public void RequestBehaviorPursuit()
+    {
+        Debug.Log("Pursuit Called");
+    }
+    public void RequestBehaviorIdle()
+    {
+        setNextWaypoint(currWaypoint);
+        aistate = AIState.Patrol;
+        Debug.Log("Idle Called");
+    }
+
+    private void aiFSM()
+    {
         switch (aistate)
         {
             case AIState.Patrol:
-                if ((agent.remainingDistance < WaypointDistanceTolerance)&&!agent.pathPending)
+                if ((agent.remainingDistance < WaypointDistanceTolerance) && !agent.pathPending)
                 {
                     setNextWaypoint();
                 }
                 break;
-            case AIState.Seek:
+            case AIState.Investigate:
+
+                investigateFSM();
                 break;
         }
     }
+
+    private void investigateFSM()
+    {
+        switch (investigatestate)
+        {
+            case investigateState.surprised:
+                anim.SetTrigger("triggerSurprised");
+                investigatestate = investigateState.approach;
+                break;
+            case investigateState.approach:
+                agent.SetDestination(lastThreat);
+                if ((agent.remainingDistance < 5) && !agent.pathPending)
+                {
+                    investigatestate = investigateState.surprised;
+                    RequestBehaviorIdle();
+                }
+                break;
+        }
+    }
+
+    private void pursuitFSM()
+    {
+        switch (pursuitstate)
+        {
+            case pursuitState.pursuit:
+                break;
+        }
+    }
+
+    // guard
+    // lost - defeated
+    // lost - research
+    // alarm from other AI
+
+    // civilian
+    // more idle movement types
+    // scared, scream
+    // find nearest guard
+    // throw garbage at player
+
+    // ======================================================
+    // Waypoint things
+    // ======================================================
     private bool setNextWaypoint()
     {
+        return setNextWaypoint(++currWaypoint);
+    }
+
+    private bool setNextWaypoint(int idx)
+    {
         bool retval = false;
-        currWaypoint++;
-        //currWaypoint = curr;
+        currWaypoint = idx;
         // loop back to 0
         if (currWaypoint >= waypoints.Length)
         {
@@ -80,6 +153,10 @@ public class AI : MonoBehaviour
         //Debug.Log("Set the destination to waypoint " + currWaypoint);
         return retval;
     }
+
+    // ======================================================
+    // Animation things
+    // ======================================================
 
     // https://www.youtube.com/watch?v=uAGjKxH4sDQ
     private void SynchronizeAnimatorAndAgent()
@@ -131,11 +208,11 @@ public class AI : MonoBehaviour
         }
     }
 
-   private void OnAnimatorMove()
-   {
+    private void OnAnimatorMove()
+    {
         Vector3 rootPosition = anim.rootPosition;
         rootPosition.y = agent.nextPosition.y; // follow navmesh slopes
-        
+
         // update transform position and rotation based on animation + navmesh height
         transform.position = rootPosition;
         transform.rotation = anim.rootRotation;
@@ -143,21 +220,24 @@ public class AI : MonoBehaviour
         // update navmesh agent with new animation root position
         agent.nextPosition = rootPosition;
 
-   
+
+    }
+
 }
 
 
-    public void RequestBehaviorInvestigate()
-    {
-        Debug.Log("Investigate Called");
-    }
+public enum AIState
+{
+    Patrol,
+    Investigate
+};
 
-    public void RequestBehaviorPursuit()
-    {
-        Debug.Log("Pursuit Called");
-    }
-    public void RequestBehaviorIdle()
-    {
-        Debug.Log("Idle Called");
-    }
-}
+public enum investigateState
+{
+    surprised,
+    approach
+};
+public enum pursuitState
+{
+    pursuit
+};
