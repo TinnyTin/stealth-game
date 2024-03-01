@@ -49,13 +49,13 @@ public class ThreatMeter : MonoBehaviour
     {
         if (val > 0)
         {
-            threatLevel = Mathf.Clamp(threatLevel + val*NeuroticMultiplier, minThreatMeter, maxThreatMeter);
+            threatLevel = Mathf.Clamp(threatLevel + val * NeuroticMultiplier, minThreatMeter, maxThreatMeter);
         }
         else
         {
             threatLevel = Mathf.Clamp(threatLevel + val, minThreatMeter, maxThreatMeter);
         }
-        
+
         onThreatChange();
     }
 
@@ -72,7 +72,7 @@ public class ThreatMeter : MonoBehaviour
     {
         int lastBhvrIdx = BehaviorIdx;
         // check there is a higher behavior state to reach, and that the AI's threat has exceeded it
-        while ((BehaviorIdx + 1 < ThreatBehaviorList.Count) && (threatLevel > ThreatBehaviorList[BehaviorIdx].max))
+        while ((BehaviorIdx + 1 < ThreatBehaviorList.Count) && (threatLevel > ThreatBehaviorList[BehaviorIdx+1].max))
         {
             BehaviorIdx++; // change to higher behavior
         }
@@ -82,10 +82,13 @@ public class ThreatMeter : MonoBehaviour
             BehaviorIdx--;
         }
         if (lastBhvrIdx != BehaviorIdx)
-            ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke(); // invoke behavior
+        {
+            Debug.Log("threat: " + threatLevel);
+            ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke(); // invoke 
+        }
     }
 
-    
+
 
 
     [System.Serializable]

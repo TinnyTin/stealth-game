@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class AI : MonoBehaviour
 {
+    public float walkSpeed = 0.2f;
+    public float runSpeed = 1.0f;
     // public
     [Header("Initialize AI State")]
     public AIState aistate;
@@ -19,6 +21,7 @@ public class AI : MonoBehaviour
 
     [Header("Hostile Settings")]
     public Vector3 lastThreat;
+
 
     // private
     private Animator anim;
@@ -66,6 +69,7 @@ public class AI : MonoBehaviour
 
     public void RequestBehaviorPursuit()
     {
+        aistate = AIState.Pursuit;
         Debug.Log("Pursuit Called");
     }
     public void RequestBehaviorIdle()
@@ -89,6 +93,9 @@ public class AI : MonoBehaviour
 
                 investigateFSM();
                 break;
+            case AIState.Pursuit:
+                pursuitFSM();
+                break;
         }
     }
 
@@ -105,6 +112,7 @@ public class AI : MonoBehaviour
                 if ((agent.remainingDistance < 5) && !agent.pathPending)
                 {
                     investigatestate = investigateState.surprised;
+                    anim.ResetTrigger("triggerSurprised");
                     RequestBehaviorIdle();
                 }
                 break;
@@ -115,8 +123,37 @@ public class AI : MonoBehaviour
     {
         switch (pursuitstate)
         {
-            case pursuitState.pursuit:
+            case pursuitState.Enter:
+                agent.speed = runSpeed;
+                pursuitstate = pursuitState.Pursuit;
                 break;
+            case pursuitState.Pursuit:
+                agent.SetDestination(lastThreat);
+                if ((agent.remainingDistance < 3) && !agent.pathPending)
+                {
+                    pursuitstate = pursuitState.Angry;
+                }
+                break;
+            case pursuitState.Angry:
+                if ((agent.remainingDistance > 3) && !agent.pathPending)
+                {
+                    pursuitstate = pursuitState.Pursuit;
+                }
+                else
+                {
+                    // perform Angry animation on player
+                    anim.SetTrigger("triggerAngry");
+                    pursuitstate = pursuitState.Stuck;
+                    
+                }
+                break;
+            case pursuitState.Stuck:
+                {
+                    //anim.ResetTrigger("triggerAngry");
+                    agent.ResetPath();
+                }
+                break;
+
         }
     }
 
@@ -229,7 +266,8 @@ public class AI : MonoBehaviour
 public enum AIState
 {
     Patrol,
-    Investigate
+    Investigate,
+    Pursuit
 };
 
 public enum investigateState
@@ -239,5 +277,8 @@ public enum investigateState
 };
 public enum pursuitState
 {
-    pursuit
+    Enter,
+    Pursuit,
+    Angry,
+    Stuck
 };
