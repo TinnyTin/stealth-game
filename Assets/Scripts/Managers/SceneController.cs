@@ -209,6 +209,8 @@ public class SceneController : MonoBehaviour
             _globalParentSceneCamera.SetActive(true);
             _activeCamera = _globalParentSceneCamera; 
         }
+
+        SceneManager.SetActiveScene(scene);
     }
 
     public GameObject GetActiveCameraGameObject()
