@@ -11,16 +11,22 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Global Scene.unity
     guid: b381005b7a5a1684fae5096204be6193
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Tom/Scene1.unity
     guid: aa0fc272d7c0e6c4fa070847b599d48c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Tom/Scene2.unity
     guid: da94a6b0eec9e884eaa04157fabb786f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ai-algorithm.unity
     guid: 636a5fa2f526dce40b3bbc4f33a595f9
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/player-control.unity
     guid: 486778c3b82d3d14db80fd63d56000af
+  - enabled: 1
+    path: Assets/Scenes/MainMenu.unity
+    guid: 7beb9e9c3b807014398bce7ea2cc66b9
+  - enabled: 1
+    path: Assets/Scenes/Tom/AudioManagerTest.unity
+    guid: 6233e2b9f19213c48968a52668ee8aeb
   m_configObjects: {}

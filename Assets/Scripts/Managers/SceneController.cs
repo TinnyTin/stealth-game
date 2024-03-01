@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 /*
  * CS6457 Attributions
@@ -21,6 +22,8 @@ public class SceneController : MonoBehaviour
 {
     // Singleton Instance 
     private static SceneController _sceneController;
+    public GameObject loadingScreen;
+    public Image loadingBarFill;
 
     public static SceneController Instance
     {
@@ -160,12 +163,15 @@ public class SceneController : MonoBehaviour
 
     private IEnumerator LoadSceneCoroutine(SceneAsset sceneToLoad, SceneAsset sceneToUnload)
     {
+        loadingScreen.SetActive(true);
         while (_sceneLoadingOperation.isDone == false)
         {
             Debug.Log($"{sceneToLoad.name} is loading. Progress {_sceneLoadingOperation.progress * 100}%");
+            float progress = Mathf.Clamp01(_sceneLoadingOperation.progress / 0.9f);
+            loadingBarFill.fillAmount = progress;
             yield return null;
         }
-
+        loadingScreen.SetActive(false);
         _activeScene = sceneToLoad;
         _sceneLoadingOperation = null;
 
