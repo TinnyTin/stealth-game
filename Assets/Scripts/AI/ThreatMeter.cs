@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 
-[RequireComponent(typeof(AI))]
+[RequireComponent(typeof(AIStateMachine))]
 public class ThreatMeter : MonoBehaviour
 {
     public Slider threatBar;
@@ -25,10 +25,10 @@ public class ThreatMeter : MonoBehaviour
     [Header("Behaviors")]
     public List<ThreatThreshold> ThreatBehaviorList;
 
-    private AI ai;
+    private AIStateMachine ai;
     private void Start()
     {
-        ai = GetComponent<AI>();
+        ai = GetComponent<AIStateMachine>();
         // invoke first behavior. usually idle
         alignBehaviorType();
         ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke();
@@ -97,7 +97,6 @@ public class ThreatMeter : MonoBehaviour
         public string name;
         public float min;
         public float max;
-        public int priority;
         public UnityEvent onThreatReach;
     }
 
