@@ -441,7 +441,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1426101215}
   - component: {fileID: 1426101214}
-  - component: {fileID: 1426101213}
   - component: {fileID: 1426101217}
   - component: {fileID: 1426101216}
   m_Layer: 0
@@ -451,14 +450,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!81 &1426101213
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1426101212}
-  m_Enabled: 1
 --- !u!20 &1426101214
 Camera:
   m_ObjectHideFlags: 0
@@ -631,7 +622,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1703440740
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -864,13 +855,13 @@ PrefabInstance:
         type: 3}
       propertyPath: _scenePlaylist.Array.data[0]
       value: 
-      objectReference: {fileID: 102900000, guid: 6233e2b9f19213c48968a52668ee8aeb,
+      objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,
         type: 3}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.data[1]
       value: 
-      objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,
+      objectReference: {fileID: 102900000, guid: 6233e2b9f19213c48968a52668ee8aeb,
         type: 3}
     - target: {fileID: 3042039951656423746, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
