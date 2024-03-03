@@ -729,12 +729,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 616641223}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c04354cb6fb23a4797ecfcbb42dea82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tcam: {fileID: 0}
+  tcam: {fileID: 1411637850}
 --- !u!1 &669549558
 GameObject:
   m_ObjectHideFlags: 0
@@ -1086,7 +1086,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1222212672}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -11.481295, y: 29.968529, z: 5.30067}
+  m_LocalPosition: {x: -9.86, y: 30.2, z: 5.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1847,7 +1847,7 @@ PrefabInstance:
     - target: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.98
+      value: -0.56
       objectReference: {fileID: 0}
     - target: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
         type: 3}
@@ -1857,7 +1857,7 @@ PrefabInstance:
     - target: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.78
+      value: -3.34
       objectReference: {fileID: 0}
     - target: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
         type: 3}
@@ -2527,7 +2527,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 0.2
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 360
@@ -2539,26 +2539,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &2119845117
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2119845113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c40f2cb80bbebc243b5754e7c16e15c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  aistate: 0
-  WaypointDistanceTolerance: 1
-  waypoints:
-  - {fileID: 1985886764}
-  - {fileID: 1270061389}
-  - {fileID: 1543007993}
-  lastThreat: {x: 0, y: 0, z: 0}
-  agent: {fileID: 0}
 --- !u!54 &2119845118
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2599,13 +2579,12 @@ MonoBehaviour:
   - name: Idle
     min: 0
     max: 0
-    priority: 0
     onThreatReach:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2119845117}
-          m_TargetAssemblyTypeName: AI, Assembly-CSharp
-          m_MethodName: RequestBehaviorIdle
+        - m_Target: {fileID: 2119845125}
+          m_TargetAssemblyTypeName: AIStateMachine, Assembly-CSharp
+          m_MethodName: BehaviorWaypoint
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2618,13 +2597,12 @@ MonoBehaviour:
   - name: Investigate
     min: 15
     max: 30
-    priority: 0
     onThreatReach:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2119845117}
-          m_TargetAssemblyTypeName: AI, Assembly-CSharp
-          m_MethodName: RequestBehaviorInvestigate
+        - m_Target: {fileID: 2119845125}
+          m_TargetAssemblyTypeName: AIStateMachine, Assembly-CSharp
+          m_MethodName: BehaviorInvestigate
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2636,14 +2614,13 @@ MonoBehaviour:
           m_CallState: 2
   - name: Pursuit
     min: 0
-    max: 70
-    priority: 0
+    max: 90
     onThreatReach:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 2119845117}
-          m_TargetAssemblyTypeName: AI, Assembly-CSharp
-          m_MethodName: RequestBehaviorPursuit
+        - m_Target: {fileID: 2119845125}
+          m_TargetAssemblyTypeName: AIStateMachine, Assembly-CSharp
+          m_MethodName: BehaviorPursuit
           m_Mode: 1
           m_Arguments:
             m_ObjectArgument: {fileID: 0}
@@ -2677,6 +2654,28 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   visibleTargets: []
+--- !u!114 &2119845125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2119845113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5508bfa78d74544ba096c5b592de1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 0.2
+  runSpeed: 1
+  WaypointDistanceTolerance: 1
+  waypoints:
+  - {fileID: 1985886764}
+  - {fileID: 1270061389}
+  - {fileID: 1543007993}
+  lastThreat: {x: 0, y: 0, z: 0}
+  anim: {fileID: 0}
+  agent: {fileID: 0}
 --- !u!1 &2135118472
 GameObject:
   m_ObjectHideFlags: 0

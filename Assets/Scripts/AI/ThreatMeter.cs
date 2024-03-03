@@ -5,7 +5,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 
 
-[RequireComponent(typeof(AI))]
+[RequireComponent(typeof(AIStateMachine))]
 public class ThreatMeter : MonoBehaviour
 {
     public Slider threatBar;
@@ -25,10 +25,10 @@ public class ThreatMeter : MonoBehaviour
     [Header("Behaviors")]
     public List<ThreatThreshold> ThreatBehaviorList;
 
-    private AI ai;
+    private AIStateMachine ai;
     private void Start()
     {
-        ai = GetComponent<AI>();
+        ai = GetComponent<AIStateMachine>();
         // invoke first behavior. usually idle
         alignBehaviorType();
         ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke();
@@ -49,13 +49,13 @@ public class ThreatMeter : MonoBehaviour
     {
         if (val > 0)
         {
-            threatLevel = Mathf.Clamp(threatLevel + val*NeuroticMultiplier, minThreatMeter, maxThreatMeter);
+            threatLevel = Mathf.Clamp(threatLevel + val * NeuroticMultiplier, minThreatMeter, maxThreatMeter);
         }
         else
         {
             threatLevel = Mathf.Clamp(threatLevel + val, minThreatMeter, maxThreatMeter);
         }
-        
+
         onThreatChange();
     }
 
@@ -72,7 +72,7 @@ public class ThreatMeter : MonoBehaviour
     {
         int lastBhvrIdx = BehaviorIdx;
         // check there is a higher behavior state to reach, and that the AI's threat has exceeded it
-        while ((BehaviorIdx + 1 < ThreatBehaviorList.Count) && (threatLevel > ThreatBehaviorList[BehaviorIdx].max))
+        while ((BehaviorIdx + 1 < ThreatBehaviorList.Count) && (threatLevel > ThreatBehaviorList[BehaviorIdx+1].max))
         {
             BehaviorIdx++; // change to higher behavior
         }
@@ -82,10 +82,13 @@ public class ThreatMeter : MonoBehaviour
             BehaviorIdx--;
         }
         if (lastBhvrIdx != BehaviorIdx)
-            ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke(); // invoke behavior
+        {
+            Debug.Log("threat: " + threatLevel);
+            ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke(); // invoke 
+        }
     }
 
-    
+
 
 
     [System.Serializable]
@@ -94,7 +97,6 @@ public class ThreatMeter : MonoBehaviour
         public string name;
         public float min;
         public float max;
-        public int priority;
         public UnityEvent onThreatReach;
     }
 
