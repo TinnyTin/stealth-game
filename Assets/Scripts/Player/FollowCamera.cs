@@ -1,28 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 /*
-Add this script to a camera game object to smoothly follow 
-a game object such as the player.  
+Add this script to the player object and set the camera target to smoothly 
+follow the player.  
 */
 
 public class FollowCamera : MonoBehaviour
 {
+  // the active camera in the scene
+  public GameObject followCam;
+
   // cameraFrom specifies the position of the camera relative to
   // the look-at object.  Easiest method is to place it in the player object's
   // GameObject hierarchy.  For rotation calculations, this will always be
   // referenced relative to the the cameraTarget's forward vector.
-  public GameObject cameraFrom;
+  private GameObject cameraFrom;
 
   // cameraTarget specifies the position of the camera's look-at object.
   // This object's forward vector should align with the player GameObject.
-  public GameObject cameraTarget;
+  private GameObject cameraTarget;
 
   // linear interpolation rates affect how fast the camera converges
   // on the player's position and forward vector
-  private float translateRate = 3f;
-  private float rotationRate = 3f;
+  public float posConvergeRate = 3f;
+  public float rotConvergeRate = 3f;
 
   // goal position and rotation of camera such that it follows
   // and looks at the player's cameraTarget child object
@@ -44,25 +48,34 @@ public class FollowCamera : MonoBehaviour
 
   void Start()
   {
+    if(followCam == null)
+    {
+      Debug.LogError("PlayerCamera: no camera");
+      return;
+    }
+    // get the from/to follow camera objects in the player object's hierarchy
+    cameraFrom = GameObject.Find("CameraFrom");
+    cameraTarget = GameObject.Find("CameraTarget");
+
     if (cameraFrom == null)
     {
-      Debug.LogError("PlayerCamera: no cameraFrom.");
+      Debug.LogError("PlayerCamera: no cameraFrom");
       return;
     }
     if (cameraTarget == null)
     {
-      Debug.LogError("PlayerCamera: no cameraTarget.");
+      Debug.LogError("PlayerCamera: no cameraTarget");
       return;
     }
 
     // initialize the camera position
     // the goal position is the cameraFrom GameObject
     camGoalPosFiltered = cameraFrom.transform.position;
-    transform.position = camGoalPosFiltered;
+    followCam.transform.position = camGoalPosFiltered;
 
     // initialize the camera rotation using authored 
-    transform.rotation = cameraFrom.transform.rotation;
     camGoalRot = getCameraRotation();
+    followCam.transform.rotation = camGoalRot;
 
     // initialize the filtered cameraTarget position
     cameraTargetPosFiltered = cameraTarget.transform.position;
@@ -77,18 +90,18 @@ public class FollowCamera : MonoBehaviour
     // accumulation based low pass filter to calculate the new camera location.
     // the goal position is the cameraFrom GameObject
     float posFilterT = 0.1f;
-    camGoalPosFiltered = camGoalPosFiltered * (1f - posFilterT) + cameraFrom.transform.position * posFilterT;
-    transform.position = Vector3.LerpUnclamped(transform.position, camGoalPosFiltered, Time.deltaTime * translateRate);
+    camGoalPosFiltered = Vector3.Lerp(camGoalPosFiltered, cameraFrom.transform.position, posFilterT);
+    followCam.transform.position = Vector3.LerpUnclamped(followCam.transform.position, camGoalPosFiltered, Time.deltaTime * posConvergeRate);
 
     // also filter the camera target position to smooth out erroneous root motion artifacts
-    cameraTargetPosFiltered = cameraTargetPosFiltered * (1f - posFilterT) + cameraTarget.transform.position * posFilterT;
+    cameraTargetPosFiltered = Vector3.Lerp(cameraTargetPosFiltered, cameraTarget.transform.position, posFilterT);
 
     // calculate the camera rotation from its new filtered goal position
     // such that it looks at the cameraTarget GameObject
     camGoalRot = getCameraRotation();
 
     // interpolate towards the new camera rotation
-    transform.rotation = Quaternion.LerpUnclamped(transform.rotation, camGoalRot, Time.deltaTime * rotationRate);
+    followCam.transform.rotation = Quaternion.LerpUnclamped(followCam.transform.rotation, camGoalRot, Time.deltaTime * rotConvergeRate);
 
   }
 }
