@@ -64,12 +64,12 @@ public class SceneController : MonoBehaviour
     private Scene _globalParentScene;
     private GameObject _globalParentSceneCamera;
 
-    private GameObject _activeCamera = null; 
+    private GameObject _activeCamera = null;
 
     private AsyncOperation _sceneLoadingOperation = null;
 
     [Header("Global Scene Camera Overridden?")]
-    [SerializeField] private bool _overridePersistentSceneCamera = false; 
+    [SerializeField] private bool _overridePersistentSceneCamera = false;
 
     // Use this for initialization
     void Start()
@@ -79,13 +79,13 @@ public class SceneController : MonoBehaviour
         if (_persistentScene == null)
         {
             Debug.LogError("Please assign a persistence scene to the SceneController.");
-            return; 
+            return;
         }
 
         if (_scenePlaylist.Any() == false)
         {
             Debug.LogError("Please add at least one scene to the scene cycle.");
-            return; 
+            return;
         }
 
         // Get a reference to the global scene and its camera
@@ -100,7 +100,7 @@ public class SceneController : MonoBehaviour
             }
         }
 
-        _activeCamera = _globalParentSceneCamera; 
+        _activeCamera = _globalParentSceneCamera;
 
         // Unload all scenes from the hierarchy as they may not match
         // the scene playlist. 
@@ -117,6 +117,26 @@ public class SceneController : MonoBehaviour
         {
             IncrementPlaylistScene();
         }
+        //else if (Input.GetKeyDown(KeyCode.F12))
+        //{
+        //    SetActiveScene("Assets/Scenes/Tom/AudioManagerTest.unity");
+        //}
+    }
+
+    public bool SetActiveScene(string scenePath)
+    {
+        // Insert the scene at the head of the playlist and jump to it
+        SceneAsset sceneAsset = AssetDatabase.LoadAssetAtPath<SceneAsset>(scenePath);
+        if (sceneAsset == null)
+        {
+            Debug.LogWarning($"{this.name}: Couldn't load SceneAsset for scene with name \"{scenePath}\"");
+            return false;
+        }
+
+        _scenePlaylist.Insert(0, sceneAsset);
+        _currentSceneIndex = -1;
+        IncrementPlaylistScene();
+        return true;
     }
 
     private void IncrementPlaylistScene()
@@ -154,8 +174,8 @@ public class SceneController : MonoBehaviour
         }
 
         _sceneLoadingOperation = SceneManager.LoadSceneAsync(sceneToLoad.name, LoadSceneMode.Additive);
-        StartCoroutine(LoadSceneCoroutine(sceneToLoad, sceneToUnload)); 
-        return true; 
+        StartCoroutine(LoadSceneCoroutine(sceneToLoad, sceneToUnload));
+        return true;
     }
 
     private IEnumerator LoadSceneCoroutine(SceneAsset sceneToLoad, SceneAsset sceneToUnload)
@@ -178,10 +198,10 @@ public class SceneController : MonoBehaviour
 
     private void PostSceneLoad()
     {
-        Debug.Log("Post Scene Load"); 
+        Debug.Log("Post Scene Load");
         Scene scene = SceneManager.GetSceneByName(_activeScene.name);
 
-        _overridePersistentSceneCamera = false; 
+        _overridePersistentSceneCamera = false;
         foreach (GameObject gameObject in scene.GetRootGameObjects())
         {
             // Try to locate a camera in the additvely loaded scene
@@ -189,7 +209,7 @@ public class SceneController : MonoBehaviour
             {
                 Debug.Log($"SceneController: Found camera in {_activeScene.name}");
                 _overridePersistentSceneCamera = true;
-                _activeCamera = gameObject; 
+                _activeCamera = gameObject;
             }
 
             // Ensure that only the global parent scene's EventSystem is active
@@ -207,7 +227,7 @@ public class SceneController : MonoBehaviour
         else
         {
             _globalParentSceneCamera.SetActive(true);
-            _activeCamera = _globalParentSceneCamera; 
+            _activeCamera = _globalParentSceneCamera;
         }
 
         SceneManager.SetActiveScene(scene);
@@ -215,6 +235,6 @@ public class SceneController : MonoBehaviour
 
     public GameObject GetActiveCameraGameObject()
     {
-        return _activeCamera; 
+        return _activeCamera;
     }
 }
