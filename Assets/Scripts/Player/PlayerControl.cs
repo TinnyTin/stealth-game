@@ -16,7 +16,7 @@ public class PlayerControl : MonoBehaviour
   Vector3 prevPosition;
   float velocityFiltered;
 
-  public float LookCamSensitivity = 4f;
+  public float LookCamSensitivity = 3f;
 
   // if true, enable mouse / right analog stick camera control
   public bool LookCamEnabled;
@@ -121,9 +121,6 @@ public class PlayerControl : MonoBehaviour
     {
       // update the look camera based on inputs from mouse and right analog stick
 
-      // rotate the CameraFrom object relative to CameraTo object
-      //Debug.Log("PlayerLookX: " + _playerLookX);
-
       // calculate new input axes relative to the camera's offset 
       // from the player's forward vector
 
@@ -150,17 +147,9 @@ public class PlayerControl : MonoBehaviour
       }
     }
 
+    //Debug.Log(_playerTurn + " " +  _playerForward);
     anim.SetFloat("velx", _playerTurn);
     anim.SetFloat("vely", _playerForward);
-
-    if (_playerForward > 0.05f || _playerTurn > 0.05f)
-    {
-      anim.SetBool("move", true);
-    }
-    else
-    {
-      anim.SetBool("move", false);
-    }
 
     if (_playerActionCrouch)
     {

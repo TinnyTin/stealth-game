@@ -25,8 +25,8 @@ public class FollowCamera : MonoBehaviour
 
   // linear interpolation rates affect how fast the camera converges
   // on the player's position and forward vector
-  public float posConvergeRate = 3f;
-  public float rotConvergeRate = 3f;
+  public float posConvergeRate = 8f;
+  public float rotConvergeRate = 20f;
 
   // goal position and rotation of camera such that it follows
   // and looks at the player's cameraTarget child object
@@ -89,7 +89,7 @@ public class FollowCamera : MonoBehaviour
 
     // accumulation based low pass filter to calculate the new camera location.
     // the goal position is the cameraFrom GameObject
-    float posFilterT = 0.1f;
+    float posFilterT = 0.3f;
     camGoalPosFiltered = Vector3.Lerp(camGoalPosFiltered, cameraFrom.transform.position, posFilterT);
     followCam.transform.position = Vector3.LerpUnclamped(followCam.transform.position, camGoalPosFiltered, Time.deltaTime * posConvergeRate);
 
