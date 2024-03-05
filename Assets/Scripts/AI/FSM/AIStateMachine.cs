@@ -126,6 +126,10 @@ public class AIStateMachine : MonoBehaviour
         agent.nextPosition = rootPosition;
     }
 
+    // ======================================================
+    // Switching Behavior
+    // ======================================================
+
     public void BehaviorWaypoint()
     {
         _currentState.SwitchState(_states.Waypoint());
