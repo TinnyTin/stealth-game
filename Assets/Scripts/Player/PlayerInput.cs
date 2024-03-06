@@ -17,7 +17,8 @@ public class PlayerInput : MonoBehaviour
   public float playerForward = 0f;
   public float playerTurn = 0f;
   public float playerLookX = 0f;
-  public bool playerActionGrab = false;
+  public float mouseXScale = 3f;
+    public bool playerActionGrab = false;
   public bool playerActionCrouch = false;
 
   // Update is called once per frame
@@ -31,7 +32,7 @@ public class PlayerInput : MonoBehaviour
 
     // controls for controlling the camera relative to player
     // mouse x
-    float inputMouseX = Input.GetAxisRaw("Mouse X");
+    float inputMouseX = Input.GetAxisRaw("Mouse X") * mouseXScale;
     // right analog stick x
     float inputLookX = Input.GetAxisRaw("LookX");
     //Debug.Log("mouse, look: " + inputMouseX + " " + inputLookX);

@@ -58,6 +58,11 @@ public class SceneController : MonoBehaviour
     [Tooltip("List of available scenes. The first scene is loaded by default. These can be cycled with F11.")]
     [SerializeField] private List<SceneAsset> _scenePlaylist = new();
 
+    [Space]
+    [Header("Resetable ScriptableObjects with Init on scene Active/reload")]
+    [Tooltip("List of Scriptable Objects that call their Init() function on scene active/reload.")]
+    [SerializeField] private List<ScriptableObject> _scriptableObjectsWithInit = new();
+
     // Local Variables
     private int _currentSceneIndex = 0;
 
@@ -108,6 +113,9 @@ public class SceneController : MonoBehaviour
 
         // Load the first scene in the playlist
         LoadSceneAdditiveAsync(_scenePlaylist[0], null);
+
+        // re-initialize Scriptable Objects
+        ReInitScriptableObjects();
     }
 
     // Update is called once per frame
@@ -136,6 +144,10 @@ public class SceneController : MonoBehaviour
         _scenePlaylist.Insert(0, sceneAsset);
         _currentSceneIndex = -1;
         IncrementPlaylistScene();
+
+        // re-initialize Scriptable Objects
+        ReInitScriptableObjects();
+
         return true;
     }
 
@@ -231,6 +243,15 @@ public class SceneController : MonoBehaviour
         }
 
         SceneManager.SetActiveScene(scene);
+    }
+
+    // Start is called before the first frame update
+    void ReInitScriptableObjects()
+    {
+        foreach (ScriptableObjectWithInit so in _scriptableObjectsWithInit)
+        {
+            so.Init();
+        }
     }
 
     public GameObject GetActiveCameraGameObject()

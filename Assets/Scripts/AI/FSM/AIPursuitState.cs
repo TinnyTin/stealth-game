@@ -6,6 +6,10 @@ public class AIPursuitState : AIBaseState
         IsRootState = true;
         InitializeSubState();
     }
+    public override void SetAIThreatPriority()
+    {
+        Ctx.aiThreatPriority = AIThreatPriority.Pursuit;
+    }
     public override void EnterState()
     {
         lastSpeed = Ctx.agent.speed;
