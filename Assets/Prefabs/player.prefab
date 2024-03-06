@@ -2416,7 +2416,7 @@ GameObject:
   - component: {fileID: 8472543914092788168}
   - component: {fileID: 5281317651356161776}
   - component: {fileID: 5367950710415409541}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: man-glasses-steampunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
