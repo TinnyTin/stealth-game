@@ -28,6 +28,7 @@ public class AIStateMachine : MonoBehaviour
     public Vector3 lastThreat;
 
     public AIData aiData;
+    public GameEvent PlayerCaught;
     [HideInInspector]
     public AIThreatPriority aiThreatPriority;
 
