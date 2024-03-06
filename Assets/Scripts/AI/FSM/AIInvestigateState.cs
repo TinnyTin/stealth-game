@@ -9,6 +9,10 @@ public class AIInvestigateState : AIBaseState
         IsRootState = true;
         InitializeSubState();
     }
+    public override void SetAIThreatPriority()
+    {
+        Ctx.aiThreatPriority = AIThreatPriority.Investigate;
+    }
     public override void EnterState()
     {
         Ctx.anim.SetTrigger("triggerSurprised");

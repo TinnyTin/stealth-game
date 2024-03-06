@@ -14,7 +14,7 @@ public abstract class AIBaseState
         _ctx = currentContext;
         _factory = aiStateFactory;
     }
-
+    public abstract void SetAIThreatPriority();
     public abstract void EnterState();
     public abstract void UpdateState();
     public abstract void ExitState();
@@ -44,8 +44,15 @@ public abstract class AIBaseState
         // current state exits state
         ExitState();
 
+        // set threat priority
+        newState.SetAIThreatPriority();
+
         // new state enters state
         newState.EnterState();
+
+        // update AI Manager
+        if (Ctx.aiData != null)
+            Ctx.aiData.UpdateThreatPriority();
 
         if (_isRootState)
         {
