@@ -6,6 +6,22 @@ using UnityEngine;
 [RequireComponent(typeof(FollowCamera))]
 public class PlayerControl : MonoBehaviour
 {
+  // stealable object
+  private GameObject stealableObject;
+  private StealableObject stealableObjectComponent;
+  private bool isStealableObjectInRangetoSteal = false;
+  private bool isStealableObjectInRangeToHilight = false;
+
+  public bool HasStolenObject = false;
+
+  // extraction point
+  private GameObject extractionPointObject;
+  private ExtractionPoint extractionPointComponent;
+  private bool isExtractionPointInRangeToHilight = false;
+
+  public bool IsExtractionSuccess = false;
+
+
   private Rigidbody rbody;
   private Animator anim;
   private PlayerInput input;
@@ -55,6 +71,30 @@ public class PlayerControl : MonoBehaviour
 
   void Awake()
   {
+    // get stealable object and component
+    stealableObject = GameObject.Find("StealableObject");
+    if (stealableObject == null)
+    {
+      Debug.LogError("PlayerControl: no StealableObject found.");
+    }
+    stealableObjectComponent = stealableObject.GetComponent<StealableObject>();
+    if (stealableObjectComponent == null)
+    {
+      Debug.LogError("PlayerControl: StealableObject has no StealableObject component.");
+    }
+
+    // get extraction point object and component
+    extractionPointObject  = GameObject.Find("ExtractionPoint");
+    if (extractionPointObject == null)
+    {
+      Debug.LogError("PlayerControl: no ExtractionPoint found.");
+    }
+    extractionPointComponent = extractionPointObject.GetComponent<ExtractionPoint>();
+    if (extractionPointComponent == null)
+    {
+      Debug.LogError("PlayerControl: ExtractionPoint has no ExtractionPoint component.");
+    }
+
     rbody = GetComponent<Rigidbody>();
     if(rbody == null)
     {
@@ -163,6 +203,18 @@ public class PlayerControl : MonoBehaviour
     {
       _playerActionGrab = false;
       Debug.Log("Grab item");
+      if (stealableObject != null && isStealableObjectInRangetoSteal)
+      {
+        stealableObject.SetActive(false);
+        HasStolenObject = true;
+
+        if (stealableObjectComponent != null && stealableObjectComponent.AudioClipSteal != null)
+          stealableObjectComponent.Steal();
+
+        // fire off an event indicating that the object is stolen
+        //
+        //
+      }
     }
 
     // calculate world-space velocity, magnitude is used to determine what 
@@ -177,8 +229,78 @@ public class PlayerControl : MonoBehaviour
 
     // emit footstep events to sound manager
     triggerFootsteps(isRunning);
+
+    // update the stealable object state 
+    UpdateStealableObject();
+
+    // update the extraction state 
+    UpdateExtractionPoint();
   }
 
+  void UpdateStealableObject()
+  {
+    if (stealableObject == null || stealableObjectComponent == null)
+      return;
+
+    Vector3 positionDiff = transform.position - stealableObject.transform.position;
+    positionDiff.y = 0f;
+    float distance = Mathf.Abs(positionDiff.magnitude);
+    
+    if (distance < 5f)
+    {
+      if(!isStealableObjectInRangeToHilight && stealableObjectComponent != null)
+        stealableObjectComponent.SetHilight(true);
+
+      isStealableObjectInRangeToHilight = true;
+    }
+    else
+    {
+      if (isStealableObjectInRangeToHilight && stealableObjectComponent != null)
+        stealableObjectComponent.SetHilight(false);
+      isStealableObjectInRangeToHilight = false;
+    }
+
+    if(distance < 2f)
+      isStealableObjectInRangetoSteal = true;
+
+  }
+
+  void UpdateExtractionPoint()
+  {
+    if (!HasStolenObject)
+      return;
+
+    if (extractionPointObject == null || extractionPointComponent == null)
+      return;
+
+    Vector3 positionDiff = transform.position - extractionPointObject.transform.position;
+    positionDiff.y = 0f;
+    float distance = Mathf.Abs(positionDiff.magnitude);
+    if (distance < 5f)
+    {
+      if (!isExtractionPointInRangeToHilight)
+        extractionPointComponent.SetHilight(true);
+
+      isExtractionPointInRangeToHilight = true;
+    }
+    else
+    {
+      if (isExtractionPointInRangeToHilight)
+        extractionPointComponent.SetHilight(false);
+
+      isExtractionPointInRangeToHilight = false;
+    }
+
+    if (distance < 1f && !IsExtractionSuccess)
+    {
+      IsExtractionSuccess = true;
+      extractionPointComponent.Extract();
+      Debug.Log("Extraction: success.");
+      // fire off extraction success event to manager 
+      // 
+      //
+    }
+  }
 
   // manage the root motion depending on animator state and input
   void OnAnimatorMove()
