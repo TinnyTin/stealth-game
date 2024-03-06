@@ -17,22 +17,7 @@ public class AIData : ScriptableObjectWithInit
     public override void Init()
     {
         highestState = AIThreatPriority.Idle;
-        AIs = GameObject.FindGameObjectsWithTag("AI").ToList();
-        if (AIs.Count == 0)
-        {
-            Debug.LogError("Error! no AI!");
-            return;
-        }
-
-        UpdateThreatPriority();
     }
-    //public void UpdateThreatLevel()
-    //{
-    //    threat level
-    //    AIs.OrderBy(AIs => AIs.GetComponent<ThreatMeter>().threatLevel).ToArray();
-    //    AIHighestThreatPriority = AIs[0];
-    //    highestThreat = AIHighestThreatPriority.GetComponent<ThreatMeter>().threatLevel;
-    //}
 
     public void UpdateThreatPriority()
     {
