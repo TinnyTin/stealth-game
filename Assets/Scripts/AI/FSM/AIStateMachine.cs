@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum AIThreatPriority
+{
+    Idle,
+    Investigate,
+    Pursuit
+}
+
 public class AIStateMachine : MonoBehaviour
 {
     // configurable from inspector
@@ -19,6 +26,10 @@ public class AIStateMachine : MonoBehaviour
 
     [Header("Hostile Settings")]
     public Vector3 lastThreat;
+
+    public AIData aiData;
+    [HideInInspector]
+    public AIThreatPriority aiThreatPriority;
 
     // state variables
     protected AIBaseState _currentState;
@@ -49,6 +60,7 @@ public class AIStateMachine : MonoBehaviour
         // setup state
         _states = new AIStateFactory(this);
         _currentState = _states.Waypoint(); // TODO replace this with configurable default state from inspector
+        _currentState.SetAIThreatPriority();
         _currentState.EnterState();
     }
 
@@ -126,6 +138,10 @@ public class AIStateMachine : MonoBehaviour
         agent.nextPosition = rootPosition;
     }
 
+    // ======================================================
+    // Switching Behavior
+    // ======================================================
+
     public void BehaviorWaypoint()
     {
         _currentState.SwitchState(_states.Waypoint());
@@ -139,6 +155,16 @@ public class AIStateMachine : MonoBehaviour
     public void BehaviorPursuit()
     {
         _currentState.SwitchState(_states.Pursuit());
+    }
+
+    private void OnEnable()
+    {
+        aiData.RegisterAI(this.gameObject);
+    }
+
+    private void OnDisable()
+    {
+        aiData.UnRegisterAI(this.gameObject);
     }
 }
 

@@ -15,6 +15,10 @@ public class AIWaypointState : AIBaseState
         IsRootState = true;
         InitializeSubState();
     }
+    public override void SetAIThreatPriority()
+    {
+        Ctx.aiThreatPriority = AIThreatPriority.Idle;
+    }
     public override void EnterState()
     {
         currWaypoint = -1;
