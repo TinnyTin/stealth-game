@@ -350,7 +350,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 1cbc5951a94f36a479a1b6844579e013, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -787,6 +787,7 @@ MonoBehaviour:
   - {fileID: 8759923798825685244}
   lastThreat: {x: 0, y: 0, z: 0}
   aiData: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
+  PlayerCaught: {fileID: 11400000, guid: b984adb34e019c549be34216320474f0, type: 2}
   aiThreatPriority: 0
   anim: {fileID: 0}
   agent: {fileID: 0}
@@ -871,7 +872,9 @@ MonoBehaviour:
   viewRadius: 11
   viewAngle: 90
   meshResolution: 1
+  meshFadeInMultiplier: 1
   viewMeshFilter: {fileID: 8759923797699422844}
+  viewMeshRenderer: {fileID: 8759923797699422845}
   targetMask:
     serializedVersion: 2
     m_Bits: 128
