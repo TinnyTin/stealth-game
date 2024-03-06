@@ -12,15 +12,15 @@ using UnityEngine.Events;
  *                      https://www.youtube.com/watch?v=7_dyDmF0Ktw&ab_channel=ThisisGameDev
  */
 
-[AddComponentMenu("Player Goal Camera Pan Completed Listener")]
-public class PlayerGoalCameraPanCompletedListener : GameEventListenerBase, IEventListener
+[AddComponentMenu("Player Stole Item Listener")]
+public class PlayerStoleItemListener : GameEventListenerBase, IEventListener
 {
     [System.Serializable]
-    public class PlayerGoalCameraCompletedEvent : UnityEvent<Component> { }
+    public class PlayerStoleItemEvent : UnityEvent<Component> { }
 
     [Header("Response Method To Invoke:")]
     [Tooltip("Response to invoke when Event with GameData is raised.")]
-    public PlayerGoalCameraCompletedEvent response;
+    public PlayerStoleItemEvent response;
 
     public void OnEventRaised(Component sender)
     {
