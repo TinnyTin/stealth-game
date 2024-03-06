@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+[RequireComponent(typeof(AIStateMachine))]
 [RequireComponent(typeof(ThreatMeter))]
 public class FieldOfView : MonoBehaviour
 {
@@ -30,6 +31,7 @@ public class FieldOfView : MonoBehaviour
     private Mesh viewMesh;
     private ThreatMeter threatmeter;
     private float meshAlpha = 0.0f;
+    private AIStateMachine ai;
 
     // TODO remove this secion and add in fixedupdate...?
     private void Start()
@@ -39,6 +41,7 @@ public class FieldOfView : MonoBehaviour
         viewMeshFilter.mesh = viewMesh;
         threatmeter = GetComponent<ThreatMeter>();
         meshAlpha = 0.0f;
+        ai = GetComponent<AIStateMachine>();
 
         StartCoroutine("FindTargetsWithDelay", refreshInterval);
     }
@@ -87,6 +90,7 @@ public class FieldOfView : MonoBehaviour
                 countInView++;
             }
         }
+        ai.countInView = countInView;
         lastVisibleTargets.Clear();
         lastVisibleTargets.AddRange(visibleTargets);
     }

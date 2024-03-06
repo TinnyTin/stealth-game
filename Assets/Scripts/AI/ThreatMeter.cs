@@ -83,7 +83,7 @@ public class ThreatMeter : MonoBehaviour
         }
         if (lastBhvrIdx != BehaviorIdx)
         {
-            Debug.Log("threat: " + threatLevel);
+            //Debug.Log("threat: " + threatLevel);
             ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke(); // invoke 
         }
     }

@@ -26,6 +26,7 @@ public class AIStateMachine : MonoBehaviour
 
     [Header("Hostile Settings")]
     public Vector3 lastThreat;
+    public int countInView;
 
     public AIData aiData;
     public GameEvent PlayerCaught;

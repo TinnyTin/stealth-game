@@ -612,7 +612,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8759923798552422216}
   m_LocalRotation: {x: -0.000000029802322, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 3.29, y: 0, z: 6.83}
+  m_LocalPosition: {x: 1.52, y: -0, z: 4.77}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -665,7 +665,7 @@ PrefabInstance:
     - target: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: -17
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
         type: 3}
@@ -675,7 +675,7 @@ PrefabInstance:
     - target: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: 7.5
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
         type: 3}
@@ -761,7 +761,7 @@ Rigidbody:
   m_Mass: 1
   m_Drag: 0
   m_AngularDrag: 0.05
-  m_UseGravity: 1
+  m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
@@ -778,14 +778,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5508bfa78d74544ba096c5b592de1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 0.2
-  runSpeed: 1
+  walkSpeed: 0.4
+  runSpeed: 3
   WaypointDistanceTolerance: 1
   waypoints:
   - {fileID: 8759923798512796713}
   - {fileID: 8759923798552422216}
   - {fileID: 8759923798825685244}
   lastThreat: {x: 0, y: 0, z: 0}
+  countInView: 0
   aiData: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
   PlayerCaught: {fileID: 11400000, guid: b984adb34e019c549be34216320474f0, type: 2}
   aiThreatPriority: 0
@@ -844,10 +845,10 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 0.2
+  m_Speed: 0.4
   m_Acceleration: 8
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 720
   m_StoppingDistance: 0.33
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -897,7 +898,7 @@ MonoBehaviour:
   threatBar: {fileID: 8759923797073108172}
   minThreatMeter: 0
   maxThreatMeter: 100
-  sightThreatRate: 35
+  sightThreatRate: 20
   NeuroticMultiplier: 1
   DegredationRate: 10
   threatLevel: 0
@@ -922,8 +923,8 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   - name: Investigate
-    min: 15
-    max: 30
+    min: 0
+    max: 15
     onThreatReach:
       m_PersistentCalls:
         m_Calls:
@@ -941,7 +942,7 @@ MonoBehaviour:
           m_CallState: 2
   - name: Pursuit
     min: 0
-    max: 90
+    max: 50
     onThreatReach:
       m_PersistentCalls:
         m_Calls:

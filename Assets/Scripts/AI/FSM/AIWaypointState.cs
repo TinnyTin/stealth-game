@@ -25,6 +25,7 @@ public class AIWaypointState : AIBaseState
         waypoints = Ctx.waypoints;
 
         setNextWaypoint();
+        Ctx.agent.speed = Ctx.walkSpeed;
     }
     public override void UpdateState()
     {
