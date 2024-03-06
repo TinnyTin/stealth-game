@@ -63,6 +63,10 @@ public class SceneController : MonoBehaviour
     [Tooltip("List of Scriptable Objects that call their Init() function on scene active/reload.")]
     [SerializeField] private List<ScriptableObject> _scriptableObjectsWithInit = new();
 
+    [Space] 
+    [Header("Events")] 
+    [SerializeField] private GameEvent _sceneLoadComplete; 
+
     // Local Variables
     private int _currentSceneIndex = 0;
 
@@ -243,6 +247,7 @@ public class SceneController : MonoBehaviour
         }
 
         SceneManager.SetActiveScene(scene);
+        _sceneLoadComplete.Raise(this);
     }
 
     // Start is called before the first frame update

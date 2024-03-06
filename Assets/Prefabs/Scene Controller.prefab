@@ -48,4 +48,6 @@ MonoBehaviour:
   _activeScene: {fileID: 0}
   _scenePlaylist:
   - {fileID: 102900000, guid: 6233e2b9f19213c48968a52668ee8aeb, type: 3}
+  _scriptableObjectsWithInit: []
+  _sceneLoadComplete: {fileID: 11400000, guid: ba6edfc78cd1fcb439331a965bcf7de6, type: 2}
   _overridePersistentSceneCamera: 0
