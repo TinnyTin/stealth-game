@@ -766,6 +766,45 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &695267126702515523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4642304207773468597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5508bfa78d74544ba096c5b592de1bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 0.2
+  runSpeed: 1
+  WaypointDistanceTolerance: 1
+  waypoints:
+  - {fileID: 8759923798512796713}
+  - {fileID: 8759923798552422216}
+  - {fileID: 8759923798825685244}
+  lastThreat: {x: 0, y: 0, z: 0}
+  aiData: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
+  aiThreatPriority: 0
+  anim: {fileID: 0}
+  agent: {fileID: 0}
+--- !u!114 &3292665219539485694
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4642304207773468597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4ff6696431a40e43ad41a8a6a648272, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radiusListenable: 50
+  baseThreatPerSound: 50
+  weightThreatOfSound: 1
 --- !u!114 &8292152907300419981
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -915,45 +954,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!114 &695267126702515523
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4642304207773468597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5508bfa78d74544ba096c5b592de1bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 0.2
-  runSpeed: 1
-  WaypointDistanceTolerance: 1
-  waypoints:
-  - {fileID: 8759923798512796713}
-  - {fileID: 8759923798552422216}
-  - {fileID: 8759923798825685244}
-  lastThreat: {x: 0, y: 0, z: 0}
-  aiData: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
-  aiThreatPriority: 0
-  anim: {fileID: 0}
-  agent: {fileID: 0}
---- !u!114 &3292665219539485694
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4642304207773468597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4ff6696431a40e43ad41a8a6a648272, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radiusListenable: 50
-  baseThreatPerSound: 50
-  weightThreatOfSound: 1
 --- !u!4 &5415323156532681999 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
