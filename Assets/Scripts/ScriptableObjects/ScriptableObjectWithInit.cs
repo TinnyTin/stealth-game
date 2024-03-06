@@ -10,8 +10,8 @@ using UnityEngine;
  * Source Credit:
  */
 
-public class ScriptableObjectWithStart : ScriptableObject
+public class ScriptableObjectWithInit : ScriptableObject
 {
     // Start is called before the first frame update
-    public virtual void Start() { }
+    public virtual void Init() { }
 }
