@@ -12,8 +12,11 @@ public class FieldOfView : MonoBehaviour
     [Range(0,360)]
     public float viewAngle;
     [Header("Visual Field of View")]
-    public float meshResolution = 1;
+    public float meshResolution = 1f;
+    [Tooltip("Based on how close viewRadius is to Player, fade in the FOV as a mesh alpha")]
+    public float meshFadeInMultiplier = 1f;
     public MeshFilter viewMeshFilter;
+    public MeshRenderer viewMeshRenderer;
     [Header("Layer Masks")]
     public LayerMask targetMask;
     public LayerMask obstacleMask;
@@ -21,10 +24,12 @@ public class FieldOfView : MonoBehaviour
     [HideInInspector]
     public List<Transform> visibleTargets = new List<Transform>();
     private List<Transform> lastVisibleTargets = new List<Transform>();
-
+    private int countInView = 0;
+    
     // private
     private Mesh viewMesh;
     private ThreatMeter threatmeter;
+    private float meshAlpha = 0.0f;
 
     // TODO remove this secion and add in fixedupdate...?
     private void Start()
@@ -33,6 +38,7 @@ public class FieldOfView : MonoBehaviour
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
         threatmeter = GetComponent<ThreatMeter>();
+        meshAlpha = 0.0f;
 
         StartCoroutine("FindTargetsWithDelay", refreshInterval);
     }
@@ -72,11 +78,13 @@ public class FieldOfView : MonoBehaviour
                 }
             }
         }
+        countInView = 0;
         foreach(Transform t in lastVisibleTargets)
         {
             if (visibleTargets.Contains(t))
             {
                 threatmeter.onSightThreat(t, refreshInterval);
+                countInView++;
             }
         }
         lastVisibleTargets.Clear();
@@ -101,6 +109,14 @@ public class FieldOfView : MonoBehaviour
 
     void DrawFieldOfView()
     {
+        if (countInView > 0) 
+        {
+            meshAlpha = Mathf.Lerp(meshAlpha, 0.3f, Time.deltaTime);
+        }
+        else
+        {
+            meshAlpha = Mathf.Lerp(meshAlpha, 0.0f, Time.deltaTime);
+        }
         int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
         float stepAngleSize = viewAngle / stepCount;
         List<Vector3> viewPoints = new List<Vector3>();
@@ -132,6 +148,8 @@ public class FieldOfView : MonoBehaviour
         viewMesh.vertices = vertices;
         viewMesh.triangles = triangles;
         viewMesh.RecalculateNormals();
+        viewMeshRenderer.material.color = new Color(viewMeshRenderer.material.color.r,viewMeshRenderer.material.color.g,viewMeshRenderer.material.color.b, meshAlpha);
+        
     }
 
     // check cast using viewRadius and angle hits any obstacle. return info
