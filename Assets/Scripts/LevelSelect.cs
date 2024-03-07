@@ -18,6 +18,6 @@ public class LevelSelect : MonoBehaviour
 
     public void changeLevels()
     {
-        SceneController.Instance.SetActiveScene("Assets/Scenes/Tom/AudioManagerTest.unity");
+        SceneController.Instance.SetActiveScene("Assets/Scenes/Levels/Level1.unity");
     }
 }
