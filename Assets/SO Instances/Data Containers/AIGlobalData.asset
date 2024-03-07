@@ -13,4 +13,3 @@ MonoBehaviour:
   m_Name: AIGlobalData
   m_EditorClassIdentifier: 
   highestState: 0
-  gameEvent: {fileID: 0}

@@ -861,7 +861,7 @@ PrefabInstance:
         type: 3}
       propertyPath: _scenePlaylist.Array.data[1]
       value: 
-      objectReference: {fileID: 102900000, guid: 6233e2b9f19213c48968a52668ee8aeb,
+      objectReference: {fileID: 102900000, guid: db5151db0ce28a14bbd0ea72aa969fd2,
         type: 3}
     - target: {fileID: 3042039951656423746, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
