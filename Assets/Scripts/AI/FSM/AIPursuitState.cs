@@ -13,7 +13,7 @@ public class AIPursuitState : AIBaseState
     public override void EnterState()
     {
         lastSpeed = Ctx.agent.speed;
-        Ctx.agent.speed = Ctx.runSpeed;
+        Ctx.setSpeed(Ctx.runSpeed);
     }
     public override void UpdateState()
     {
@@ -38,7 +38,8 @@ public class AIPursuitState : AIBaseState
     }
     public override void ExitState()
     {
-        Ctx.agent.speed = lastSpeed;
+        Ctx.setSpeed(lastSpeed);
+        Ctx.anim.ResetTrigger("triggerLook");
         Ctx.anim.ResetTrigger("triggerAngry");
     }
     public override void CheckSwitchStates()

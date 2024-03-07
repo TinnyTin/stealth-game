@@ -3,6 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+public enum PathDebugType
+{ 
+    PathCornersLength,
+        NextPosition
+};
+
 [RequireComponent(typeof(LineRenderer))]
 public class PathDebugger : MonoBehaviour
 {
@@ -10,6 +16,8 @@ public class PathDebugger : MonoBehaviour
     private NavMeshAgent agentToDebug;
 
     private LineRenderer linerenderer;
+
+    public PathDebugType debugType;
 
     // Start is called before the first frame update
     void Start()
@@ -22,16 +30,34 @@ public class PathDebugger : MonoBehaviour
     {
         if (agentToDebug != null)
         {
-            if (agentToDebug.hasPath)
+            if (debugType == PathDebugType.PathCornersLength)
             {
-                linerenderer.positionCount = agentToDebug.path.corners.Length;
-                linerenderer.SetPositions(agentToDebug.path.corners);
-                linerenderer.enabled = true;
+                if (agentToDebug.hasPath)
+                {
+                    linerenderer.positionCount = agentToDebug.path.corners.Length;
+                    linerenderer.SetPositions(agentToDebug.path.corners);
+                    linerenderer.enabled = true;
+                }
+                else
+                {
+                    linerenderer.enabled = false;
+                }
             }
-            else
+            else if (debugType == PathDebugType.NextPosition)
             {
-                linerenderer.enabled = false;
+                if (agentToDebug.hasPath)
+                {
+                    Vector3[] debugpositions = {new Vector3(), new Vector3()};
+                    debugpositions[0] = agentToDebug.transform.position;
+                    debugpositions[1] = agentToDebug.nextPosition;
+                    linerenderer.SetPositions(debugpositions);
+                }
+                else
+                {
+                    linerenderer.enabled = false;
+                }
             }
+           
         }
     }
 }

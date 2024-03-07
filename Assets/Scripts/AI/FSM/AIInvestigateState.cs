@@ -16,7 +16,7 @@ public class AIInvestigateState : AIBaseState
     public override void EnterState()
     {
         Ctx.anim.SetTrigger("triggerSurprised");
-        Ctx.agent.speed = Ctx.walkSpeed;
+        Ctx.setSpeed(Ctx.walkSpeed);
     }
     public override void UpdateState()
     {
