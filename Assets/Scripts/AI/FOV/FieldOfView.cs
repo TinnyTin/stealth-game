@@ -8,6 +8,7 @@ using UnityEngine.Events;
 public class FieldOfView : MonoBehaviour
 {
     [Header("FOV settings")]
+    public GameObject viewCastStartingPoint;
     public float refreshInterval = 0.2f;
     public float viewRadius;
     [Range(0,360)]
@@ -69,13 +70,13 @@ public class FieldOfView : MonoBehaviour
         {
             // check within viewing ANGLE
             Transform target = targetsInViewRadius[i].transform;
-            Vector3 dirToTarget = (target.position - transform.position).normalized;
+            Vector3 dirToTarget = (target.position - viewCastStartingPoint.transform.position).normalized;
             if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
             {
-                float distToTarget = Vector3.Distance(transform.position, target.position);
+                float distToTarget = Vector3.Distance(viewCastStartingPoint.transform.position, target.position);
 
                 // RAYCAST against blocking obstacles
-                if (!Physics.Raycast(transform.position, dirToTarget, distToTarget, obstacleMask))
+                if (!Physics.Raycast(viewCastStartingPoint.transform.position, dirToTarget, distToTarget, obstacleMask))
                 {
                     visibleTargets.Add(target);
                 }
