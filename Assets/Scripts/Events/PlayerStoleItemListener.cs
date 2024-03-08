@@ -22,8 +22,8 @@ public class PlayerStoleItemListener : GameEventListenerBase, IEventListener
     [Tooltip("Response to invoke when Event with GameData is raised.")]
     public PlayerStoleItemEvent response;
 
-    public void OnEventRaised(Component sender)
+    public void OnEventRaised()
     {
-        response.Invoke(sender);
+        response.Invoke(null);
     }
 }

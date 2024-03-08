@@ -22,8 +22,8 @@ public class SceneLoadCompletedListener : GameEventListenerBase, IEventListener
     [Tooltip("Response to invoke when Event with GameData is raised.")]
     public SceneLoadCompleteEvent response;
 
-    public void OnEventRaised(Component sender)
+    public void OnEventRaised()
     {
-        response.Invoke(sender);
+        response.Invoke(null);
     }
 }

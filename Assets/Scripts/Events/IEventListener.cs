@@ -12,5 +12,5 @@
 
 public interface IEventListener
 {
-    public void OnEventRaised(Component sender);
+    public void OnEventRaised();
 }

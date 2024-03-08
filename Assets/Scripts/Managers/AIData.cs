@@ -9,7 +9,11 @@ public class AIData : ScriptableObjectWithInit
     public AIThreatPriority highestState;
     //public float highestThreat;
 
+    // Events
+    public GameEvent eventToRaise;
+
     private List<GameObject> AIs;
+
     private GameObject AIhighestState;
     private GameObject AIHighestThreatPriority;
 
@@ -27,6 +31,9 @@ public class AIData : ScriptableObjectWithInit
             AIs.OrderByDescending(AIs => AIs.GetComponent<AIStateMachine>().aiThreatPriority).ToArray();
             AIHighestThreatPriority = AIs[0];
             highestState = AIHighestThreatPriority.GetComponent<AIStateMachine>().aiThreatPriority;
+
+            // raise Event with 
+            eventToRaise.Raise(highestState);
         }
 
     }

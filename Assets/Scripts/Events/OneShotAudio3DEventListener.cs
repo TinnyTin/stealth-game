@@ -22,8 +22,8 @@ public class OneShotAudio3DEventListener : GameEventListenerBase, I2ParamEventLi
     [Tooltip("Response to invoke when Event with GameData is raised.")]
     public OneShotAudio3DEvent response;
 
-    public void OnEventRaised(Component sender, AudioClip audioClip, Vector3 position) 
+    public void OnEventRaised(AudioClip audioClip, Vector3 position)
     {
-        response.Invoke(sender, audioClip, position);
+        response.Invoke(null, audioClip, position);
     }
 }
