@@ -46,9 +46,9 @@ public class FollowCamera : MonoBehaviour
     return Quaternion.LookRotation(camTargetDiffXZ, upVec);
   }
 
-  void Start()
+  public void Initialize()
   {
-    if(followCam == null)
+    if (followCam == null)
     {
       Debug.LogError("PlayerCamera: no camera");
       return;
@@ -79,6 +79,12 @@ public class FollowCamera : MonoBehaviour
 
     // initialize the filtered cameraTarget position
     cameraTargetPosFiltered = cameraTarget.transform.position;
+
+  }
+
+  void Start()
+  {
+    Initialize();
   }
 
 

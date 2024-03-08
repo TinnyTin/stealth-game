@@ -12,12 +12,18 @@ public class PlayerControl : MonoBehaviour
   private bool isStealableObjectInRangetoSteal = false;
   private bool isStealableObjectInRangeToHilight = false;
 
+  // highlight the target object when the player is within range
+  public float HilightRangeStealableObject = 5f;
+
   public bool HasStolenObject = false;
 
   // extraction point
   private GameObject extractionPointObject;
   private ExtractionPoint extractionPointComponent;
   private bool isExtractionPointInRangeToHilight = false;
+
+  // highlight the target object when the player is within range
+  public float HilightRangeExtractionPoint = 7f;
 
   public bool IsExtractionSuccess = false;
 
@@ -47,6 +53,8 @@ public class PlayerControl : MonoBehaviour
 
   private bool isCrouched = false;
 
+  public bool isPlayerControlEnabled = true;
+
   // camera transforms, must be in the player gameobject hierarchy
   private GameObject cameraFrom;
   private GameObject cameraTarget;
@@ -61,15 +69,12 @@ public class PlayerControl : MonoBehaviour
   // (directly behind, looking at player is zero)
   private Quaternion camLookOffset;
 
-  // keep a filtered heading for altering input vector depending
-  // on camera look rotation
-  private Vector3 playerHeadingFiltered;
-
   // store initial player game object rotation, which must 
   // be used as an offset for all later rotation calculations
   private Quaternion playerInitialRot;
 
-  void Awake()
+
+  public void Initialize()
   {
     // get stealable object and component
     stealableObject = GameObject.Find("StealableObject");
@@ -84,7 +89,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     // get extraction point object and component
-    extractionPointObject  = GameObject.Find("ExtractionPoint");
+    extractionPointObject = GameObject.Find("ExtractionPoint");
     if (extractionPointObject == null)
     {
       Debug.LogError("PlayerControl: no ExtractionPoint found.");
@@ -96,7 +101,7 @@ public class PlayerControl : MonoBehaviour
     }
 
     rbody = GetComponent<Rigidbody>();
-    if(rbody == null)
+    if (rbody == null)
     {
       Debug.LogError("PlayerControl: no RigidBody component.");
     }
@@ -139,6 +144,17 @@ public class PlayerControl : MonoBehaviour
     rightFootDown = false;
     prevPosition = transform.position;
     velocityFiltered = 0f;
+
+    // reinit the follow camera script
+    GetComponent<FollowCamera>().Initialize();
+
+    isPlayerControlEnabled = true;
+  }
+
+
+  void Start()
+  {
+    Initialize();
   }
 
 
@@ -167,11 +183,15 @@ public class PlayerControl : MonoBehaviour
       Vector3 camDiff = cameraFrom.transform.position - cameraTarget.transform.position;
       Vector3 upVec = new Vector3(0f, 1f, 0f);
       Quaternion rot = Quaternion.AngleAxis(_playerLookX * LookCamSensitivity, upVec);
-      camLookOffset *= rot;
+      if(isPlayerControlEnabled)
+        camLookOffset *= rot;
 
       camDiff = camLookOffset * camPosZeroOffset;
       cameraFrom.transform.position = cameraTarget.transform.position + camDiff;
-      Vector3 inputXY = new Vector3(_playerTurn, 0f, _playerForward);
+      Vector3 inputXY = new Vector3(0f, 0f, 0f);
+      if(isPlayerControlEnabled)
+        inputXY = new Vector3(_playerTurn, 0f, _playerForward);
+
       // rotate the input hor/vert vector by the difference between the player's heading and
       // the current camera look offset
       inputXY = playerInitialRot * camLookOffset * Quaternion.Inverse(cameraTarget.transform.rotation) * inputXY;
@@ -197,6 +217,7 @@ public class PlayerControl : MonoBehaviour
       _playerActionCrouch = false;
       isCrouched = !isCrouched;
       Debug.Log("Crouch: " + isCrouched);
+      anim.SetBool("crouch", isCrouched);
     }
 
     if(_playerActionGrab)
@@ -246,7 +267,7 @@ public class PlayerControl : MonoBehaviour
     positionDiff.y = 0f;
     float distance = Mathf.Abs(positionDiff.magnitude);
     
-    if (distance < 5f)
+    if (distance < HilightRangeStealableObject)
     {
       if(!isStealableObjectInRangeToHilight && stealableObjectComponent != null)
         stealableObjectComponent.SetHilight(true);
@@ -276,7 +297,7 @@ public class PlayerControl : MonoBehaviour
     Vector3 positionDiff = transform.position - extractionPointObject.transform.position;
     positionDiff.y = 0f;
     float distance = Mathf.Abs(positionDiff.magnitude);
-    if (distance < 5f)
+    if (distance < HilightRangeExtractionPoint)
     {
       if (!isExtractionPointInRangeToHilight)
         extractionPointComponent.SetHilight(true);
@@ -291,7 +312,7 @@ public class PlayerControl : MonoBehaviour
       isExtractionPointInRangeToHilight = false;
     }
 
-    if (distance < 1f && !IsExtractionSuccess)
+    if (distance < 1.5f && !IsExtractionSuccess)
     {
       IsExtractionSuccess = true;
       extractionPointComponent.Extract();

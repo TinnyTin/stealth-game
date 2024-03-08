@@ -18,14 +18,14 @@ public class PlayerInput : MonoBehaviour
   public float playerTurn = 0f;
   public float playerLookX = 0f;
   public float mouseXScale = 3f;
-    public bool playerActionGrab = false;
+  public bool playerActionGrab = false;
   public bool playerActionCrouch = false;
 
   // Update is called once per frame
   void Update()
   {
     playerActionGrab = Input.GetButtonDown("Fire1");
-    playerActionCrouch = Input.GetButtonDown("Jump");
+    playerActionCrouch = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C);
 
     float inputH = Input.GetAxisRaw("Horizontal");
     float inputV = Input.GetAxisRaw("Vertical");
