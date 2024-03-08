@@ -438,7 +438,7 @@ BlendTree:
       type: 3}
     m_Threshold: 0.6666667
     m_Position: {x: -0.2, y: -0.41}
-    m_TimeScale: 80
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: velx
     m_Mirror: 0
@@ -447,7 +447,7 @@ BlendTree:
       type: 3}
     m_Threshold: 0.6666667
     m_Position: {x: 0.19, y: -0.41}
-    m_TimeScale: 80
+    m_TimeScale: 1
     m_CycleOffset: 0
     m_DirectBlendParameter: velx
     m_Mirror: 0

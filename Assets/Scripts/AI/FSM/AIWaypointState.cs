@@ -21,11 +21,11 @@ public class AIWaypointState : AIBaseState
     }
     public override void EnterState()
     {
-        currWaypoint = -1;
+        currWaypoint = Ctx.LastWaypointIdx;
         waypoints = Ctx.waypoints;
 
         setNextWaypoint();
-        Ctx.agent.speed = Ctx.walkSpeed;
+        Ctx.setSpeed(Ctx.walkSpeed);
     }
     public override void UpdateState()
     {
@@ -34,7 +34,10 @@ public class AIWaypointState : AIBaseState
             setNextWaypoint();
         }
     }
-    public override void ExitState() { }
+    public override void ExitState()
+    {
+        Ctx.LastWaypointIdx = currWaypoint-1;
+    }
     public override void CheckSwitchStates()
     {
 

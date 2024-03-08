@@ -58,6 +58,7 @@ public class AudioManager : MonoBehaviour
         //}
 
         snd.audioSrc.clip = clip;
+        snd.audioSrc.dopplerLevel = 0f;
         return snd;
     }
 

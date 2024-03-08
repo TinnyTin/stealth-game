@@ -12,7 +12,7 @@ using UnityEngine.Events;
  *                      https://www.youtube.com/watch?v=7_dyDmF0Ktw&ab_channel=ThisisGameDev
  */
 
-[AddComponentMenu("Player Goal Camera Pan Started Listener")]
+[AddComponentMenu("Player Goal Camera Pan Completed Listener")]
 public class PlayerGoalCameraPanCompletedListener : GameEventListenerBase, IEventListener
 {
     [System.Serializable]
