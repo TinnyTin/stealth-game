@@ -8,6 +8,7 @@ public class StealableObject : MonoBehaviour
 {
   public AudioClip AudioClipSteal;
   public GameEvent eventToRaise;
+  public GameObject objectiveTracker;
 
   private GameObject childDefault, childHilighted;
 
@@ -40,6 +41,11 @@ public class StealableObject : MonoBehaviour
   {
     if(AudioClipSteal != null)
       eventToRaise.Raise(this, AudioClipSteal, transform.position);
+    if(objectiveTracker != null)
+        {
+            objectiveTracker.GetComponent<ObjectiveTracker>().mainObjectiveObtained();
+            Debug.Log("tracker hit");
+        }
   }
 
   public void SetHilight(bool isHilighted)

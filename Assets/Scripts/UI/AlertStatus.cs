@@ -14,23 +14,35 @@ public class AlertStatus : MonoBehaviour
     void Start()
     {
         image = GetComponent<Image>();
-        tmp = textObject.GetComponent<TMPro.TextMeshProUGUI>();
+        if (textObject != null)
+        {
+            tmp = textObject.GetComponent<TMPro.TextMeshProUGUI>();
+        }
     }
 
     public void setSafe()
     {
-        image.color = new Color(0, 0, 0, 0.5f);
-        tmp.text = "Safe";
+        if (image != null && tmp != null) 
+        {
+            image.color = new Color(0, 0, 0, 0.5f);
+            tmp.text = "Safe";
+        }
     }
     public void setSearching()
     {
-        image.color = new Color(1f, 0.92f, 0.016f, 0.5f);
-        tmp.text = "Searching";
+        if (image != null && tmp != null)
+        {
+            image.color = new Color(1f, 0.92f, 0.016f, 0.5f);
+            tmp.text = "Searching";
+        }
     }
     public void setPursuit()
     {
-        image.color = new Color(1f,0,0, 0.5f);
-        tmp.text = "Pursuit";
-        // In the future, we can add different music/ambience when stage is in alert mode.
+        if (image != null && tmp != null)
+        {
+            image.color = new Color(1f, 0, 0, 0.5f);
+            tmp.text = "Pursuit";
+            // In the future, we can add different music/ambience when stage is in alert mode.
+        }
     }
 }
