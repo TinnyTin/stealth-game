@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 001b5f0654eeb144684678221477a775, type: 3}
-  m_Name: AIGlobalData
+  m_Script: {fileID: 11500000, guid: 076610b7dafdfcd4581e37428fb5fd2d, type: 3}
+  m_Name: AIHighestStateChange
   m_EditorClassIdentifier: 
-  highestState: 0
-  eventToRaise: {fileID: 11400000, guid: e7762b142c4c6794b9524700a89d80cb, type: 2}
+  listeners: []
