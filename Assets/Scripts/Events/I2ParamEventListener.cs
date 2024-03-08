@@ -12,5 +12,5 @@
 
 public interface I2ParamEventListener<T1, T2>
 {
-    public void OnEventRaised(Component sender, T1 param1, T2 param2);
+    public void OnEventRaised(T1 param1, T2 param2);
 }

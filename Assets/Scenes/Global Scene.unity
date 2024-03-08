@@ -838,6 +838,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
+      propertyPath: _activeScene
+      value: 
+      objectReference: {fileID: 102900000, guid: 473e18f7cd74f074f9883ed356b63a88,
+        type: 3}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
       propertyPath: loadingScreen
       value: 
       objectReference: {fileID: 709027308}
@@ -849,13 +855,13 @@ PrefabInstance:
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.data[0]
       value: 
-      objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,
+      objectReference: {fileID: 102900000, guid: 473e18f7cd74f074f9883ed356b63a88,
         type: 3}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}

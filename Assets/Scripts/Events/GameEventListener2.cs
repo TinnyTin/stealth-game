@@ -23,8 +23,8 @@ public class GameEventListener2 : GameEventListenerBase, I2ParamEventListener<ob
     [Tooltip("Response to invoke when Event with GameData is raised.")]
     public CustomGameEvent2 response;
 
-    public void OnEventRaised(Component sender, object param1, object param2) 
+    public void OnEventRaised(object param1, object param2)
     {
-        response.Invoke(sender, param1, param1);
+        response.Invoke(null, param1, param1);
     }
 }

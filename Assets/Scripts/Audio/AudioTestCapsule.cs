@@ -14,25 +14,25 @@ using UnityEngine;
 public class AudioTestCapsule : MonoBehaviour
 {
     public AudioClip audioClip;
-    public GameEvent eventToRaise; 
+    public GameEvent eventToRaise;
     private CapsuleCollider capsuleCollider;
     public int soundId = -1;
-    public float volume = 1.0f; 
+    public float volume = 1.0f;
 
     public enum TestType
     {
-        OneShot3D, 
+        OneShot3D,
         OneShot2D,
         DemoTest,
         AmbientSound2D,
     }
 
-    public TestType testType; 
+    public TestType testType;
 
     // Start is called before the first frame update
     void Start()
     {
-        capsuleCollider = GetComponent<CapsuleCollider>(); 
+        capsuleCollider = GetComponent<CapsuleCollider>();
     }
 
     // Update is called once per frame
@@ -45,14 +45,14 @@ public class AudioTestCapsule : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.F7))
                 volume -= 0.1f;
 
-            volume = Mathf.Clamp01(volume); 
+            volume = Mathf.Clamp01(volume);
 
             AudioManager.Instance.SetAmbientAudio2DVolume(soundId, volume);
 
             if (Input.GetKeyDown(KeyCode.F6))
             {
                 AudioManager.Instance.DestroyAmbientAudio2D(soundId);
-                soundId = -1; 
+                soundId = -1;
             }
         }
     }
@@ -62,11 +62,11 @@ public class AudioTestCapsule : MonoBehaviour
         if (eventToRaise != null)
         {
             if (testType == TestType.OneShot3D)
-                eventToRaise.Raise(this, audioClip, transform.position);
+                eventToRaise.Raise(audioClip, transform.position);
             else if (testType == TestType.OneShot2D)
-                eventToRaise.Raise(this, audioClip);
+                eventToRaise.Raise(audioClip);
             else if (testType == TestType.DemoTest)
-                eventToRaise.Raise(this, audioClip, transform.position, "This is a test");
+                eventToRaise.Raise(audioClip, transform.position, "This is a test");
         }
         else
         {
@@ -79,7 +79,7 @@ public class AudioTestCapsule : MonoBehaviour
                     if (AudioManager.Instance.IsAmbientAudio2DPlaying(soundId))
                         AudioManager.Instance.PauseAmbientAudio2D(soundId);
                     else
-                        AudioManager.Instance.PlayAmbientAudio2D(soundId); 
+                        AudioManager.Instance.PlayAmbientAudio2D(soundId);
                 }
             }
         }
