@@ -17,7 +17,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Tom/Scene2.unity
     guid: da94a6b0eec9e884eaa04157fabb786f
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/ai-algorithm_old.unity
     guid: 636a5fa2f526dce40b3bbc4f33a595f9
   - enabled: 0
@@ -29,4 +29,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tom/AudioManagerTest.unity
     guid: 6233e2b9f19213c48968a52668ee8aeb
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level1.unity
+    guid: db5151db0ce28a14bbd0ea72aa969fd2
   m_configObjects: {}
