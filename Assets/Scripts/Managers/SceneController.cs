@@ -37,10 +37,6 @@ public class SceneController : MonoBehaviour
                 {
                     Debug.LogError("There needs to be one active SceneController script on a GameObject in your scene.");
                 }
-                //else
-                //{
-                //    _sceneController.Init();
-                //}
             }
 
             return _sceneController;
@@ -78,7 +74,10 @@ public class SceneController : MonoBehaviour
 
     private GameObject _activeCamera = null;
 
-    private AsyncOperation _sceneLoadingOperation = null;
+    private AsyncOperation _sceneChangeOperation = null;
+
+    private bool _sceneUnloadCoroutineComplete = true;
+    private bool _sceneLoadCoroutineComplete = true;
 
     [Header("Global Scene Camera Overridden?")]
     [SerializeField] private bool _overridePersistentSceneCamera = false;
@@ -119,10 +118,7 @@ public class SceneController : MonoBehaviour
         UnloadAllHierarchyScenesAsync();
 
         // Load the first scene in the playlist
-        LoadSceneAdditiveAsync(_scenePlaylist[0], null);
-
-        // re-initialize Scriptable Objects
-        ReInitScriptableObjects();
+        ChangeSceneAdditiveAsync(_scenePlaylist[0], null);
     }
 
     // Update is called once per frame
@@ -138,7 +134,7 @@ public class SceneController : MonoBehaviour
         //}
     }
 
-    public bool SetActiveScene(string scenePath)
+    public bool ChangeScene(string scenePath, bool removePlaylistHead = true)
     {
         // Insert the scene at the head of the playlist and jump to it
         SceneAsset sceneAsset = AssetDatabase.LoadAssetAtPath<SceneAsset>(scenePath);
@@ -147,13 +143,17 @@ public class SceneController : MonoBehaviour
             Debug.LogWarning($"{this.name}: Couldn't load SceneAsset for scene with name \"{scenePath}\"");
             return false;
         }
-
+        
         _scenePlaylist.Insert(0, sceneAsset);
         _currentSceneIndex = -1;
         IncrementPlaylistScene();
 
-        // re-initialize Scriptable Objects
-        ReInitScriptableObjects();
+        if (removePlaylistHead)
+        {
+            // Remove the scene asset that was previously
+            // at the head of the playlist
+            _scenePlaylist.RemoveAt(1);
+        }
 
         return true;
     }
@@ -166,7 +166,7 @@ public class SceneController : MonoBehaviour
             if (_currentSceneIndex >= _scenePlaylist.Count)
                 _currentSceneIndex = 0;
 
-            LoadSceneAdditiveAsync(_scenePlaylist[_currentSceneIndex], _activeScene);
+            ChangeSceneAdditiveAsync(_scenePlaylist[_currentSceneIndex], _activeScene);
         }
     }
 
@@ -183,50 +183,85 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private bool LoadSceneAdditiveAsync(SceneAsset sceneToLoad, SceneAsset sceneToUnload)
+    private bool ChangeSceneAdditiveAsync(SceneAsset sceneToLoad, SceneAsset sceneToUnload)
     {
         // We can't start another scene load while another is in flight
-        if (_sceneLoadingOperation != null)
+        if (_sceneChangeOperation != null)
         {
-            Debug.LogWarning($"Cannot load scene {sceneToLoad.name}. Another scene load is currently in progress.");
+            Debug.LogWarning($"Cannot change to scene {sceneToLoad.name}. Another scene change is currently in progress.");
             return false;
         }
 
-        _sceneLoadingOperation = SceneManager.LoadSceneAsync(sceneToLoad.name, LoadSceneMode.Additive);
-        StartCoroutine(LoadSceneCoroutine(sceneToLoad, sceneToUnload));
+        // Pop up the loading screen
+        loadingScreen.SetActive(true);
+
+        // Kick off the coroutine that will change scenes 
+        StartCoroutine(SceneChangeCoroutine(sceneToLoad, sceneToUnload));
         return true;
     }
 
-    private IEnumerator LoadSceneCoroutine(SceneAsset sceneToLoad, SceneAsset sceneToUnload)
+    private IEnumerator SceneChangeCoroutine(SceneAsset sceneToLoad, SceneAsset sceneToUnload)
     {
-        loadingScreen.SetActive(true);
-        while (_sceneLoadingOperation.isDone == false)
+        if (sceneToUnload != null)
         {
-            Debug.Log($"{sceneToLoad.name} is loading. Progress {_sceneLoadingOperation.progress * 100}%");
-            float progress = Mathf.Clamp01(_sceneLoadingOperation.progress / 0.9f);
+            _sceneUnloadCoroutineComplete = false;
+            StartCoroutine(UnloadSceneCoroutine(sceneToUnload));
+            while (_sceneUnloadCoroutineComplete == false)
+                yield return null;
+        }
+
+        if (sceneToLoad != null)
+        {
+            _sceneLoadCoroutineComplete = false;
+            StartCoroutine(LoadSceneCoroutine(sceneToLoad));
+            while (_sceneLoadCoroutineComplete == false)
+                yield return null;
+        }
+
+        PostSceneLoad(); 
+    }
+
+    private IEnumerator UnloadSceneCoroutine(SceneAsset sceneToUnload)
+    {
+        _sceneChangeOperation = SceneManager.UnloadSceneAsync(sceneToUnload.name);
+
+        while (_sceneChangeOperation.isDone == false)
+            yield return false;
+
+        _sceneChangeOperation = null;
+        _sceneUnloadCoroutineComplete = true;
+    }
+
+    private IEnumerator LoadSceneCoroutine(SceneAsset sceneToLoad)
+    {
+        Debug.Assert(_sceneChangeOperation == null,
+            "LoadSceneCoroutine called while _sceneChangeOperation non null. Cannot load " +
+            "a new scene while another is unloading."); 
+        
+        _sceneChangeOperation = SceneManager.LoadSceneAsync(sceneToLoad.name, LoadSceneMode.Additive);
+
+        while (_sceneChangeOperation.isDone == false)
+        {
+            // Debug.Log($"{sceneToLoad.name} is loading. Progress {_sceneLoadingOperation.progress * 100}%");
+            float progress = Mathf.Clamp01(_sceneChangeOperation.progress / 0.9f);
             loadingBarFill.fillAmount = progress;
             yield return null;
         }
-        loadingScreen.SetActive(false);
+
         _activeScene = sceneToLoad;
-        _sceneLoadingOperation = null;
-
-        if (sceneToUnload != null)
-            SceneManager.UnloadSceneAsync(sceneToUnload.name);
-
-        // Run the post scene load operations
-        PostSceneLoad();
+        _sceneChangeOperation = null;
+        _sceneLoadCoroutineComplete = true;
     }
 
     private void PostSceneLoad()
     {
-        Debug.Log("Post Scene Load");
+        // Debug.Log("Post Scene Load");
         Scene scene = SceneManager.GetSceneByName(_activeScene.name);
 
         _overridePersistentSceneCamera = false;
         foreach (GameObject gameObject in scene.GetRootGameObjects())
         {
-            // Try to locate a camera in the additvely loaded scene
+            // Try to locate a camera in the additively loaded scene
             if (gameObject.GetComponent<Camera>() == true)
             {
                 Debug.Log($"SceneController: Found camera in {_activeScene.name}");
@@ -252,8 +287,15 @@ public class SceneController : MonoBehaviour
             _activeCamera = _globalParentSceneCamera;
         }
 
+        // re-initialize Scriptable Objects
+        ReInitScriptableObjects();
+
+        // Make the scene active 
         SceneManager.SetActiveScene(scene);
         _sceneLoadComplete.Raise(this);
+
+        // Hide the loading screen 
+        loadingScreen.SetActive(false);
     }
 
     // Start is called before the first frame update
@@ -285,5 +327,11 @@ public class SceneController : MonoBehaviour
         // Enable the new camera
         _activeCamera = camera;
         _activeCamera.SetActive(true);
+    }
+
+    public void RestartScene()
+    {
+        Scene activeScene = SceneManager.GetActiveScene();
+        ChangeScene(activeScene.path); 
     }
 }

@@ -19,16 +19,19 @@ public class LevelSelect : MonoBehaviour
 
     public void changeLevels()
     {
-        SceneController.Instance.SetActiveScene("Assets/Scenes/Levels/Level1.unity");
+        SceneController.Instance.ChangeScene("Assets/Scenes/Levels/Level1.unity");
     }
 
     public void returnToMainMenu()
     {
-        SceneController.Instance.SetActiveScene("Assets/Scenes/MainMenu.unity");
+        SceneController.Instance.ChangeScene("Assets/Scenes/MainMenu.unity");
     }
 
     public void restartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        //SceneController.Instance.RestartScene();
+
+        SceneController.Instance.RestartScene();
     }
 }
