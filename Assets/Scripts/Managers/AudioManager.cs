@@ -17,7 +17,7 @@ public class AudioManager : MonoBehaviour
 
                 if (!_audioManager)
                 {
-                    Debug.LogError("There needs to be one active SceneController script on a GameObject in your scene.");
+                    Debug.LogError("There needs to be one active AudioManager script on a GameObject in your scene.");
                 }
             }
 

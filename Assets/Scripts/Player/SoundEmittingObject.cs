@@ -22,6 +22,6 @@ public class SoundEmittingObject : MonoBehaviour
   public void OnCollisionEnter()
   {
     if(AudioClipCollision != null)
-      eventToRaise.Raise(this, AudioClipCollision, transform.position);
+      eventToRaise.Raise(AudioClipCollision, transform.position);
   }
 }
