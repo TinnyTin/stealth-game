@@ -195,6 +195,9 @@ public class SceneController : MonoBehaviour
         // Pop up the loading screen
         loadingScreen.SetActive(true);
 
+        // Temporarily reactivate the camera in the global scene
+        SetActiveCamera(_globalParentSceneCamera);
+
         // Kick off the coroutine that will change scenes 
         StartCoroutine(SceneChangeCoroutine(sceneToLoad, sceneToUnload));
         return true;
@@ -287,12 +290,12 @@ public class SceneController : MonoBehaviour
             _activeCamera = _globalParentSceneCamera;
         }
 
-        // re-initialize Scriptable Objects
-        ReInitScriptableObjects();
-
         // Make the scene active 
         SceneManager.SetActiveScene(scene);
         _sceneLoadComplete.Raise(this);
+
+        // re-initialize Scriptable Objects
+        ReInitScriptableObjects();
 
         // Hide the loading screen 
         loadingScreen.SetActive(false);
