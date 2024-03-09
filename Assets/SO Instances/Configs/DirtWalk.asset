@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364e218902de0154a8785578b2411406, type: 3}
+  m_Name: DirtWalk
+  m_EditorClassIdentifier: 
+  floorCharacteristic: 0
+  stepCharacteristic: 0
+  AudioClips:
+  - {fileID: 8300000, guid: d557c7e9171740e45b83d95f00010250, type: 3}
+  - {fileID: 8300000, guid: 23037fb54da85b74fad4ed63f08501a2, type: 3}
+  - {fileID: 8300000, guid: 9b94f704427218743bc7044b5e989e9a, type: 3}
+  - {fileID: 8300000, guid: d91a38481af413a4a912f208f4930e9a, type: 3}
+  - {fileID: 8300000, guid: 0bd6bbe114984e04bb3d2649d0fa2c70, type: 3}
+  - {fileID: 8300000, guid: b831b899c9758c74596390e35ed4b6df, type: 3}
