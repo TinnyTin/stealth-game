@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class AIPursuitState : AIBaseState
 {
     private float lastSpeed;
@@ -17,11 +19,20 @@ public class AIPursuitState : AIBaseState
     }
     public override void UpdateState()
     {
+        // Feature to find target if you're in pursuit State and the target is already close by
+        Vector3? targetpos = Ctx._FOV.FindTargetWithinRadius(Ctx.pursuitAutoSenseRadius);
+        if (targetpos != null)
+        {
+            Ctx.lastThreat = (Vector3)targetpos;
+            Ctx.agent.SetDestination(Ctx.lastThreat);
+        }
+
+        // pursue Target
         Ctx.agent.SetDestination(Ctx.lastThreat);
         if ((Ctx.agent.remainingDistance < 1.5) && !Ctx.agent.pathPending)
         {
             // if the target is no longer in view, need to find the guy
-            if (Ctx.countInView == 0)
+            if ((Ctx.countInView == 0) && (targetpos == null))
             {
                 if (!Ctx.anim.GetCurrentAnimatorStateInfo(0).IsName("LookAroundCut"))
                 {
@@ -35,6 +46,10 @@ public class AIPursuitState : AIBaseState
             }
 
         }
+
+
+
+
     }
     public override void ExitState()
     {
@@ -47,5 +62,6 @@ public class AIPursuitState : AIBaseState
 
     }
     public override void InitializeSubState() { }
+
 
 }

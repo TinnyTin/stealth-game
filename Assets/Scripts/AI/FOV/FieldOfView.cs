@@ -95,6 +95,16 @@ public class FieldOfView : MonoBehaviour
         lastVisibleTargets.Clear();
         lastVisibleTargets.AddRange(visibleTargets);
     }
+    public Vector3? FindTargetWithinRadius(float radius)
+    {
+        Vector3? retpos = null;
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, radius, targetMask);
+        if (targetsInViewRadius.Length > 0)
+        {
+            retpos = targetsInViewRadius[0].transform.position;
+        }
+        return retpos;
+    }
 
     bool checkTargetVisible(Transform t)
     {
