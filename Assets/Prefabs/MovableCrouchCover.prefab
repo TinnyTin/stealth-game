@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1759713684994853222}
   - component: {fileID: 1759713684994853223}
   - component: {fileID: 1759713684994853211}
+  - component: {fileID: 7700628583994484499}
   m_Layer: 6
   m_Name: MovableCrouchCover
   m_TagString: Untagged
@@ -114,3 +115,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &7700628583994484499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1759713684994853217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cc38690e07a45d459ef664af94eb6ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AudioClipCollision: {fileID: 8300000, guid: 86236203f34e1084d8253536d12458ae, type: 3}
+  eventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
