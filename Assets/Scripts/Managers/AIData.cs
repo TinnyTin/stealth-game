@@ -12,7 +12,7 @@ public class AIData : ScriptableObjectWithInit
     // Events
     public GameEvent eventToRaise;
 
-    private List<GameObject> AIs;
+    private List<GameObject> AIs = new List<GameObject>();
 
     private GameObject AIhighestState;
     private GameObject AIWithHighestThreatPriority;

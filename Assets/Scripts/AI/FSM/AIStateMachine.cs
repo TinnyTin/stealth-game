@@ -55,6 +55,10 @@ public class AIStateMachine : MonoBehaviour
 
     private void Awake()
     {
+
+        // Register in AI Data SO
+        aiData.RegisterAI(this.gameObject);
+
         // set up context
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
