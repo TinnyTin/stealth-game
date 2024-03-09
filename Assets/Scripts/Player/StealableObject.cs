@@ -40,7 +40,7 @@ public class StealableObject : MonoBehaviour
   public void Steal()
   {
     if(AudioClipSteal != null)
-      eventToRaise.Raise(this, AudioClipSteal, transform.position);
+      eventToRaise.Raise(AudioClipSteal, transform.position);
     if(objectiveTracker != null)
         {
             objectiveTracker.GetComponent<ObjectiveTracker>().mainObjectiveObtained();
