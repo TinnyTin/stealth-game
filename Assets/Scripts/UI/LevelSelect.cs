@@ -29,6 +29,6 @@ public class LevelSelect : MonoBehaviour
 
     public void restartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneController.Instance.SetActiveScene(SceneManager.GetActiveScene().path);
     }
 }
