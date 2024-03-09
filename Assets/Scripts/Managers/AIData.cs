@@ -15,7 +15,7 @@ public class AIData : ScriptableObjectWithInit
     private List<GameObject> AIs;
 
     private GameObject AIhighestState;
-    private GameObject AIHighestThreatPriority;
+    private GameObject AIWithHighestThreatPriority;
 
     // Init is called before the first frame update
     public override void Init()
@@ -28,9 +28,9 @@ public class AIData : ScriptableObjectWithInit
         if (AIs.Count > 0)
         {
             // ThreatPriority
-            AIs.OrderByDescending(AIs => AIs.GetComponent<AIStateMachine>().aiThreatPriority).ToArray();
-            AIHighestThreatPriority = AIs[0];
-            highestState = AIHighestThreatPriority.GetComponent<AIStateMachine>().aiThreatPriority;
+            var sortedAIs = AIs.OrderByDescending(AIs => AIs.GetComponent<AIStateMachine>().aiThreatPriority).ToArray();
+            AIWithHighestThreatPriority = sortedAIs[0];
+            highestState = AIWithHighestThreatPriority.GetComponent<AIStateMachine>().aiThreatPriority;
 
             // raise Event with 
             eventToRaise.Raise(highestState);
