@@ -44,7 +44,6 @@ public class StealableObject : MonoBehaviour
     if(objectiveTracker != null)
         {
             objectiveTracker.GetComponent<ObjectiveTracker>().mainObjectiveObtained();
-            Debug.Log("tracker hit");
         }
   }
 
