@@ -224,7 +224,7 @@ public class PlayerControl : MonoBehaviour
     {
       _playerActionGrab = false;
       Debug.Log("Grab item");
-      if (stealableObject != null && isStealableObjectInRangetoSteal)
+      if (stealableObject != null && isStealableObjectInRangetoSteal && !HasStolenObject)
       {
         stealableObject.SetActive(false);
         HasStolenObject = true;
