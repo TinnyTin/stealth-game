@@ -33,7 +33,7 @@ public class PlayerControl : MonoBehaviour
     private PlayerInput input;
 
     // data for footstep tracking and sound event emitter
-    private FootstepEmitter footsteps;
+    public FootStepFactory footStepFactory;
     bool leftFootDown, rightFootDown;
     Vector3 prevPosition;
     float velocityFiltered;
@@ -134,12 +134,8 @@ public class PlayerControl : MonoBehaviour
 
         camLookOffset = new Quaternion(0, 0, 0, 1);
 
-        // get the footstep emitter and initialize the footstep tracking state
-        footsteps = GetComponent<FootstepEmitter>();
-        if (footsteps == null)
-        {
-            Debug.LogError("PlayerControl: no FootstepEmitter component.");
-        }
+
+
         leftFootDown = false;
         rightFootDown = false;
         prevPosition = transform.position;
@@ -347,6 +343,7 @@ public class PlayerControl : MonoBehaviour
     {
         GameObject rigBase = GameObject.Find("rig-main");
         GameObject leftFoot = GameObject.Find("LeftFoot");
+        StepCharacteristic stepCharacteristic = isRunning ? StepCharacteristic.Run : StepCharacteristic.Walk;
         if (rigBase && leftFoot)
         {
             float leftFootY = leftFoot.transform.position.y - rigBase.transform.position.y;
@@ -356,7 +353,7 @@ public class PlayerControl : MonoBehaviour
                 // only emit footstep one time once y threshold is passed.
                 if (!leftFootDown)
                 {
-                    footsteps.EmitFootstep(isRunning);
+                    footStepFactory.playFootStepRandom(FloorCharacteristic.Dirt, stepCharacteristic, transform.position);
                 }
                 leftFootDown = true;
             }
@@ -376,7 +373,7 @@ public class PlayerControl : MonoBehaviour
                 if (!rightFootDown)
                 {
                     //Debug.Log("r foot: " + rbody.velocity.magnitude);
-                    footsteps.EmitFootstep(isRunning);
+                    footStepFactory.playFootStepRandom(FloorCharacteristic.Dirt, stepCharacteristic, transform.position);
                 }
                 rightFootDown = true;
             }

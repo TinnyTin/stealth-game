@@ -2258,6 +2258,7 @@ MonoBehaviour:
   HasStolenObject: 0
   HilightRangeExtractionPoint: 7
   IsExtractionSuccess: 0
+  footStepFactory: {fileID: 11400000, guid: 4643d944ea5b1f74d9660238939e6009, type: 2}
   LookCamSensitivity: 3
   LookCamEnabled: 1
   isPlayerControlEnabled: 1

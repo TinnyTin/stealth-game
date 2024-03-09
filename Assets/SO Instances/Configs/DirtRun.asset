@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 364e218902de0154a8785578b2411406, type: 3}
+  m_Name: DirtRun
+  m_EditorClassIdentifier: 
+  floorCharacteristic: 0
+  stepCharacteristic: 1
+  AudioClips:
+  - {fileID: 8300000, guid: c2c4c67e0abbd3e4e83ae08ca4beaa4e, type: 3}
+  - {fileID: 8300000, guid: 8286854a485842a4cb254761358a83c8, type: 3}
+  - {fileID: 8300000, guid: 97eebeed650ce8b44b555e99c0e5cb22, type: 3}
+  - {fileID: 8300000, guid: 48f0724c312689e45bfb1419396d6f84, type: 3}
+  - {fileID: 8300000, guid: 147252c3475dd644aa1dc602cb8b3cb0, type: 3}
+  - {fileID: 8300000, guid: e2a1300db2c50714a805a46534a3d9f5, type: 3}

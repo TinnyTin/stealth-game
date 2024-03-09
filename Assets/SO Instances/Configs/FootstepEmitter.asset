@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8456232099c4c7740ac2f9fe9f25b7eb, type: 3}
+  m_Name: FootstepEmitter
+  m_EditorClassIdentifier: 
+  footStepInfoArray:
+  - name: Dirt Walk
+    _floorCharacteristic: 0
+    _stepCharacteristic: 0
+    _footStepCollection: {fileID: 11400000, guid: 0ed18d31002e0ed47b3d174997b4152f,
+      type: 2}
+  - name: Dirt Run
+    _floorCharacteristic: 0
+    _stepCharacteristic: 1
+    _footStepCollection: {fileID: 11400000, guid: a9935483576f690448e476080446e8aa,
+      type: 2}
+  eventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
