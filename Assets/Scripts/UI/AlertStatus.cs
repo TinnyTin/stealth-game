@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
@@ -19,8 +20,26 @@ public class AlertStatus : MonoBehaviour
             tmp = textObject.GetComponent<TMPro.TextMeshProUGUI>();
         }
     }
+    
+    public void setAlertStatus(Component component, AIThreatPriority threatPriority)
+    {
+        switch(threatPriority)
+        {
+            case AIThreatPriority.Idle:
+                setSafe();
+                break;
+            case AIThreatPriority.Investigate:
+                setSearching();
+                break;
+            case AIThreatPriority.Pursuit:
+                setPursuit();
+                break;
+            default:
+                break;
+        }
+    }
 
-    public void setSafe()
+    private void setSafe()
     {
         if (image != null && tmp != null) 
         {
@@ -28,7 +47,7 @@ public class AlertStatus : MonoBehaviour
             tmp.text = "Safe";
         }
     }
-    public void setSearching()
+    private void setSearching()
     {
         if (image != null && tmp != null)
         {
@@ -36,7 +55,7 @@ public class AlertStatus : MonoBehaviour
             tmp.text = "Searching";
         }
     }
-    public void setPursuit()
+    private void setPursuit()
     {
         if (image != null && tmp != null)
         {
