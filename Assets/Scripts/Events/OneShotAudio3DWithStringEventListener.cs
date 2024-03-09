@@ -23,8 +23,8 @@ public class OneShotAudio3DWithStringEventListener : GameEventListenerBase, I3Pa
     [Tooltip("Response to invoke when Event with GameData is raised.")]
     public OneShotAudio3DWithStringGameEvent3 response;
 
-    public void OnEventRaised(Component sender, AudioClip param1, Vector3 param2, string param3) 
+    public void OnEventRaised(AudioClip param1, Vector3 param2, string param3) 
     {
-        response.Invoke(sender, param1, param2, param3);
+        response.Invoke(null, param1, param2, param3);
     }
 }

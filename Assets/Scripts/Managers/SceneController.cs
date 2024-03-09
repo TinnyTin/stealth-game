@@ -269,4 +269,21 @@ public class SceneController : MonoBehaviour
     {
         return _activeCamera;
     }
+
+    public void SetActiveCamera(GameObject camera)
+    {
+        // Check to see if we are enabling the global 
+        // scene camera (unlikely to ever happen)
+        if (camera != _globalParentSceneCamera)
+            _overridePersistentSceneCamera = true;
+        else
+            _overridePersistentSceneCamera = false; 
+        
+        // Disable the last camera that was active
+        _activeCamera.SetActive(false);
+
+        // Enable the new camera
+        _activeCamera = camera;
+        _activeCamera.SetActive(true);
+    }
 }

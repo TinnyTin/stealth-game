@@ -159,7 +159,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 29.71994}
+  m_AnchoredPosition: {x: 0, y: 29.71997}
   m_SizeDelta: {x: -322, y: 20.818787}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &279793255
@@ -235,7 +235,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: 0, y: 55.129}
+  m_AnchoredPosition: {x: 0, y: 60}
   m_SizeDelta: {x: 162, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &618292707
@@ -260,8 +260,9 @@ MonoBehaviour:
       m_Calls: []
   m_text: Loading
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 80f558ef40d59d24c8b09efe2ead2baa, type: 2}
+  m_sharedMaterial: {fileID: 3406720647072504001, guid: 80f558ef40d59d24c8b09efe2ead2baa,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -285,8 +286,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 16
-  m_fontSizeBase: 16
+  m_fontSize: 20
+  m_fontSizeBase: 20
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -388,15 +389,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.16037738, g: 0.16037738, b: 0.16037738, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 21300000, guid: bbf8b6390c74db64f8fea761f70333e3, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -751,7 +752,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 25
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 10
   m_TargetDisplay: 0
 --- !u!224 &2043837209
 RectTransform:
@@ -838,6 +839,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
+      propertyPath: _activeScene
+      value: 
+      objectReference: {fileID: 102900000, guid: 473e18f7cd74f074f9883ed356b63a88,
+        type: 3}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
       propertyPath: loadingScreen
       value: 
       objectReference: {fileID: 709027308}
@@ -849,17 +856,23 @@ PrefabInstance:
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.data[0]
       value: 
-      objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,
+      objectReference: {fileID: 102900000, guid: 473e18f7cd74f074f9883ed356b63a88,
         type: 3}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.data[1]
+      value: 
+      objectReference: {fileID: 102900000, guid: db5151db0ce28a14bbd0ea72aa969fd2,
+        type: 3}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _scenePlaylist.Array.data[2]
       value: 
       objectReference: {fileID: 102900000, guid: 6233e2b9f19213c48968a52668ee8aeb,
         type: 3}

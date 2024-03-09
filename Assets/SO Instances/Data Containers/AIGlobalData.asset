@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AIGlobalData
   m_EditorClassIdentifier: 
   highestState: 0
-  gameEvent: {fileID: 0}
+  eventToRaise: {fileID: 11400000, guid: e7762b142c4c6794b9524700a89d80cb, type: 2}

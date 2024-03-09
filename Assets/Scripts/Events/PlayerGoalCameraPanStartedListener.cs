@@ -22,8 +22,8 @@ public class PlayerGoalCameraPanStartedListener : GameEventListenerBase, IEventL
     [Tooltip("Response to invoke when Event with GameData is raised.")]
     public PlayerGoalCameraPanStartedEvent response;
 
-    public void OnEventRaised(Component sender)
+    public void OnEventRaised()
     {
-        response.Invoke(sender);
+        response.Invoke(null);
     }
 }

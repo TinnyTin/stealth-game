@@ -870,6 +870,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4ded10ab96e12964199d7e51845d7b59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  viewCastStartingPoint: {fileID: 5832243423728098345}
   refreshInterval: 0.2
   viewRadius: 11
   viewAngle: 90
@@ -962,6 +963,12 @@ MonoBehaviour:
 --- !u!4 &5415323156532681999 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
+    type: 3}
+  m_PrefabInstance: {fileID: 8759923797910317158}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &5832243423728098345 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2981886763502711887, guid: c49392c42316aa747ac88209726d7c0f,
     type: 3}
   m_PrefabInstance: {fileID: 8759923797910317158}
   m_PrefabAsset: {fileID: 0}

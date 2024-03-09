@@ -12,7 +12,7 @@ using UnityEngine;
  *                      https://www.youtube.com/watch?v=7_dyDmF0Ktw&ab_channel=ThisisGameDev
  */
 
-[CreateAssetMenu(menuName="SO's/GameEvent")]
+[CreateAssetMenu(menuName = "SO's/GameEvent")]
 public class GameEvent : ScriptableObject
 {
     // Event Listeners by parameter count
@@ -31,46 +31,46 @@ public class GameEvent : ScriptableObject
     //    Raise(null, data);
     //}
 
-    public void Raise(Component sender) 
+    public void Raise()
     {
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
             if (listeners[i] is IEventListener listener)
             {
-                listener.OnEventRaised(sender);
+                listener.OnEventRaised();
             }
         }
     }
 
-    public void Raise<T>(Component sender, T param1)
+    public void Raise<T>(T param1)
     {
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
             if (listeners[i] is I1ParamEventListener<T> listener)
             {
-                listener.OnEventRaised(sender, param1);
+                listener.OnEventRaised(param1);
             }
         }
     }
 
-    public void Raise<T1, T2>(Component sender, T1 param1, T2 param2)
+    public void Raise<T1, T2>(T1 param1, T2 param2)
     {
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
             if (listeners[i] is I2ParamEventListener<T1, T2> listener)
             {
-                listener.OnEventRaised(sender, param1, param2);
+                listener.OnEventRaised(param1, param2);
             }
         }
     }
 
-    public void Raise<T1, T2, T3>(Component sender, T1 param1, T2 param2, T3 param3)
+    public void Raise<T1, T2, T3>(T1 param1, T2 param2, T3 param3)
     {
         for (int i = listeners.Count - 1; i >= 0; i--)
         {
             if (listeners[i] is I3ParamEventListener<T1, T2, T3> listener)
             {
-                listener.OnEventRaised(sender, param1, param2, param3);
+                listener.OnEventRaised(param1, param2, param3);
             }
         }
     }

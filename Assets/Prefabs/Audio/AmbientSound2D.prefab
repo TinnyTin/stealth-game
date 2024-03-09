@@ -141,5 +141,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c63113dacf28f27439a701cbdebe0aca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _audioSrc: {fileID: 0}
-  DestoryOnNextFrame: 0
+  audioSrc: {fileID: 0}

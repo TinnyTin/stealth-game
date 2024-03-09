@@ -46,3 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   eventSound3DPrefab: {fileID: 4332418955186504471, guid: 2f3293db34a80e24fa41367bc7d0ef2e,
     type: 3}
+  eventSound2DPrefab: {fileID: 0}
+  ambientSound2DPrefab: {fileID: 0}
