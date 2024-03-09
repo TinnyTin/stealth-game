@@ -11,7 +11,7 @@ public class FieldOfView : MonoBehaviour
     public GameObject viewCastStartingPoint;
     public float refreshInterval = 0.2f;
     public float viewRadius;
-    [Range(0,360)]
+    [Range(0, 360)]
     public float viewAngle;
     [Header("Visual Field of View")]
     public float meshResolution = 1f;
@@ -27,7 +27,7 @@ public class FieldOfView : MonoBehaviour
     public List<Transform> visibleTargets = new List<Transform>();
     private List<Transform> lastVisibleTargets = new List<Transform>();
     private int countInView = 0;
-    
+
     // private
     private Mesh viewMesh;
     private ThreatMeter threatmeter;
@@ -59,7 +59,7 @@ public class FieldOfView : MonoBehaviour
     {
         DrawFieldOfView();
     }
-    
+
     //  Find targets
     void FindVisibleTargets()
     {
@@ -83,7 +83,7 @@ public class FieldOfView : MonoBehaviour
             }
         }
         countInView = 0;
-        foreach(Transform t in lastVisibleTargets)
+        foreach (Transform t in lastVisibleTargets)
         {
             if (visibleTargets.Contains(t))
             {
@@ -109,12 +109,12 @@ public class FieldOfView : MonoBehaviour
         {
             angleInDegrees += transform.eulerAngles.y;
         }
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad),0,Mathf.Cos(angleInDegrees*Mathf.Deg2Rad));
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
 
     void DrawFieldOfView()
     {
-        if (countInView > 0) 
+        if (countInView > 0)
         {
             meshAlpha = Mathf.Lerp(meshAlpha, 0.3f, Time.deltaTime);
         }
@@ -153,8 +153,8 @@ public class FieldOfView : MonoBehaviour
         viewMesh.vertices = vertices;
         viewMesh.triangles = triangles;
         viewMesh.RecalculateNormals();
-        viewMeshRenderer.material.color = new Color(viewMeshRenderer.material.color.r,viewMeshRenderer.material.color.g,viewMeshRenderer.material.color.b, meshAlpha);
-        
+        viewMeshRenderer.material.color = new Color(viewMeshRenderer.material.color.r, viewMeshRenderer.material.color.g, viewMeshRenderer.material.color.b, meshAlpha);
+
     }
 
     // check cast using viewRadius and angle hits any obstacle. return info
@@ -164,14 +164,14 @@ public class FieldOfView : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask))
         {
-            return new ViewCastInfo(true,hit.point,hit.distance,globalAngle);
+            return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
         }
         else
         {
             return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
         }
     }
-    
+
     // 
     public struct ViewCastInfo
     {
