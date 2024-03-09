@@ -269,4 +269,10 @@ public class SceneController : MonoBehaviour
     {
         return _activeCamera;
     }
+
+    public void SetActiveCamera(GameObject camera)
+    {
+        _overridePersistentSceneCamera = true;
+        _activeCamera = camera;
+    }
 }
