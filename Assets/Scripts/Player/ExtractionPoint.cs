@@ -11,6 +11,13 @@ public class ExtractionPoint : MonoBehaviour
 
   private GameObject childDefault, childHilighted;
 
+    // Temporary referencing structure until SO's are setup
+    public GameObject player;
+    public GameObject mainCamera;
+    public GameObject missionSummaryCamera;
+    public GameObject hudCanvas;
+    public GameObject missionSummaryCanvas;
+
   // Start is called before the first frame update
   void Start()
   {
@@ -40,6 +47,16 @@ public class ExtractionPoint : MonoBehaviour
   {
     if(AudioClipExtract != null)
       eventToRaise.Raise(this, AudioClipExtract, transform.position);
+
+    // Temporary until SO's are setup. Raise a "Player Reached Exit" SO event in the future.
+    if (player != null && mainCamera != null && missionSummaryCamera != null)
+    {
+            player.GetComponent<PlayerControl>().isPlayerControlEnabled = false;
+            missionSummaryCamera.SetActive(true);
+            mainCamera.SetActive(false);
+            hudCanvas.SetActive(false);
+            missionSummaryCanvas.SetActive(true);
+    }
   }
 
   public void SetHilight(bool isHilighted)

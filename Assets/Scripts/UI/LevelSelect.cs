@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
@@ -19,5 +20,15 @@ public class LevelSelect : MonoBehaviour
     public void changeLevels()
     {
         SceneController.Instance.SetActiveScene("Assets/Scenes/Levels/Level1.unity");
+    }
+
+    public void returnToMainMenu()
+    {
+        SceneController.Instance.SetActiveScene("Assets/Scenes/MainMenu.unity");
+    }
+
+    public void restartLevel()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
