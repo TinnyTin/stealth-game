@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8759923796965552694}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -47,7 +47,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8759923797073108173}
   - component: {fileID: 8759923797073108172}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: ThreatBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   - component: {fileID: 8759923797194673356}
   - component: {fileID: 8759923797194673357}
   - component: {fileID: 8759923797194673353}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -383,7 +383,7 @@ GameObject:
   - component: {fileID: 8759923798041994961}
   - component: {fileID: 8759923798041994963}
   - component: {fileID: 8759923798041994960}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -459,7 +459,7 @@ GameObject:
   - component: {fileID: 8759923798061208553}
   - component: {fileID: 8759923798061208555}
   - component: {fileID: 8759923798061208552}
-  m_Layer: 5
+  m_Layer: 0
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
