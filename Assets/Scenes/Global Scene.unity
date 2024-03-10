@@ -1258,7 +1258,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 7984823440440758857}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: DemoEventFunction
+        m_MethodName: PlayAudio3DOneShotWithStr
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -75,6 +75,17 @@ public class GameEvent : ScriptableObject
         }
     }
 
+    public void Raise<T1, T2, T3, T4>(T1 param1, T2 param2, T3 param3, T4 param4)
+    {
+        for (int i = listeners.Count - 1; i >= 0; i--)
+        {
+            if (listeners[i] is I4ParamEventListener<T1, T2, T3, T4> listener)
+            {
+                listener.OnEventRaised(param1, param2, param3, param4);
+            }
+        }
+    }
+
     // Manage Listeners
     // ############################################################
     public void RegisterListener(GameEventListenerBase listener)

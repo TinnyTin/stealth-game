@@ -6,7 +6,7 @@ public class AudioManager : MonoBehaviour
 {
     // Singleton Instance 
     private static AudioManager _audioManager;
-    private static bool _hasShutdown = false; 
+    private static bool _hasShutdown = false;
 
     public static AudioManager Instance
     {
@@ -35,11 +35,11 @@ public class AudioManager : MonoBehaviour
 
     // Inspector Visible Variables
     public EventSound3D eventSound3DPrefab;
-    public EventSound2D eventSound2DPrefab; 
+    public EventSound2D eventSound2DPrefab;
     public AmbientSound2D ambientSound2DPrefab;
 
     // Local Variables
-    private List<AmbientSound2D> _2dAudioSources = new(); 
+    private List<AmbientSound2D> _2dAudioSources = new();
 
     // Start is called before the first frame update
     void Start()
@@ -56,7 +56,7 @@ public class AudioManager : MonoBehaviour
     public void OnDestroy()
     {
         DestroyAll2DAudioSources();
-        _hasShutdown = true; 
+        _hasShutdown = true;
     }
 
     private EventSound3D CreateEventAudio3D(AudioClip clip, Vector3 worldPos, AudioSourceParams audioSourceParams)
@@ -72,8 +72,8 @@ public class AudioManager : MonoBehaviour
         snd.audioSrc.minDistance = audioSourceParams.MinDistance;
         snd.audioSrc.rolloffMode = audioSourceParams.RolloffMode;
         snd.audioSrc.panStereo = audioSourceParams.StereoPan;
-        snd.audioSrc.volume = audioSourceParams.Volume; 
-        
+        snd.audioSrc.volume = audioSourceParams.Volume;
+
         return snd;
     }
 
@@ -110,20 +110,20 @@ public class AudioManager : MonoBehaviour
         sound.audioSrc.Play();
     }
 
-    public void DemoEventFunction(Component sender, AudioClip clip, Vector3 position, string message)
+    public void PlayAudio3DOneShotWithStr(AudioClip clip, Vector3 position, string message, AudioSourceParams audioSourceParams)
     {
-        EventSound3D sound = CreateEventAudio3D(clip, position, null);
+        EventSound3D sound = CreateEventAudio3D(clip, position, audioSourceParams);
         sound.audioSrc.Play();
         Debug.Log($"{this.name} - {System.Reflection.MethodBase.GetCurrentMethod().Name} - {message}");
     }
 
     public int CreateAmbientAudio2DLooping(AudioClip audioClip, AudioSourceParams audioSourceParams, bool playImmediate = true)
     {
-        AmbientSound2D snd = Instantiate(ambientSound2DPrefab); 
+        AmbientSound2D snd = Instantiate(ambientSound2DPrefab);
 
         audioSourceParams ??= AudioSourceParams.Default;
 
-        snd.audioSrc.clip = audioClip; 
+        snd.audioSrc.clip = audioClip;
         snd.audioSrc.loop = true;
         snd.audioSrc.volume = audioSourceParams.Volume;
 
@@ -132,7 +132,7 @@ public class AudioManager : MonoBehaviour
         if (playImmediate)
             snd.audioSrc.Play();
 
-        return snd.GetInstanceID(); 
+        return snd.GetInstanceID();
     }
 
     public bool PlayAmbientAudio2D(int ambientSoundId)
@@ -151,10 +151,10 @@ public class AudioManager : MonoBehaviour
         AmbientSound2D snd = _2dAudioSources.FirstOrDefault(snd => snd.GetInstanceID() == ambientSoundId);
 
         if (snd == null)
-            return false; 
+            return false;
 
         snd.audioSrc.Pause();
-        return true; 
+        return true;
     }
 
     public bool DestroyAmbientAudio2D(int ambientSoundId)
@@ -165,7 +165,7 @@ public class AudioManager : MonoBehaviour
             return false;
 
         snd.Destroy();
-        _2dAudioSources.Remove(snd); 
+        _2dAudioSources.Remove(snd);
 
         return true;
     }
@@ -177,7 +177,7 @@ public class AudioManager : MonoBehaviour
         if (snd == null)
             return false;
 
-        snd.audioSrc.volume = Mathf.Clamp01(volume); 
+        snd.audioSrc.volume = Mathf.Clamp01(volume);
 
         return true;
     }
@@ -189,7 +189,7 @@ public class AudioManager : MonoBehaviour
         if (snd == null)
             return false;
 
-        return snd.audioSrc.isPlaying; 
+        return snd.audioSrc.isPlaying;
     }
 
     private void DestroyAll2DAudioSources()
