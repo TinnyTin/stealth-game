@@ -21,7 +21,7 @@ public class SoundEmittingObject : MonoBehaviour
         if (c.impulse.magnitude > impulseThreshold)
         {
             if (AudioClipCollision != null)
-                eventToRaise.Raise(AudioClipCollision, transform.position, AudioSourceParams.Default);
+                eventToRaise.Raise(AudioClipCollision, transform.position,"SoundThreat",AudioSourceParams.Default);
         }
     }
 }
