@@ -12,7 +12,7 @@ using UnityEngine;
 
 public class AudioSourceParams
 {
-    public static AudioSourceParams Default = new(); 
+    public static readonly AudioSourceParams Default = new(); 
 
     private float _volume = 1.0f;
     public float Volume
