@@ -42,7 +42,7 @@ public class AIPursuitState : AIBaseState
             else if (!Ctx.anim.GetCurrentAnimatorStateInfo(0).IsName("Angry Point"))
             {
                 Ctx.anim.SetTrigger("triggerAngry");
-                Ctx.PlayerCaught.Raise(Ctx);
+                Ctx.PlayerCaught.Raise();
             }
 
         }
