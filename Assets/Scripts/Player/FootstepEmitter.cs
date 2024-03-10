@@ -4,6 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Erik
+ * Contributors:        
+ */
+
+/*
 Footstep emitter class.  Call EmitFootstep() from an 
 animator event to play random footsteps from array
 of audio clips for walk and run respectively.
