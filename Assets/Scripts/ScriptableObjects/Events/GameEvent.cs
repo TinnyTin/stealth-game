@@ -20,17 +20,6 @@ public class GameEvent : ScriptableObject
     public List<GameEventListenerBase> listeners = new();
 
     // Raise event through different method signatures
-    // ############################################################
-    //public void Raise() 
-    //{
-    //    Raise(null, null);
-    //}
-
-    //public void Raise(object data) 
-    //{
-    //    Raise(null, data);
-    //}
-
     public void Raise()
     {
         for (int i = listeners.Count - 1; i >= 0; i--)

@@ -1,5 +1,12 @@
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Tom
+ * Contributors:        
+ */
+
 public class GameManager : MonoBehaviour
 {
     // Singleton Instance 

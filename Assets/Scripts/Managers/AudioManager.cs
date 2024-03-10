@@ -2,6 +2,13 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Tom
+ * Contributors:        
+ */
+
 public class AudioManager : MonoBehaviour
 {
     // Singleton Instance 

@@ -5,9 +5,6 @@ using UnityEngine;
  * Tiny Brain
  * Original Author:    Tom 
  * Contributors:        
- *
- * External
- * Source Credit:
  */
 
 [CreateAssetMenu(menuName = "SO's/PlayerData")]

@@ -1,13 +1,8 @@
-﻿using UnityEngine;
-
-/*
+﻿/*
  * CS6457 Attributions
  * Tiny Brain
  * Original Author:     Tom
  * Contributors:
- *
- * External
- * Source Credit:
  */
 
 public interface I4ParamEventListener<T1, T2, T3, T4>
