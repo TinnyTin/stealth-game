@@ -153,6 +153,8 @@ public class SceneController : MonoBehaviour
             _scenePlaylist.RemoveAt(1);
         }
 
+        ReInitScriptableObjects();
+
         return true;
     }
 

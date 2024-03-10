@@ -200,6 +200,66 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 279793253}
   m_CullTransparentMesh: 1
+--- !u!1 &423811807
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 423811810}
+  - component: {fileID: 423811809}
+  m_Layer: 0
+  m_Name: PlayerCaughtSound
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &423811809
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423811807}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ccb869ff16892c4ba4aeabafba1cba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: b984adb34e019c549be34216320474f0, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 11400000, guid: 377799429c11fac41b531c976d95caaf, type: 2}
+        m_TargetAssemblyTypeName: ScriptOneShot2DSound, Assembly-CSharp
+        m_MethodName: Play2DSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!4 &423811810
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 423811807}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -13.69, y: 0.127, z: 3.541}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &458243242
 GameObject:
   m_ObjectHideFlags: 0
@@ -1038,7 +1098,7 @@ PrefabInstance:
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scriptableObjectsWithInit.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
@@ -1065,6 +1125,12 @@ PrefabInstance:
       propertyPath: _scriptableObjectsWithInit.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 4643d944ea5b1f74d9660238939e6009,
+        type: 2}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _scriptableObjectsWithInit.Array.data[1]
+      value: 
+      objectReference: {fileID: 11400000, guid: 377799429c11fac41b531c976d95caaf,
         type: 2}
     - target: {fileID: 3042039951656423746, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
