@@ -114,6 +114,7 @@ public class SceneCameraController : MonoBehaviour
             IntroAnimationCamera.SetActive(false);
             playerControl.isPlayerControlEnabled = true;
             PlayerCamera.GetComponent<Camera>().enabled = true;
+            HUD.SetActive(true);
             return;
     }
 
@@ -181,6 +182,7 @@ public class SceneCameraController : MonoBehaviour
     {
         IntroAnimationCamera.SetActive(false);
             playerControl.isPlayerControlEnabled = true;
+            HUD.SetActive(true);
             return;
     }
     PlayerCamera.GetComponent<Camera>().enabled = false;
