@@ -64,4 +64,3 @@ public class PlayerInput : MonoBehaviour
         playerTurn = curTurnVal;
     }
 }
-}
