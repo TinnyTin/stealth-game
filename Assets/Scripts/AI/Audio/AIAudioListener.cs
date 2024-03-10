@@ -24,10 +24,15 @@ public class AIAudioListener : MonoBehaviour
 
     public void onSound3DStringInGameCreated(Component component, AudioClip sfx, Vector3 position, string str)
     {
-        if (Vector3.Distance(position,this.transform.position) <= radiusListenable)
+        // check string is correct
+        if (str == "SoundThreat")
         {
-            float val = baseThreatPerSound * weightThreatOfSound;
-            tm.changeThreat(val);
+            if (Vector3.Distance(position, this.transform.position) <= radiusListenable)
+            {
+                float val = baseThreatPerSound * weightThreatOfSound;
+                tm.changeThreat(val);
+            }
         }
+        
     }
 }

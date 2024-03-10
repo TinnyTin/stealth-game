@@ -10,12 +10,15 @@ public enum AIThreatPriority
     Pursuit
 }
 
+[RequireComponent(typeof(ThreatMeter))]
+[RequireComponent(typeof(FieldOfView))]
 public class AIStateMachine : MonoBehaviour
 {
     // configurable from inspector
     public float walkSpeed = 0.2f;
     public float runSpeed = 1.0f;
     public float currentSpeed = 0.2f;
+    public float pursuitAutoSenseRadius = 2f;
 
     // public
     [Header("Initialize AI State")]
@@ -33,6 +36,7 @@ public class AIStateMachine : MonoBehaviour
     public GameEvent PlayerCaught;
     [HideInInspector]
     public AIThreatPriority aiThreatPriority;
+    public FieldOfView _FOV;
 
     // state variables
     protected AIBaseState _currentState;
@@ -55,6 +59,10 @@ public class AIStateMachine : MonoBehaviour
 
     private void Awake()
     {
+
+        // Register in AI Data SO
+        aiData.RegisterAI(this.gameObject);
+
         // set up context
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
@@ -72,6 +80,11 @@ public class AIStateMachine : MonoBehaviour
         _currentState.EnterState();
 
         
+    }
+
+    private void Start()
+    {
+        _FOV = GetComponent<FieldOfView>();
     }
 
     private void Update()
