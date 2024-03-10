@@ -58,7 +58,7 @@ public class SceneCameraController : MonoBehaviour
 
   private float fadePlayerStartTime;
   private bool isFadePlayer = false;
-    public bool skipIntroAnimation = false;
+    public GameObject skipIntroText;
 
   // Start is called before the first frame update
   void Start()
@@ -102,22 +102,24 @@ public class SceneCameraController : MonoBehaviour
         //playerControl.isPlayerControlEnabled = true;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Space))
+        {
+            skipIntro();
+        }
+    }
 
-  void FixedUpdate()
+    void FixedUpdate()
   {
     //test checking the path hash
     if (introCameraAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash != playStateNameHash)
       return;
 
-    if (!isPlayIntroAnimation || skipIntroAnimation)
-        {
-            IntroAnimationCamera.SetActive(false);
-            playerControl.isPlayerControlEnabled = true;
-            PlayerCamera.GetComponent<Camera>().enabled = true;
-            HUD.SetActive(true);
-            return;
+    if (!isPlayIntroAnimation)
+    {
+        return;
     }
-
 
     if (!isFadePlayer)
     {
@@ -178,16 +180,14 @@ public class SceneCameraController : MonoBehaviour
   // pan animation.
   public void Play()
   {
-    if (isPlayIntroAnimation || skipIntroAnimation)
+    if (isPlayIntroAnimation)
     {
-        IntroAnimationCamera.SetActive(false);
-            playerControl.isPlayerControlEnabled = true;
-            HUD.SetActive(true);
             return;
     }
     PlayerCamera.GetComponent<Camera>().enabled = false;
     IntroAnimationCamera.GetComponent<Camera>().enabled = true;
     HUD.SetActive(false); // Deactivate HUD while intro sequence is playing
+    skipIntroText.SetActive(true);
 
     introCameraAnimator.Play(playStateName);
 
@@ -196,4 +196,12 @@ public class SceneCameraController : MonoBehaviour
     isPlayIntroAnimation = true;
     isFadePlayer = false;
   }
+
+    private void skipIntro() {
+        PlayerCamera.GetComponent<Camera>().enabled = true;
+        skipIntroText.SetActive(false);
+        IntroAnimationCamera.SetActive(false);
+        playerControl.isPlayerControlEnabled = true;
+        HUD.SetActive(true);
+    }
 }
