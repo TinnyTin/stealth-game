@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author: Martin Lee
+ * Contributors:
+ * Description: Main Menu animation triggers
+ */
+
 public class MainMenuCamera : MonoBehaviour
 {
     private Animator anim;
