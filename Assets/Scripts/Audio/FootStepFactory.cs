@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: Footstep Factory for returning audio clip of footstep based on characteristics
+ * External Source Credit:
+ *                      
+ */
 public enum FloorCharacteristic
 {
     Dirt,

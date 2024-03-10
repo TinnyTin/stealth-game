@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: AI movement between waypoints using Gizmos.
+ * External Source Credit: 
+ *                      
+ */
 public class Waypoint : MonoBehaviour
 {
     private void OnDrawGizmos()

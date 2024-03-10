@@ -2,7 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: Debug NavMesh agent next position or path corners
+ * External Source Credit:       
+ *                      
+ */
 public enum PathDebugType
 { 
     PathCornersLength,

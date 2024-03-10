@@ -4,6 +4,17 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: Threat Meter increments based on hostile sound/sight objects, degrades naturally at a fixed rate.
+ *              Threat meter also allows you to set boundaries of AI state behaviors based on the threat level.
+ * External Source Credit: 
+ *                      
+ */
+
 public enum ThreatChooseBehaviorState
 {
     Waypoint,

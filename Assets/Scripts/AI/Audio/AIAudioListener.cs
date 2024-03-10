@@ -2,6 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: Ears for the AI to listen to sound emitting object in the scene
+ * External
+ * Source Credit:       
+ *                      
+ */
+
+
 [RequireComponent(typeof(AIStateMachine))]
 [RequireComponent(typeof(ThreatMeter))]
 public class AIAudioListener : MonoBehaviour

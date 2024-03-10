@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: AI "eyes" includes view Radius, view Angle, view Raycasting.
+ *              Also includes red cone FOV using a mesh renderer and viewCasting to objects in scene
+ * External
+ * Source Credit:       
+ *                      
+ */
 [RequireComponent(typeof(AIStateMachine))]
 [RequireComponent(typeof(ThreatMeter))]
 public class FieldOfView : MonoBehaviour

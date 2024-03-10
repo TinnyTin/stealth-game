@@ -3,6 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: AI Data pushing into a Scriptable Object.
+ * External Source Credit: 
+ *                      
+ */
+
 [CreateAssetMenu(menuName = "SO's/AIGlobalData")]
 public class AIData : ScriptableObjectWithInit
 {

@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: Idle/Waypoint AI State class
+ * External Source Credit: https://www.youtube.com/watch?v=kV06GiJgFhc&t=1535s
+ *                      
+ */
 
 public class AIWaypointState : AIBaseState
 {

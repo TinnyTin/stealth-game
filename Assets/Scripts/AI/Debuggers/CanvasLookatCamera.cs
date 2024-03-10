@@ -4,11 +4,12 @@ using UnityEngine.SceneManagement;
 /*
  * CS6457 Attributions
  * Tiny Brain
- * Original Author:     Justin
- * Contributors:        Tom
- *
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: Threat Bar for debugging. Ended up adding it starting in the Game Alpha
  * External
- * Source Credit:          
+ * Source Credit:       
+ *                      
  */
 
 public class CanvasLookatCamera : MonoBehaviour
