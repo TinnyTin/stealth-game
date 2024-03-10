@@ -161,6 +161,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "com.unity_x.modules.sceneref": {
+      "version": "0.2.1",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://upm-packages.dev"
+    },
     "com.xsduan.hierarchy-folders": {
       "version": "0.3.1",
       "depth": 0,
