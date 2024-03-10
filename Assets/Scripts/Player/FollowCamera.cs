@@ -4,9 +4,16 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 /*
-Add this script to the player object and set the camera target to smoothly 
-follow the player.  
-*/
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Erik
+ * Contributors:        
+ */
+
+/*
+ * Add this script to the player object and set the camera target to smoothly 
+ * follow the player.  
+ */
 
 public class FollowCamera : MonoBehaviour
 {

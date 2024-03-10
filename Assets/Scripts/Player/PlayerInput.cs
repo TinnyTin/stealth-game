@@ -3,6 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.LowLevel;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Erik
+ * Contributors:        
+ */
+
 public class PlayerInput : MonoBehaviour
 {
     public float maxForwardInput = 5.0f;

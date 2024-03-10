@@ -8,6 +8,13 @@ using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
 /*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Erik
+ * Contributors:        
+ */
+
+/*
 This script controls two cameras in the scene.  The first is the 
 player camera which follows the player during gameplay.
 The second camera is an animated camera which plays back
