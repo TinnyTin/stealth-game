@@ -261,4 +261,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AudioClipCollision: {fileID: 8300000, guid: a7fc1d392a7c7d9448a7dce9961158af, type: 3}
   eventToRaise: {fileID: 11400000, guid: 4fb5bd836f516464f99d7d30cf89ed89, type: 2}
-  impulseThreshold: 1
+  impulseThreshold: 3
