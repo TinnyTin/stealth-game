@@ -3052,57 +3052,15 @@ MonoBehaviour:
   - name: Idle
     min: 0
     max: 0
-    onThreatReach:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 695267126702515523}
-          m_TargetAssemblyTypeName: AIStateMachine, Assembly-CSharp
-          m_MethodName: BehaviorWaypoint
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+    threatChooseState: 0
   - name: Investigate
     min: 0
     max: 15
-    onThreatReach:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 695267126702515523}
-          m_TargetAssemblyTypeName: AIStateMachine, Assembly-CSharp
-          m_MethodName: BehaviorInvestigate
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+    threatChooseState: 1
   - name: Pursuit
     min: 0
     max: 50
-    onThreatReach:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 695267126702515523}
-          m_TargetAssemblyTypeName: AIStateMachine, Assembly-CSharp
-          m_MethodName: BehaviorPursuit
-          m_Mode: 1
-          m_Arguments:
-            m_ObjectArgument: {fileID: 0}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
+    threatChooseState: 2
 --- !u!4 &5415323156532681999 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3654275205124896105, guid: c49392c42316aa747ac88209726d7c0f,
