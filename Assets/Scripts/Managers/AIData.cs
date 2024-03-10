@@ -43,6 +43,7 @@ public class AIData : ScriptableObjectWithInit
         if (AIs.Contains(ai))
         {
             AIs.Remove(ai);
+            AIs.RemoveAll(ai => ai == null);
         }
         else
         {
@@ -56,6 +57,10 @@ public class AIData : ScriptableObjectWithInit
         {
             Debug.Log("Error: tried to add AI twice to AI list!");
         }
-        AIs.Add(ai);
+        else
+        {
+            AIs.Add(ai);
+        }
+        
     }
 }
