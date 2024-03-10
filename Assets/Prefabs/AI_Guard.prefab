@@ -877,8 +877,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4ff6696431a40e43ad41a8a6a648272, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radiusListenable: 50
-  baseThreatPerSound: 50
+  radiusListenable: 15
+  baseThreatPerSound: 15
   weightThreatOfSound: 1
 --- !u!114 &8292152907300419981
 MonoBehaviour:
