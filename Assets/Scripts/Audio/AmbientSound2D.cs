@@ -23,7 +23,8 @@ public class AmbientSound2D : MonoBehaviour
 
     public void Destroy()
     {
-        Destroy(this.gameObject);
+        if (this.gameObject != null)
+            Destroy(this.gameObject);
     }
 }
 
