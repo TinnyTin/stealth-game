@@ -1009,6 +1009,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
+      propertyPath: _scenesInBuild.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _persistentScene.sceneGuid
+      value: b381005b7a5a1684fae5096204be6193
+      objectReference: {fileID: 0}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
       propertyPath: _scenePlaylist.Array.data[0]
       value: 
       objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,
@@ -1029,6 +1039,26 @@ PrefabInstance:
         type: 3}
       propertyPath: _scriptableObjectsWithInit.Array.size
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _scenePlaylist.Array.data[0].sceneGuid
+      value: 7beb9e9c3b807014398bce7ea2cc66b9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _scenesInBuild.Array.data[0].sceneGuid
+      value: b381005b7a5a1684fae5096204be6193
+      objectReference: {fileID: 0}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _scenesInBuild.Array.data[1].sceneGuid
+      value: 7beb9e9c3b807014398bce7ea2cc66b9
+      objectReference: {fileID: 0}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _scenesInBuild.Array.data[2].sceneGuid
+      value: db5151db0ce28a14bbd0ea72aa969fd2
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}

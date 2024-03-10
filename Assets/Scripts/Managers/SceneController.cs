@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -45,17 +44,22 @@ public class SceneController : MonoBehaviour
 
     // Inspector Visible Variables
     [Tooltip("The scene that is persistent across the lifetime of the game.")]
-    [SerializeField] private SceneAsset _persistentScene;
+    [SerializeField] private SceneReference _persistentScene;
 
     [SerializeField]
     [Tooltip("The active (additively loaded) scene.")]
-    private SceneAsset _activeScene;
+    private SceneReference _activeScene;
 
     [Space]
 
     [Header("Cycle Scenes with F11")]
     [Tooltip("List of available scenes. The first scene is loaded by default. These can be cycled with F11.")]
-    [SerializeField] private List<SceneAsset> _scenePlaylist = new();
+    [SerializeField] private List<SceneReference> _scenePlaylist = new();
+
+    [Space] 
+    [Header("Scenes In Build: Must be synced with Build Settings")] 
+    [SerializeField]
+    private List<SceneReference> _scenesInBuild = new();
 
     [Space]
     [Header("Resetable ScriptableObjects with Init on scene Active/reload")]
@@ -64,7 +68,7 @@ public class SceneController : MonoBehaviour
 
     [Space] 
     [Header("Events")] 
-    [SerializeField] private GameEvent _sceneLoadComplete; 
+    [SerializeField] private GameEvent _sceneLoadComplete;
 
     // Local Variables
     private int _currentSceneIndex = 0;
@@ -79,6 +83,8 @@ public class SceneController : MonoBehaviour
     private bool _sceneUnloadCoroutineComplete = true;
     private bool _sceneLoadCoroutineComplete = true;
 
+    private readonly SceneReference _nullSceneReference = new();
+
     [Header("Global Scene Camera Overridden?")]
     [SerializeField] private bool _overridePersistentSceneCamera = false;
 
@@ -87,7 +93,7 @@ public class SceneController : MonoBehaviour
     {
         Debug.Log("SceneController started");
 
-        if (_persistentScene == null)
+        if (_persistentScene.sceneIndex == -1)
         {
             Debug.LogError("Please assign a persistence scene to the SceneController.");
             return;
@@ -95,12 +101,12 @@ public class SceneController : MonoBehaviour
 
         if (_scenePlaylist.Any() == false)
         {
-            Debug.LogError("Please add at least one scene to the scene cycle.");
+            Debug.LogError("Please add at least one scene to the scene playlist.");
             return;
         }
 
         // Get a reference to the global scene and its camera
-        _globalParentScene = SceneManager.GetSceneByName(_persistentScene.name);
+        _globalParentScene = SceneManager.GetSceneByBuildIndex(_persistentScene.sceneIndex);
 
         foreach (GameObject gameObject in _globalParentScene.GetRootGameObjects())
         {
@@ -118,7 +124,7 @@ public class SceneController : MonoBehaviour
         UnloadAllHierarchyScenesAsync();
 
         // Load the first scene in the playlist
-        ChangeSceneAdditiveAsync(_scenePlaylist[0], null);
+        ChangeSceneAdditiveAsync(_scenePlaylist[0], _nullSceneReference);
     }
 
     // Update is called once per frame
@@ -134,17 +140,9 @@ public class SceneController : MonoBehaviour
         //}
     }
 
-    public bool ChangeScene(string scenePath, bool removePlaylistHead = true)
+    public bool ChangeScene(SceneReference sceneReference, bool removePlaylistHead = true)
     {
-        // Insert the scene at the head of the playlist and jump to it
-        SceneAsset sceneAsset = AssetDatabase.LoadAssetAtPath<SceneAsset>(scenePath);
-        if (sceneAsset == null)
-        {
-            Debug.LogWarning($"{this.name}: Couldn't load SceneAsset for scene with name \"{scenePath}\"");
-            return false;
-        }
-        
-        _scenePlaylist.Insert(0, sceneAsset);
+        _scenePlaylist.Insert(0, sceneReference);
         _currentSceneIndex = -1;
         IncrementPlaylistScene();
 
@@ -183,12 +181,13 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private bool ChangeSceneAdditiveAsync(SceneAsset sceneToLoad, SceneAsset sceneToUnload)
+    private bool ChangeSceneAdditiveAsync(SceneReference sceneToLoad, SceneReference sceneToUnload)
     {
         // We can't start another scene load while another is in flight
         if (_sceneChangeOperation != null)
         {
-            Debug.LogWarning($"Cannot change to scene {sceneToLoad.name}. Another scene change is currently in progress.");
+            Scene scene = SceneManager.GetSceneByBuildIndex(sceneToLoad.sceneIndex); 
+            Debug.LogWarning($"Cannot change to scene {scene.name}. Another scene change is currently in progress.");
             return false;
         }
 
@@ -203,9 +202,9 @@ public class SceneController : MonoBehaviour
         return true;
     }
 
-    private IEnumerator SceneChangeCoroutine(SceneAsset sceneToLoad, SceneAsset sceneToUnload)
+    private IEnumerator SceneChangeCoroutine(SceneReference sceneToLoad, SceneReference sceneToUnload)
     {
-        if (sceneToUnload != null)
+        if (sceneToUnload.sceneIndex != -1)
         {
             _sceneUnloadCoroutineComplete = false;
             StartCoroutine(UnloadSceneCoroutine(sceneToUnload));
@@ -213,20 +212,24 @@ public class SceneController : MonoBehaviour
                 yield return null;
         }
 
-        if (sceneToLoad != null)
+        if (sceneToLoad.sceneIndex != -1)
         {
             _sceneLoadCoroutineComplete = false;
             StartCoroutine(LoadSceneCoroutine(sceneToLoad));
             while (_sceneLoadCoroutineComplete == false)
                 yield return null;
         }
+        else
+        {
+            Debug.LogError($"{this.name}: sceneToLoad has invalid build index -1. Scene change failed.");
+        }
 
         PostSceneLoad(); 
     }
 
-    private IEnumerator UnloadSceneCoroutine(SceneAsset sceneToUnload)
+    private IEnumerator UnloadSceneCoroutine(SceneReference sceneToUnload)
     {
-        _sceneChangeOperation = SceneManager.UnloadSceneAsync(sceneToUnload.name);
+        _sceneChangeOperation = SceneManager.UnloadSceneAsync(sceneToUnload.sceneIndex);
 
         while (_sceneChangeOperation.isDone == false)
             yield return false;
@@ -235,13 +238,13 @@ public class SceneController : MonoBehaviour
         _sceneUnloadCoroutineComplete = true;
     }
 
-    private IEnumerator LoadSceneCoroutine(SceneAsset sceneToLoad)
+    private IEnumerator LoadSceneCoroutine(SceneReference sceneToLoad)
     {
         Debug.Assert(_sceneChangeOperation == null,
             "LoadSceneCoroutine called while _sceneChangeOperation non null. Cannot load " +
             "a new scene while another is unloading."); 
         
-        _sceneChangeOperation = SceneManager.LoadSceneAsync(sceneToLoad.name, LoadSceneMode.Additive);
+        _sceneChangeOperation = SceneManager.LoadSceneAsync(sceneToLoad.sceneIndex, LoadSceneMode.Additive);
 
         while (_sceneChangeOperation.isDone == false)
         {
@@ -259,7 +262,7 @@ public class SceneController : MonoBehaviour
     private void PostSceneLoad()
     {
         // Debug.Log("Post Scene Load");
-        Scene scene = SceneManager.GetSceneByName(_activeScene.name);
+        Scene scene = SceneManager.GetSceneByBuildIndex(_activeScene.sceneIndex);
 
         _overridePersistentSceneCamera = false;
         foreach (GameObject gameObject in scene.GetRootGameObjects())
@@ -267,7 +270,7 @@ public class SceneController : MonoBehaviour
             // Try to locate a camera in the additively loaded scene
             if (gameObject.GetComponent<Camera>() == true)
             {
-                Debug.Log($"SceneController: Found camera in {_activeScene.name}");
+                Debug.Log($"SceneController: Found camera in {scene.name}");
                 _overridePersistentSceneCamera = true;
                 _activeCamera = gameObject;
             }
@@ -333,8 +336,7 @@ public class SceneController : MonoBehaviour
     }
 
     public void RestartScene()
-    {
-        Scene activeScene = SceneManager.GetActiveScene();
-        ChangeScene(activeScene.path); 
+    {   
+        ChangeScene(_activeScene); 
     }
 }

@@ -179,6 +179,7 @@ public class SceneCameraController : MonoBehaviour
         ppColorAdjust.postExposure.value = 0f;
         isPlayIntroAnimation = false;
         HUD.SetActive(true);
+        skipIntroText.SetActive(false);
       }
     }
   }
