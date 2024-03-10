@@ -19,6 +19,7 @@ public class AIStateMachine : MonoBehaviour
     public float runSpeed = 1.0f;
     public float currentSpeed = 0.2f;
     public float pursuitAutoSenseRadius = 2f;
+    public float finalCaughtRadius = 1.5f;
 
     // public
     [Header("Initialize AI State")]
@@ -192,6 +193,21 @@ public class AIStateMachine : MonoBehaviour
     private void OnDisable()
     {
         aiData.UnRegisterAI(this.gameObject);
+    }
+
+    // ======================================================
+    // Catch Callback
+    // ======================================================
+    public void CatchPlayer()
+    {
+        StartCoroutine("CoroutineCatchPlayer", 1.0f);
+    }
+    
+    
+    IEnumerator CoroutineCatchPlayer(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        PlayerCaught.Raise(this);
     }
 }
 
