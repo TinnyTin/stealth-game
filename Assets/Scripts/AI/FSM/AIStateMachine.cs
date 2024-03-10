@@ -33,10 +33,18 @@ public class AIStateMachine : MonoBehaviour
     public Vector3 lastThreat;
     public int countInView;
 
+    [Header("ScriptableObjects")]
     public AIData aiData;
     public GameEvent PlayerCaught;
+    public GameEvent AudioChannel;
+
+    [Header("AudioClips")]
+    public AudioClip audioClipGasp;
+    public AudioClip audioClipAlert;
+
     [HideInInspector]
     public AIThreatPriority aiThreatPriority;
+    [HideInInspector]
     public FieldOfView _FOV;
 
     // state variables
@@ -80,7 +88,7 @@ public class AIStateMachine : MonoBehaviour
         _currentState.SetAIThreatPriority();
         _currentState.EnterState();
 
-        
+
     }
 
     private void Start()
@@ -138,7 +146,7 @@ public class AIStateMachine : MonoBehaviour
             // transition from idle --> moving, and prevent overshooting stopping point and creating circling around again
             shouldMove = (_velocity.magnitude > 0.5f) && (agent.remainingDistance > agent.stoppingDistance);
         }
-        
+
 
         // update animator parameters for rootmotion
         anim.SetBool("move", shouldMove);
@@ -202,8 +210,8 @@ public class AIStateMachine : MonoBehaviour
     {
         StartCoroutine("CoroutineCatchPlayer", 1.0f);
     }
-    
-    
+
+
     IEnumerator CoroutineCatchPlayer(float delay)
     {
         yield return new WaitForSeconds(delay);
