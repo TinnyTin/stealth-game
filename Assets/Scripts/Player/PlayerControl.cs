@@ -303,8 +303,8 @@ public class PlayerControl : MonoBehaviour
 
     void UpdateExtractionPoint()
     {
-        //if (!HasStolenObject)
-        //    return;
+        if (!HasStolenObject)
+            return;
 
         if (extractionPointObject == null || extractionPointComponent == null)
             return;
@@ -327,7 +327,6 @@ public class PlayerControl : MonoBehaviour
             isExtractionPointInRangeToHilight = false;
         }
 
-        //if (distance < 1.5f)
         if (distance < 1.5f && !IsExtractionSuccess)
         {
             IsExtractionSuccess = true;
