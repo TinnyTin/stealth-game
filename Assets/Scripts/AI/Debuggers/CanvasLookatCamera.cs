@@ -24,11 +24,12 @@ public class CanvasLookatCamera : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        FindMainCamera();
+        //FindMainCamera();
 
         this.transform.LookAt(this.transform.position - (tcam.transform.position - this.transform.position));
     }
 
+    // old implementation based on scenecontroller grabbing camera 
     private void FindMainCamera()
     {
         // Find the main camera in the global scene
