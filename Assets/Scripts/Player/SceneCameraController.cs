@@ -31,6 +31,7 @@ public class SceneCameraController : MonoBehaviour
 {
   public GameObject PlayerCamera;
   public GameObject IntroAnimationCamera;
+  public GameObject HUD;
 
   // IntroAnimationCamera Animator component
   private Animator introCameraAnimator;
@@ -154,9 +155,10 @@ public class SceneCameraController : MonoBehaviour
 
       if (t <= 0f)
       {
-        // done with all fades. reset the exposure adjustment to zero
+        // done with all fades. reset the exposure adjustment to zero and activate HUD
         ppColorAdjust.postExposure.value = 0f;
         isPlayIntroAnimation = false;
+        HUD.SetActive(true);
       }
     }
   }
@@ -171,6 +173,7 @@ public class SceneCameraController : MonoBehaviour
     }
     PlayerCamera.GetComponent<Camera>().enabled = false;
     IntroAnimationCamera.GetComponent<Camera>().enabled = true;
+    HUD.SetActive(false); // Deactivate HUD while intro sequence is playing
 
     introCameraAnimator.Play(playStateName);
 
