@@ -4,6 +4,12 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
+public enum ThreatChooseBehaviorState
+{
+    Waypoint,
+    Investigate,
+    Pursuit
+}
 
 [RequireComponent(typeof(AIStateMachine))]
 public class ThreatMeter : MonoBehaviour
@@ -31,7 +37,7 @@ public class ThreatMeter : MonoBehaviour
         ai = GetComponent<AIStateMachine>();
         // invoke first behavior. usually idle
         alignBehaviorType();
-        ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke();
+        ChooseBehaviorState(ThreatBehaviorList[BehaviorIdx].threatChooseState);
     }
 
     private void FixedUpdate()
@@ -72,7 +78,7 @@ public class ThreatMeter : MonoBehaviour
     {
         int lastBhvrIdx = BehaviorIdx;
         // check there is a higher behavior state to reach, and that the AI's threat has exceeded it
-        while ((BehaviorIdx + 1 < ThreatBehaviorList.Count) && (threatLevel > ThreatBehaviorList[BehaviorIdx+1].max))
+        while ((BehaviorIdx + 1 < ThreatBehaviorList.Count) && (threatLevel > ThreatBehaviorList[BehaviorIdx + 1].max))
         {
             BehaviorIdx++; // change to higher behavior
         }
@@ -84,11 +90,26 @@ public class ThreatMeter : MonoBehaviour
         if (lastBhvrIdx != BehaviorIdx)
         {
             //Debug.Log("threat: " + threatLevel);
-            ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke(); // invoke 
+            //ThreatBehaviorList[BehaviorIdx].onThreatReach.Invoke(); // invoke 
+            ChooseBehaviorState(ThreatBehaviorList[BehaviorIdx].threatChooseState);
         }
     }
 
-
+    private void ChooseBehaviorState(ThreatChooseBehaviorState state)
+    {
+        switch (state)
+        {
+            case ThreatChooseBehaviorState.Waypoint:
+                ai.BehaviorWaypoint();
+                break;
+            case ThreatChooseBehaviorState.Investigate:
+                ai.BehaviorInvestigate();
+                break;
+            case ThreatChooseBehaviorState.Pursuit:
+                ai.BehaviorPursuit();
+                break;
+        }
+    }
 
 
     [System.Serializable]
@@ -97,7 +118,7 @@ public class ThreatMeter : MonoBehaviour
         public string name;
         public float min;
         public float max;
-        public UnityEvent onThreatReach;
+        public ThreatChooseBehaviorState threatChooseState;
     }
 
 }
