@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -40,7 +37,7 @@ public class StealableObject : MonoBehaviour
   public void Steal()
   {
     if(AudioClipSteal != null)
-      eventToRaise.Raise(AudioClipSteal, transform.position);
+      eventToRaise.Raise(AudioClipSteal, transform.position, AudioSourceParams.Default);
     if(objectiveTracker != null)
         {
             objectiveTracker.GetComponent<ObjectiveTracker>().mainObjectiveObtained();

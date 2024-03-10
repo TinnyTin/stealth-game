@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SoundEmittingObject : MonoBehaviour
@@ -22,6 +18,6 @@ public class SoundEmittingObject : MonoBehaviour
   public void OnCollisionEnter()
   {
     if(AudioClipCollision != null)
-      eventToRaise.Raise(AudioClipCollision, transform.position);
+      eventToRaise.Raise(AudioClipCollision, transform.position, AudioSourceParams.Default);
   }
 }

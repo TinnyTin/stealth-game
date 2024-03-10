@@ -20,7 +20,7 @@ public class AmbientAudioTest : MonoBehaviour
     {
         if (_audioClip != null)
         {
-            _audioClipId = AudioManager.Instance.CreateAmbientAudio2DLooping(_audioClip);
+            _audioClipId = AudioManager.Instance.CreateAmbientAudio2DLooping(_audioClip, AudioSourceParams.Default);
             AudioManager.Instance.SetAmbientAudio2DVolume(_audioClipId, 0.6f);
         }
     }
@@ -33,6 +33,7 @@ public class AmbientAudioTest : MonoBehaviour
 
     public void OnDestroy()
     {
-        AudioManager.Instance.DestroyAmbientAudio2D(_audioClipId); 
+        if (AudioManager.Instance)
+            AudioManager.Instance.DestroyAmbientAudio2D(_audioClipId); 
     }
 }
