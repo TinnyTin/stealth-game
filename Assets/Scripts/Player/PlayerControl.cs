@@ -38,6 +38,11 @@ public class PlayerControl : MonoBehaviour
     Vector3 prevPosition;
     float velocityFiltered;
 
+    // joints in the player skeleton rig for footstep calculations
+    public GameObject rigBase;
+    public GameObject leftFoot;
+    public GameObject rightFoot;
+
     public float LookCamSensitivity = 3f;
 
     // if true, enable mouse / right analog stick camera control
@@ -56,8 +61,8 @@ public class PlayerControl : MonoBehaviour
     public bool isPlayerControlEnabled = true;
 
     // camera transforms, must be in the player gameobject hierarchy
-    private GameObject cameraFrom;
-    private GameObject cameraTarget;
+    public GameObject cameraFrom;
+    public GameObject cameraTarget;
 
     // current world space camera roation
     // used to calculate camera transforms when LookCamEnabled
@@ -117,9 +122,8 @@ public class PlayerControl : MonoBehaviour
             Debug.LogError("PlayerControl: no PlayerInput component.");
         }
 
-        // get the from/to follow camera objects in the player object's hierarchy
-        cameraFrom = GameObject.Find("CameraFrom");
-        cameraTarget = GameObject.Find("CameraTarget");
+        // the from/to follow camera objects must be assigned by reference from
+        // the player object's hierarchy
         if (cameraFrom == null || cameraTarget == null)
         {
             Debug.LogError("PlayerControl: no CameraFrom or CameraTo component.");
@@ -135,7 +139,10 @@ public class PlayerControl : MonoBehaviour
         camLookOffset = new Quaternion(0, 0, 0, 1);
 
 
-
+        if (rigBase == null || leftFoot == null || rightFoot == null)
+        {
+            Debug.LogError("PlayerControl: rigBase, leftFoot, rightFoot not set.");
+        }
         leftFootDown = false;
         rightFootDown = false;
         prevPosition = transform.position;
@@ -341,8 +348,6 @@ public class PlayerControl : MonoBehaviour
     // if below y threshold
     private void triggerFootsteps(bool isRunning)
     {
-        GameObject rigBase = GameObject.Find("rig-main");
-        GameObject leftFoot = GameObject.Find("LeftFoot");
         StepCharacteristic stepCharacteristic = isRunning ? StepCharacteristic.Run : StepCharacteristic.Walk;
         if (rigBase && leftFoot)
         {
@@ -362,8 +367,8 @@ public class PlayerControl : MonoBehaviour
                 leftFootDown = false;
             }
         }
-        GameObject rightFoot = GameObject.Find("RightFoot");
-        if (rigBase && leftFoot)
+
+        if (rigBase && rightFoot)
         {
             float rightFootY = rightFoot.transform.position.y - rigBase.transform.position.y;
 
