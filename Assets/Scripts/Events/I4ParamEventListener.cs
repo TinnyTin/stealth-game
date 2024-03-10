@@ -1,7 +1,7 @@
 ﻿/*
  * CS6457 Attributions
  * Tiny Brain
- * Original Author:     Tom
+ * Original Author:     Justin
  * Contributors:
  */
 
