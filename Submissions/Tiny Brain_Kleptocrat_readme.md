@@ -89,6 +89,9 @@ Erik also contributed to asset creation, including:
 * StealableObject.cs
 
 #### 3rd party credits
+* Footstep sounds: https://freesound.org/people/marb7e/packs/34204/
+* "Steal Object" chime: https://freesound.org/people/Samulis/sounds/192636/
+* "Reach extraction point" chime: https://freesound.org/people/Anthousai/sounds/398496/
 
 ### Jeesoo
 Jeesoo’s main contributions were level development and UI scenes.
@@ -127,6 +130,7 @@ Jeesoo’s main contributions were level development and UI scenes.
 * SceneCameraController.cs
 
 #### 3rd party credits
+* Poly Steampunk Pack by Polyperfect: https://assetstore.unity.com/packages/3d/props/poly-steampunk-pack-265079
 
 ### Justin
 #### Assets Implemented
@@ -190,5 +194,5 @@ Also added the ambient audio that can be heard throughout the level.
 #### 3rd party credits
 * Hierarchy Folders Package: https://github.com/xsduan/unity-hierarchy-folders 
 * Eflatun.SceneReference Package: https://github.com/starikcetin/Eflatun.SceneReference
-* City Ambience: https://freesound.org/people/klankbeeld/sounds/279041/
+* City Ambience Audio: https://freesound.org/people/klankbeeld/sounds/279041/
 
