@@ -1,5 +1,15 @@
 {
   "dependencies": {
+    "com.eflatun.scenereference": {
+      "version": "4.0.0",
+      "depth": 0,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.settings-manager": "2.0.1",
+        "com.unity.nuget.newtonsoft-json": "3.0.2"
+      },
+      "url": "https://package.openupm.com"
+    },
     "com.unity.burst": {
       "version": "1.8.11",
       "depth": 1,
@@ -55,6 +65,13 @@
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
+    "com.unity.nuget.newtonsoft-json": {
+      "version": "3.2.1",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://packages.unity.com"
+    },
     "com.unity.probuilder": {
       "version": "5.2.2",
       "depth": 0,
@@ -95,7 +112,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.settings-manager": {
-      "version": "1.0.3",
+      "version": "2.0.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
@@ -160,13 +177,6 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
-    },
-    "com.unity_x.modules.sceneref": {
-      "version": "0.2.1",
-      "depth": 0,
-      "source": "registry",
-      "dependencies": {},
-      "url": "https://upm-packages.dev"
     },
     "com.xsduan.hierarchy-folders": {
       "version": "0.3.1",

@@ -2,9 +2,10 @@ using UnityEngine;
 
 public class LevelSelect : MonoBehaviour
 {
-    public SceneReference Level1;
-    public SceneReference MainMenu;
-    
+    [Header("Scene Names")]
+    [SerializeField] private string _mainMenuSceneName = "MainMenu";
+    [SerializeField] private string _level1SceneName = "Level1"; 
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +20,12 @@ public class LevelSelect : MonoBehaviour
 
     public void changeLevels()
     {
-        SceneController.Instance.ChangeScene(Level1);
+        SceneController.Instance.ChangeScene(_level1SceneName);
     }
 
     public void returnToMainMenu()
     {
-        SceneController.Instance.ChangeScene(MainMenu);
+        SceneController.Instance.ChangeScene(_mainMenuSceneName);
     }
 
     public void restartLevel()
