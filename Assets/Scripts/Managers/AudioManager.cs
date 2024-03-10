@@ -93,6 +93,7 @@ public class AudioManager : MonoBehaviour
         audioSourceParams ??= AudioSourceParams.Default;
 
         snd.audioSrc.clip = clip;
+        snd.audioSrc.spatialBlend = 0.0f; 
         snd.audioSrc.volume = audioSourceParams.Volume;
 
         return snd;
