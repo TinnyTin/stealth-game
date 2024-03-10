@@ -26,13 +26,13 @@ public class FootstepEmitter : MonoBehaviour
       if (isRunning)
       {
         int audioClipIndex = (int)((float)audioClipRun.Length * UnityEngine.Random.value) % audioClipRun.Length;
-        eventToRaise.Raise(audioClipRun[audioClipIndex], transform.position);
+        eventToRaise.Raise(audioClipRun[audioClipIndex], transform.position, AudioSourceParams.Default);
         //Debug.Log("Raise");
       }
       else
       {
         int audioClipIndex = (int)((float)audioClipWalk.Length * UnityEngine.Random.value) % audioClipWalk.Length;
-        eventToRaise.Raise(audioClipWalk[audioClipIndex], transform.position);
+        eventToRaise.Raise(audioClipWalk[audioClipIndex], transform.position, AudioSourceParams.Default);
       }
 
     }

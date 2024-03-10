@@ -42,7 +42,7 @@ public class ExtractionPoint : MonoBehaviour
   public void Extract()
   {
     if(AudioClipExtract != null)
-      eventToRaise.Raise(AudioClipExtract, transform.position);
+      eventToRaise.Raise(AudioClipExtract, transform.position, AudioSourceParams.Default);
 
     // Temporary until SO's are setup. Raise a "Player Reached Exit" SO event in the future.
     if(gameplayObject != null)
