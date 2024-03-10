@@ -50,14 +50,101 @@ Some problems that may be observed during gameplay:
 Who did what, organised by team member names in alphabetical order. Assets that aren't listed here below aren't relevant to what can be seen in the alpha. 
 
 ### Erik
+Erik’s main contributions were the player and camera control systems. Algorithmic contributions include:
+* Input system supporting game controller and keyboard input for third-person perspective control of the player. The player can walk or crouch-walk to navigate on the nav-mesh. The camera system is an interpolated follow-cam, which allows the player to naturally move using either the keyboard or game controller with dual analog sticks.
+* Animated introduction panning camera script
+* System for highlighting the target “stealable” object and extraction point based on player proximity.
+
+Erik also contributed to asset creation, including:
+* A test scene to prototype with the chosen low poly asset pack
+* Animation for player and some civilian NPCs
+* Audio for footsteps
+
+#### Assets Implemented
+**Audio:**
+* Footsteps
+
+**Models and Animations:**
+* Agent animations (civilian clips and animation controllers)
+* Player animations (walk, run, crouch)
+* Player Animation Controller
+
+**Scenes:**
+* Victorian Test Scene
+
+**Prefabs:**
+* Player
+* Extraction Point
+* Stealable Object
+* Civilians
+
+#### Scripts Implemented
+* CameraAnimPlayer.cs
+* ExtractionPoint.cs
+* FollowCamera.cs
+* FootstepEmitter.cs
+* PlayerControl.cs
+* PlayerInput.cs
+* SceneCameraController.cs
+* StealableObject.cs
+
+#### 3rd party credits
+
 ### Jeesoo
+Jeesoo’s main contributions were level development and UI scenes.
+* Designed and built level 1 tutorial level using assets from the low poly asset pack
+* Incorporated camera animations for pan scene
+* Created sound emitting objects that contribute to the AI threat meter
+* Created designs for main menu flow and end states
+
+#### Assets Implemented
+**Audio:**
+* Background music
+* Sounds
+* Crate collision
+* Glass collision
+* Scraping wood
+
+**UI:**
+* Title image
+* Backdrop images
+* Font files
+* Game Flow UI designs
+
+**Animations:**
+* Level1IntroAnimation
+
+**Scenes:**
+* Level1
+* MainMenu
+
+**Prefabs:**
+* Crate
+* Glass Bottle
+
+#### Scripts Implemented
+* SoundEmittingObject.cs
+* SceneCameraController.cs
+
+#### 3rd party credits
+
 ### Justin
+#### Assets Implemented
+#### Scripts Implemented
+#### 3rd party credits
+
 ### Martin
+#### Assets Implemented
+#### Scripts Implemented
+#### 3rd party credits
+
 ### Tom
 Primarily worked on systems to support the development of the game. These systems included:
 * AudioManager: Handles instantiating and playing 2D and 3D audio sources
 * SceneController: Handles loading, unloading, and transitioning scenes at runtime
 * Event System: Allows events to be raised via a GameEvent scriptable oject anywhere in the codebase and for the events to be responded to by parametised listener MonoBehaviors. 
+
+Implemented Global Scene, which is the persistent scene into which all others are additively loaded at runtime. Global Scene contains manager scripts that are required to persist across scenes, this prevents wasted effort duplicating reused managers into each scene. 
 
 Also added the ambient audio that can be heard throughout the level. 
 
