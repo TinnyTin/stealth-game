@@ -45,6 +45,9 @@ The alpha showcases the majority of our technical requirements that are required
 Some problems that may be observed during gameplay:
 * Animations are still a work in progress, some issues such as akward poses and buggy feet movement are to be expected
 * The camera can clip through walls
+* There is some notable z-fighting with certain textures
+* The glass cones don't always emit sound when expected due to an impulse issue
+* Not all NPC's have animations applied
 
 ## Manifest
 Who did what, organised by team member names in alphabetical order. Assets that aren't listed here below aren't relevant to what can be seen in the alpha. 
