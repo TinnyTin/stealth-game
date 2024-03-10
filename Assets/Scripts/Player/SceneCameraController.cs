@@ -112,6 +112,7 @@ public class SceneCameraController : MonoBehaviour
     if (!isPlayIntroAnimation || skipIntroAnimation)
         {
             IntroAnimationCamera.SetActive(false);
+            playerControl.isPlayerControlEnabled = true;
             PlayerCamera.GetComponent<Camera>().enabled = true;
             return;
     }
@@ -179,7 +180,8 @@ public class SceneCameraController : MonoBehaviour
     if (isPlayIntroAnimation || skipIntroAnimation)
     {
         IntroAnimationCamera.SetActive(false);
-      return;
+            playerControl.isPlayerControlEnabled = true;
+            return;
     }
     PlayerCamera.GetComponent<Camera>().enabled = false;
     IntroAnimationCamera.GetComponent<Camera>().enabled = true;
