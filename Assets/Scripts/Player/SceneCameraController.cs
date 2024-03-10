@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -56,6 +58,7 @@ public class SceneCameraController : MonoBehaviour
 
   private float fadePlayerStartTime;
   private bool isFadePlayer = false;
+    public bool skipIntroAnimation = false;
 
   // Start is called before the first frame update
   void Start()
@@ -95,8 +98,9 @@ public class SceneCameraController : MonoBehaviour
     isPlayIntroAnimation = false;
 
     Play();
-    //playerControl.isPlayerControlEnabled = true;
-  }
+    
+        //playerControl.isPlayerControlEnabled = true;
+    }
 
 
   void FixedUpdate()
@@ -104,9 +108,16 @@ public class SceneCameraController : MonoBehaviour
     //test checking the path hash
     if (introCameraAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash != playStateNameHash)
       return;
-    
-    if (!isPlayIntroAnimation)
-      return;
+
+    if (!isPlayIntroAnimation || skipIntroAnimation)
+        {
+            IntroAnimationCamera.SetActive(false);
+            playerControl.isPlayerControlEnabled = true;
+            PlayerCamera.GetComponent<Camera>().enabled = true;
+            HUD.SetActive(true);
+            return;
+    }
+
 
     if (!isFadePlayer)
     {
@@ -167,9 +178,12 @@ public class SceneCameraController : MonoBehaviour
   // pan animation.
   public void Play()
   {
-    if (isPlayIntroAnimation)
+    if (isPlayIntroAnimation || skipIntroAnimation)
     {
-      return;
+        IntroAnimationCamera.SetActive(false);
+            playerControl.isPlayerControlEnabled = true;
+            HUD.SetActive(true);
+            return;
     }
     PlayerCamera.GetComponent<Camera>().enabled = false;
     IntroAnimationCamera.GetComponent<Camera>().enabled = true;
