@@ -207,7 +207,7 @@ public class AIStateMachine : MonoBehaviour
     IEnumerator CoroutineCatchPlayer(float delay)
     {
         yield return new WaitForSeconds(delay);
-        PlayerCaught.Raise(this);
+        PlayerCaught.Raise();
     }
 }
 

@@ -6,11 +6,18 @@ public class AudioManager : MonoBehaviour
 {
     // Singleton Instance 
     private static AudioManager _audioManager;
+    private static bool _hasShutdown = false; 
 
     public static AudioManager Instance
     {
         get
         {
+            if (_hasShutdown)
+            {
+                // Debug.LogWarning("AudioManager Instance accessed after shutdown.");
+                return null;
+            }
+
             if (!_audioManager)
             {
                 _audioManager = FindObjectOfType(typeof(AudioManager)) as AudioManager;
@@ -18,6 +25,7 @@ public class AudioManager : MonoBehaviour
                 if (!_audioManager)
                 {
                     Debug.LogError("There needs to be one active AudioManager script on a GameObject in your scene.");
+                    return null;
                 }
             }
 
@@ -45,24 +53,31 @@ public class AudioManager : MonoBehaviour
 
     }
 
-    private EventSound3D CreateEventAudio3D(AudioClip clip, Vector3 worldPos)
+    public void OnDestroy()
+    {
+        DestroyAll2DAudioSources();
+        _hasShutdown = true; 
+    }
+
+    private EventSound3D CreateEventAudio3D(AudioClip clip, Vector3 worldPos, AudioSourceParams audioSourceParams)
     {
         EventSound3D snd = Instantiate(eventSound3DPrefab, worldPos, Quaternion.identity, null);
 
-        //AudioClip audioClip = Resources.Load<AudioClip>(assetPath);
-
-        //if (audioClip == null)
-        //{
-        //    Debug.LogWarning($"{this.name}: Could not load audio clip with asset path {assetPath}");
-        //    return null;
-        //}
+        // Use default audio source params if none provided
+        audioSourceParams ??= AudioSourceParams.Default;
 
         snd.audioSrc.clip = clip;
-        snd.audioSrc.dopplerLevel = 0f;
+        snd.audioSrc.dopplerLevel = audioSourceParams.DopplerLevel;
+        snd.audioSrc.maxDistance = audioSourceParams.MaxDistance;
+        snd.audioSrc.minDistance = audioSourceParams.MinDistance;
+        snd.audioSrc.rolloffMode = audioSourceParams.RolloffMode;
+        snd.audioSrc.panStereo = audioSourceParams.StereoPan;
+        snd.audioSrc.volume = audioSourceParams.Volume; 
+        
         return snd;
     }
 
-    private EventSound2D CreateEventAudio2D(AudioClip clip)
+    private EventSound2D CreateEventAudio2D(AudioClip clip, AudioSourceParams audioSourceParams)
     {
         EventSound2D snd = Instantiate(eventSound2DPrefab);
 
@@ -74,40 +89,44 @@ public class AudioManager : MonoBehaviour
         //    return null;
         //}
 
+        // Use default audio source params if none provided
+        audioSourceParams ??= AudioSourceParams.Default;
+
         snd.audioSrc.clip = clip;
+        snd.audioSrc.volume = audioSourceParams.Volume;
+
         return snd;
     }
 
-    public void PlayAudio3DOneShot(Component sender, AudioClip clip, Vector3 position)
+    public void PlayAudio3DOneShot(AudioClip clip, Vector3 position, AudioSourceParams audioSourceParams)
     {
-        //if (clip is AudioClip clipp && position is Vector3 vector3)
-        {
-            EventSound3D sound = CreateEventAudio3D(clip, position);
-            sound.audioSrc.Play();
-        }
+        EventSound3D sound = CreateEventAudio3D(clip, position, audioSourceParams);
+        sound.audioSrc.Play();
     }
 
-    public void PlayAudio2DOneShot(Component sender, AudioClip clip)
+    public void PlayAudio2DOneShot(AudioClip clip, AudioSourceParams audioSourceParams)
     {
-        //if (clip is AudioClip clipp && position is Vector3 vector3)
-        {
-            EventSound2D sound = CreateEventAudio2D(clip);
-            sound.audioSrc.Play();
-        }
+        EventSound2D sound = CreateEventAudio2D(clip, audioSourceParams);
+        sound.audioSrc.Play();
     }
 
     public void DemoEventFunction(Component sender, AudioClip clip, Vector3 position, string message)
     {
-        EventSound3D sound = CreateEventAudio3D(clip, position);
+        EventSound3D sound = CreateEventAudio3D(clip, position, null);
         sound.audioSrc.Play();
         Debug.Log($"{this.name} - {System.Reflection.MethodBase.GetCurrentMethod().Name} - {message}");
     }
 
-    public int CreateAmbientAudio2DLooping(AudioClip audioClip, bool playImmediate = true)
+    public int CreateAmbientAudio2DLooping(AudioClip audioClip, AudioSourceParams audioSourceParams, bool playImmediate = true)
     {
         AmbientSound2D snd = Instantiate(ambientSound2DPrefab); 
+
+        audioSourceParams ??= AudioSourceParams.Default;
+
         snd.audioSrc.clip = audioClip; 
         snd.audioSrc.loop = true;
+        snd.audioSrc.volume = audioSourceParams.Volume;
+
         _2dAudioSources.Add(snd);
 
         if (playImmediate)
@@ -171,5 +190,13 @@ public class AudioManager : MonoBehaviour
             return false;
 
         return snd.audioSrc.isPlaying; 
+    }
+
+    private void DestroyAll2DAudioSources()
+    {
+        foreach (AmbientSound2D audioSource in _2dAudioSources)
+        {
+            audioSource.Destroy();
+        }
     }
 }

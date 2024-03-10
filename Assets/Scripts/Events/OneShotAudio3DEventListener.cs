@@ -13,17 +13,17 @@ using UnityEngine.Events;
  */
 
 [AddComponentMenu("One-Shot 3D Audio Event Listener")]
-public class OneShotAudio3DEventListener : GameEventListenerBase, I2ParamEventListener<AudioClip, Vector3>
+public class OneShotAudio3DEventListener : GameEventListenerBase, I3ParamEventListener<AudioClip, Vector3, AudioSourceParams>
 {
     [System.Serializable]
-    public class OneShotAudio3DEvent : UnityEvent<Component, AudioClip, Vector3> { }
+    public class OneShotAudio3DEvent : UnityEvent<AudioClip, Vector3, AudioSourceParams> { }
 
     [Header("Response Method To Invoke:")]
     [Tooltip("Response to invoke when Event with GameData is raised.")]
     public OneShotAudio3DEvent response;
 
-    public void OnEventRaised(AudioClip audioClip, Vector3 position)
+    public void OnEventRaised(AudioClip audioClip, Vector3 position, AudioSourceParams audioSourceParams)
     {
-        response.Invoke(null, audioClip, position);
+        response.Invoke(audioClip, position, audioSourceParams);
     }
 }

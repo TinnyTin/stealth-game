@@ -62,7 +62,7 @@ public class AudioTestCapsule : MonoBehaviour
         if (eventToRaise != null)
         {
             if (testType == TestType.OneShot3D)
-                eventToRaise.Raise(audioClip, transform.position);
+                eventToRaise.Raise(audioClip, transform.position, AudioSourceParams.Default);
             else if (testType == TestType.OneShot2D)
                 eventToRaise.Raise(audioClip);
             else if (testType == TestType.DemoTest)
@@ -73,7 +73,7 @@ public class AudioTestCapsule : MonoBehaviour
             if (testType == TestType.AmbientSound2D)
             {
                 if (soundId == -1)
-                    soundId = AudioManager.Instance.CreateAmbientAudio2DLooping(audioClip);
+                    soundId = AudioManager.Instance.CreateAmbientAudio2DLooping(audioClip, AudioSourceParams.Default);
                 else
                 {
                     if (AudioManager.Instance.IsAmbientAudio2DPlaying(soundId))

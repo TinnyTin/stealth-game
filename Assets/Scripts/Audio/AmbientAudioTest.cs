@@ -13,6 +13,10 @@ using UnityEngine;
 public class AmbientAudioTest : MonoBehaviour
 {
     [SerializeField] private AudioClip _audioClip;
+
+    [Range(0.0f,1.0f)]
+    [SerializeField] private float _volume = 1.0f;
+
     private int _audioClipId = 0; 
 
     // Start is called before the first frame update
@@ -20,8 +24,12 @@ public class AmbientAudioTest : MonoBehaviour
     {
         if (_audioClip != null)
         {
-            _audioClipId = AudioManager.Instance.CreateAmbientAudio2DLooping(_audioClip);
-            AudioManager.Instance.SetAmbientAudio2DVolume(_audioClipId, 0.6f);
+            AudioSourceParams audioSourceParams = new AudioSourceParams
+            {
+                Volume = _volume
+            };
+
+            _audioClipId = AudioManager.Instance.CreateAmbientAudio2DLooping(_audioClip, audioSourceParams);
         }
     }
 
@@ -33,6 +41,7 @@ public class AmbientAudioTest : MonoBehaviour
 
     public void OnDestroy()
     {
-        AudioManager.Instance.DestroyAmbientAudio2D(_audioClipId); 
+        if (AudioManager.Instance)
+            AudioManager.Instance.DestroyAmbientAudio2D(_audioClipId); 
     }
 }
