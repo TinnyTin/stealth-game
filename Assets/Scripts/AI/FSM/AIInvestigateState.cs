@@ -17,7 +17,7 @@ public class AIInvestigateState : AIBaseState
     {
         Ctx.anim.SetTrigger("triggerSurprised");
         Ctx.setSpeed(Ctx.walkSpeed);
-        Ctx.AudioChannel.Raise(Ctx.audioClipGasp, Ctx.transform.position);
+         Ctx.AudioChannel.Raise(Ctx.audioClipGasp, Ctx.transform.position, AudioSourceParams.Default);
     }
     public override void UpdateState()
     {
