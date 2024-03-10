@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author: Martin Lee
+ * Contributors:
+ * Description: Stops the Minimap from rotating with the player
+ */
 public class LimitCamera : MonoBehaviour
 {
     public GameObject player;

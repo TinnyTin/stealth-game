@@ -8,7 +8,7 @@ using UnityEngine;
  * CS6457 Attributions
  * Tiny Brain
  * Original Author:     Erik
- * Contributors:        
+ * Contributors:        Martin
  */
 
 public class ExtractionPoint : MonoBehaviour

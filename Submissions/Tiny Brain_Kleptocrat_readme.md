@@ -212,9 +212,43 @@ Other notable contributions:
 * Probuilder rapid prototyping - https://unity.com/features/probuilder
 
 ### Martin
+Worked on end-user game flow, all UI logic and animations, and assistance with merging game systems together.
+* Authored MainMenu scene, logic and animations.
+* Mission Summary screen (exit, restart, return to menus) and associated camera logic.
+* Minimap, ObjectiveTracker, and Alert status for the HUD.
+* Loading screen implementation.
+* Scripts for the user's success and game-over conditions.
+* Ensuring controllers can navigate all menus in the game.
+* Ability and text to skip the intro cutscene.
+Piecing together navigation flow for the user from start to end of experience.
+
 #### Assets Implemented
+
+**Animations and Controllers:**
+* All files under ModelsAndAnimations\UI
+
+**Scenes:**
+* MainMenu
+* Level1 (Contributor)
+
+**Prefabs:**
+* Minimap Camera.prefab
+* HUD Canvas.prefab
+* Mission Summary Canvas.prefab
+
 #### Scripts Implemented
+* Most can be found under Scripts/UI/*
+* AlertStatus.cs
+* ChangeMissionText.cs
+* GameQuitter.cs
+* LimitCamera.cs
+* MainMenuTransition.cs
+* MainMenuCamera.cs
+* MissionSummary.cs
+* ObjectiveTracker.cs
+
 #### 3rd party credits
+* Milestone assignment for the GameQuitter
 
 ### Tom
 Primarily worked on systems to support the development of the game. These systems included:

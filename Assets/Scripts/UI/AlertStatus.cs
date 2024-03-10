@@ -5,6 +5,14 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.UI;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author: Martin Lee
+ * Contributors:
+ * Description: Alert status functionality for HUD display
+ */
+
 public class AlertStatus : MonoBehaviour
 {
     private Image image;

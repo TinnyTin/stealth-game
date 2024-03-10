@@ -2,6 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author: Martin Lee
+ * Contributors:
+ * Description: Objective Tracker for HUD
+ */
+
 public class ObjectiveTracker : MonoBehaviour
 {
     public GameObject mainObjective;

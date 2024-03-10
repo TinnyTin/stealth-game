@@ -2,6 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author: Martin Lee
+ * Contributors:
+ * Description: Change mission text for mission summary HUD
+ */
 public class ChangeMissionText : MonoBehaviour
 {
     public string missionSuccess = "Mission Success";

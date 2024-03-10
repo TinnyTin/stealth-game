@@ -1,5 +1,13 @@
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author: Martin Lee
+ * Contributors:
+ * Description: Scene switching for UI navigation
+ */
+
 public class LevelSelect : MonoBehaviour
 {
     [Header("Scene Names")]
