@@ -22,7 +22,7 @@ public class AIAudioListener : MonoBehaviour
         
     }
 
-    public void onSound3DStringInGameCreated(Component component, AudioClip sfx, Vector3 position, string str)
+    public void onSound3DStringInGameCreated(AudioClip sfx, Vector3 position, string str, AudioSourceParams audioSourceParams)
     {
         // check string is correct
         if (str == "SoundThreat")
