@@ -11,6 +11,7 @@
     "com.unity.timeline": "1.6.5",
     "com.unity.ugui": "1.0.0",
     "com.unity.visualscripting": "1.9.1",
+    "com.unity_x.modules.sceneref": "0.2.1",
     "com.xsduan.hierarchy-folders": "0.3.1",
     "com.unity.modules.ai": "1.0.0",
     "com.unity.modules.androidjni": "1.0.0",
@@ -50,6 +51,13 @@
       "url": "https://package.openupm.com",
       "scopes": [
         "com.xsduan.hierarchy-folders"
+      ]
+    },
+    {
+      "name": "Unofficial Unity Package Manager Registry",
+      "url": "https://upm-packages.dev",
+      "scopes": [
+        "com.unity_x"
       ]
     }
   ]

@@ -1,10 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelSelect : MonoBehaviour
 {
+    public SceneReference Level1;
+    public SceneReference MainMenu;
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -19,12 +19,12 @@ public class LevelSelect : MonoBehaviour
 
     public void changeLevels()
     {
-        SceneController.Instance.ChangeScene("Assets/Scenes/Levels/Level1.unity");
+        SceneController.Instance.ChangeScene(Level1);
     }
 
     public void returnToMainMenu()
     {
-        SceneController.Instance.ChangeScene("Assets/Scenes/MainMenu.unity");
+        SceneController.Instance.ChangeScene(MainMenu);
     }
 
     public void restartLevel()
