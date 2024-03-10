@@ -133,9 +133,80 @@ Jeesoo’s main contributions were level development and UI scenes.
 * Poly Steampunk Pack by Polyperfect: https://assetstore.unity.com/packages/3d/props/poly-steampunk-pack-265079
 
 ### Justin
+Justin’s contributions were heavily in the AI system. Algorithm contributions include:
+* Hierarchical FSM system for AI behavior states
+* Audio sensory through sound listener based on listening radius
+* FOV Sight sensory using physics radius, view angle & non-blocked raycasting from AI head to player 
+* FOV conic view visualisation through dynamic mesh renderer
+* 2D root-motion blended movement integrated into the navigational mesh, with waypoint navigation
+* Threat-meter based behavior switching system, and UI displaying threat bar
+* AI Manager creating events in Scriptable Object (highest elevated AI hostile state, AI requests player caught)
+
+Other notable contributions:
+* Enhancement on Erik’s footstep emitter- now the randomized collection-based footsteps can be chosen based on passed-in ground surface + movement type (not yet fully utilized in the alpha)
+
 #### Assets Implemented
+**Controller:**
+* AI_guard.controller
+
+**Animation:**
+* From milestone 1:
+  * Walkback.fbx
+  * Walkbackandturn.fbx
+  * Walkforward.fbx
+  * Runs.fbx
+  * Idles.fbx
+  * Y_Bot@left_turn_90.fbx
+  * Y_Bot@right_turn_90.fbx
+* From Mixamo.com:
+  * Nervously Look Around.fbx
+  * Surprised.fbx
+  * Terrified.fbx
+  * Reacting.fbx
+
+**Audio:**
+* Fail-trumpet-sound-effect.mp3 https://www.youtube.com/watch?v=z8Jn3qnPOGg
+* Male-gasp.mp3 https://www.youtube.com/watch?v=g9xXaDyi5_E
+
+**Prefab:**
+* AI_Guard.prefab
+* MovableCrouchCover.prefab
+* PathDebugger.prefab
+
+**ScriptableObjects:**
+* AIGlobalData.asset
+* AIHighestStateChange.asset
+* AIRequestPlayerCaught.asset
+* DirtWalk.asset
+* DirtRun.asset
+* FootstepEmitter.asset
+* FailSound.asset
+
+**Scenes:**
+* ai-algorithm (test, not used in alpha)
+
 #### Scripts Implemented
+* AIStateMachine.cs
+* AIStateFactory.cs
+* AIBaseState.cs
+* AIInvestigateState.cs
+* AIPursuitState.cs
+* AIWaypointState.cs
+* AIAudioListener.cs
+* CanvasLookatCamera.cs
+* PathDebugger.cs
+* ThreatMeter.cs
+* Waypoint.cs
+* FootStepFactory.cs
+* FootStepCollection.cs
+* AIData.cs
+* PlayerCaughtListener.cs
+* AIThreatChangeEventListener.cs
+
 #### 3rd party credits
+* Heirarchical FSM - https://www.youtube.com/watch?v=kV06GiJgFhc&t=1535s
+* FOV visualisation - https://www.youtube.com/watch?v=rQG9aUWarw
+* Probuilder rapid prototyping - https://unity.com/features/probuilder
 
 ### Martin
 #### Assets Implemented
