@@ -197,7 +197,8 @@ public class AudioManager : MonoBehaviour
     {
         foreach (AmbientSound2D audioSource in _2dAudioSources)
         {
-            audioSource.Destroy();
+            if (audioSource != null)
+                audioSource.Destroy();
         }
     }
 }
