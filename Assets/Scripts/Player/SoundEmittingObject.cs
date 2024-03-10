@@ -1,5 +1,12 @@
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Jeesoo
+ * Contributors:        
+ */
+
 public class SoundEmittingObject : MonoBehaviour
 {
     public AudioClip AudioClipCollision;

@@ -1,8 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
@@ -11,7 +6,7 @@ using UnityEngine.Rendering.Universal;
  * CS6457 Attributions
  * Tiny Brain
  * Original Author:     Erik
- * Contributors:        
+ * Contributors:        Jeesoo
  */
 
 /*
