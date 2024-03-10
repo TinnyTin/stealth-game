@@ -53,7 +53,7 @@ public class FootStepFactory: ScriptableObjectWithInit
         AudioClip footstep = null;
         footstep = getFootStepRandom(floorCharacteristic, stepCharacteristic);
         // play sound
-        eventToRaise.Raise(footstep, position);
+        eventToRaise.Raise(footstep, position, AudioSourceParams.Default);
         return footstep;
     }
 }

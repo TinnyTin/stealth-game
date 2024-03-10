@@ -1,7 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class SoundEmittingObject : MonoBehaviour
@@ -25,9 +21,7 @@ public class SoundEmittingObject : MonoBehaviour
         if (c.impulse.magnitude > impulseThreshold)
         {
             if (AudioClipCollision != null)
-                eventToRaise.Raise(AudioClipCollision, transform.position, "SoundThreat");
+                eventToRaise.Raise(AudioClipCollision, transform.position, AudioSourceParams.Default);
         }
-
-
     }
 }
