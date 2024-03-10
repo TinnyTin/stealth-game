@@ -2,6 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Erik
+ * Contributors:        Justin
+ */
+
+/*
+ * Main player script for controlling player behavior and follow 
+ * camera from player input
+ */
+
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(PlayerInput))]
 [RequireComponent(typeof(FollowCamera))]
 public class PlayerControl : MonoBehaviour

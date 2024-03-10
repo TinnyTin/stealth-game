@@ -1,6 +1,13 @@
 using Unity.VisualScripting;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Erik
+ * Contributors:        
+ */
+
 public class StealableObject : MonoBehaviour
 {
   public AudioClip AudioClipSteal;
