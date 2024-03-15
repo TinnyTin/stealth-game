@@ -204,6 +204,7 @@ public class SceneCameraController : MonoBehaviour
         PlayerCamera.GetComponent<Camera>().enabled = true;
         skipIntroText.SetActive(false);
         IntroAnimationCamera.SetActive(false);
+        ppColorAdjust.postExposure.value = 0f; // turn off black post-processing entirely
         playerControl.isPlayerControlEnabled = true;
         HUD.SetActive(true);
     }
