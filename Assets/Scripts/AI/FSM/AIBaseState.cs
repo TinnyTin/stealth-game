@@ -60,8 +60,8 @@ public abstract class AIBaseState
         newState.EnterState();
 
         // update AI Manager
-        if (Ctx.aiData != null)
-            Ctx.aiData.UpdateThreatPriority();
+        if (Ctx.aiManager != null)
+            Ctx.aiManager.UpdateThreatPriority();
 
         if (_isRootState)
         {

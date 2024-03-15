@@ -29,6 +29,9 @@ public class AIManager : ScriptableObjectWithInit
     private GameObject AIhighestState;
     private GameObject AIWithHighestThreatPriority;
 
+    public bool _areAIsActive = true;
+    public bool AreAIsActive { get { return _areAIsActive; } set { _areAIsActive = value; } }
+
     // Init is called before the first frame update
     public override void Init()
     {
@@ -80,7 +83,8 @@ public class AIManager : ScriptableObjectWithInit
     {
         foreach (GameObject AI in AIs)
         {
-            AI.SetActive(isActive);
+            AI.GetComponent<AIStateMachine>().IsAIActive = isActive;
         }
+        AreAIsActive = isActive;
     }
 }

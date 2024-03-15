@@ -29,7 +29,7 @@ public class AIStateMachine : MonoBehaviour
     public float currentSpeed = 0.2f;
     public float pursuitAutoSenseRadius = 2f;
     public float finalCaughtRadius = 1.5f;
-    public bool _isAIActive = false;
+    public bool isAIActive = false;
 
     // public
     [Header("Initialize AI State")]
@@ -44,7 +44,7 @@ public class AIStateMachine : MonoBehaviour
     public int countInView;
 
     [Header("ScriptableObjects")]
-    public AIManager aiData;
+    public AIManager aiManager;
     public GameEvent PlayerCaught;
     public GameEvent AudioChannel;
 
@@ -75,14 +75,14 @@ public class AIStateMachine : MonoBehaviour
     // interfaces
     public AIBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public int LastWaypointIdx { get { return _lastWaypointIdx; } set { _lastWaypointIdx = value; } }
-    public bool IsAIActive { get { return _isAIActive; } set { _isAIActive = value; } }
+    public bool IsAIActive { get { return isAIActive; } set { isAIActive = value; } }
 
 
     private void Awake()
     {
 
         // Register in AI Data SO
-        aiData.RegisterAI(this.gameObject);
+        aiManager.RegisterAI(this.gameObject);
 
         // set up context
         anim = GetComponent<Animator>();
@@ -101,7 +101,7 @@ public class AIStateMachine : MonoBehaviour
         _currentState.EnterState();
 
         // set active flag
-        _isAIActive = true;
+        isAIActive = true;
 
 
     }
@@ -113,9 +113,9 @@ public class AIStateMachine : MonoBehaviour
 
     private void Update()
     {
-        if (_isAIActive)
+        SynchronizeAnimatorAndAgent();
+        if (isAIActive)
         {
-            SynchronizeAnimatorAndAgent();
             _currentState.UpdateStates();
             _currentState.CheckSwitchStates();
         }
@@ -214,12 +214,12 @@ public class AIStateMachine : MonoBehaviour
 
     private void OnEnable()
     {
-        aiData.RegisterAI(this.gameObject);
+        aiManager.RegisterAI(this.gameObject);
     }
 
     private void OnDisable()
     {
-        aiData.UnRegisterAI(this.gameObject);
+        aiManager.UnRegisterAI(this.gameObject);
     }
 
     // ======================================================

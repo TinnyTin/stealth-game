@@ -2915,6 +2915,7 @@ MonoBehaviour:
   currentSpeed: 0.3
   pursuitAutoSenseRadius: 3
   finalCaughtRadius: 1.5
+  _isAIActive: 0
   WaypointDistanceTolerance: 1
   waypoints:
   - {fileID: 1000510915}
@@ -2927,7 +2928,7 @@ MonoBehaviour:
   - {fileID: 2065430734}
   lastThreat: {x: 0, y: 0, z: 0}
   countInView: 0
-  aiData: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
+  aiManager: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
   PlayerCaught: {fileID: 11400000, guid: b984adb34e019c549be34216320474f0, type: 2}
   AudioChannel: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
   audioClipGasp: {fileID: 8300000, guid: 1a40ae3c3c83d8143870f766d55c3855, type: 3}
