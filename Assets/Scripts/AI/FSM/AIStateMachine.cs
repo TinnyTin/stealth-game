@@ -29,6 +29,7 @@ public class AIStateMachine : MonoBehaviour
     public float currentSpeed = 0.2f;
     public float pursuitAutoSenseRadius = 2f;
     public float finalCaughtRadius = 1.5f;
+    public bool _isAIActive = false;
 
     // public
     [Header("Initialize AI State")]
@@ -43,7 +44,7 @@ public class AIStateMachine : MonoBehaviour
     public int countInView;
 
     [Header("ScriptableObjects")]
-    public AIData aiData;
+    public AIManager aiData;
     public GameEvent PlayerCaught;
     public GameEvent AudioChannel;
 
@@ -71,8 +72,10 @@ public class AIStateMachine : MonoBehaviour
     private Vector2 SmoothDeltaDirection;
     protected int _lastWaypointIdx = -1;
 
+    // interfaces
     public AIBaseState CurrentState { get { return _currentState; } set { _currentState = value; } }
     public int LastWaypointIdx { get { return _lastWaypointIdx; } set { _lastWaypointIdx = value; } }
+    public bool IsAIActive { get { return _isAIActive; } set { _isAIActive = value; } }
 
 
     private void Awake()
@@ -97,6 +100,9 @@ public class AIStateMachine : MonoBehaviour
         _currentState.SetAIThreatPriority();
         _currentState.EnterState();
 
+        // set active flag
+        _isAIActive = true;
+
 
     }
 
@@ -107,9 +113,13 @@ public class AIStateMachine : MonoBehaviour
 
     private void Update()
     {
-        SynchronizeAnimatorAndAgent();
-        _currentState.UpdateStates();
-        _currentState.CheckSwitchStates();
+        if (_isAIActive)
+        {
+            SynchronizeAnimatorAndAgent();
+            _currentState.UpdateStates();
+            _currentState.CheckSwitchStates();
+        }
+
     }
 
     // ======================================================

@@ -8,13 +8,15 @@ using System.Linq;
  * Tiny Brain
  * Original Author:     Justin Wu
  * Contributors:
- * Description: AI Data pushing into a Scriptable Object.
+ * Description: AI Manager 
+ *              receives request to enable/disable all AI
+ *              pushes data into a ScriptableObjects.
  * External Source Credit: 
  *                      
  */
 
 [CreateAssetMenu(menuName = "SO's/AIGlobalData")]
-public class AIData : ScriptableObjectWithInit
+public class AIManager : ScriptableObjectWithInit
 {
     public AIThreatPriority highestState;
     //public float highestThreat;
@@ -71,6 +73,14 @@ public class AIData : ScriptableObjectWithInit
         {
             AIs.Add(ai);
         }
-        
+
+    }
+
+    public void setAIActive(bool isActive)
+    {
+        foreach (GameObject AI in AIs)
+        {
+            AI.SetActive(isActive);
+        }
     }
 }
