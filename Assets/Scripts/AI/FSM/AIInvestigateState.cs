@@ -38,7 +38,7 @@ public class AIInvestigateState : AIBaseState
         Ctx.agent.SetDestination(Ctx.lastThreat);
         if ((Ctx.agent.remainingDistance < 5) && !Ctx.agent.pathPending)
         {
-            // loop LookAroundCut animation
+            // loop Look animation
             if (!AIAnimationSubState.CheckAnimationString(CurrentSubState,"Look"))
             { 
                 AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null);

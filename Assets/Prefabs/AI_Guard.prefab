@@ -2915,6 +2915,7 @@ MonoBehaviour:
   aiManager: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
   PlayerCaught: {fileID: 11400000, guid: b984adb34e019c549be34216320474f0, type: 2}
   AudioChannel: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
+  playerData: {fileID: 11400000, guid: 15901981171d3984bad2e1974e5b7aa7, type: 2}
   audioClipGasp: {fileID: 8300000, guid: 1a40ae3c3c83d8143870f766d55c3855, type: 3}
   audioClipAlert: {fileID: 8300000, guid: d300c59fa6831f3428d08d8729dd6089, type: 3}
   aiThreatPriority: 0

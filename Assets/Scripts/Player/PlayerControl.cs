@@ -90,7 +90,11 @@ public class PlayerControl : MonoBehaviour
     // be used as an offset for all later rotation calculations
     private Quaternion playerInitialRot;
 
+    /*
+     * ScriptablObjects
+     */
 
+    public PlayerData playerData;
     public void Initialize()
     {
         // get stealable object and component
@@ -184,6 +188,12 @@ public class PlayerControl : MonoBehaviour
         // don't overwrite the cached input buttons (if true, not yet handled)
         _playerActionGrab = input.playerActionGrab || _playerActionGrab;
         _playerActionCrouch = input.playerActionCrouch || _playerActionCrouch;
+
+        if (playerData != null)
+        {
+            playerData.PlayerPosition = transform.position;
+        }
+        
     }
 
     private void FixedUpdate()

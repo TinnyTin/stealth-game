@@ -47,10 +47,12 @@ public class AIStateMachine : MonoBehaviour
     public AIManager aiManager;
     public GameEvent PlayerCaught;
     public GameEvent AudioChannel;
+    public PlayerData playerData;
 
     [Header("AudioClips")]
     public AudioClip audioClipGasp;
     public AudioClip audioClipAlert;
+
 
     [HideInInspector]
     public AIThreatPriority aiThreatPriority;
