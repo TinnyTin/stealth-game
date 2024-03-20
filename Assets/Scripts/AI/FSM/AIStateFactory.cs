@@ -17,6 +17,7 @@ public class AIStateFactory
     AIWaypointState _waypointState;
     AIInvestigateState _investigateState;
     AIPursuitState _pursuitState;
+    AIEmptySubState _emptySubState;
     public AIStateFactory(AIStateMachine currentContext)
     {
         _context = currentContext;
@@ -45,5 +46,19 @@ public class AIStateFactory
             _pursuitState = new AIPursuitState(_context, this);
         }
         return _pursuitState;
+    }
+
+    public AIAnimationSubState animationSubState(string strAnimation, string strTrigger, AudioClip audioClip)
+    {
+        return new AIAnimationSubState(_context, this, strAnimation, strTrigger, audioClip);
+    }
+
+    public AIBaseState EmptySubState()
+    {
+        if (_emptySubState == null)
+        {
+            _emptySubState = new AIEmptySubState(_context, this);
+        }
+        return _emptySubState;
     }
 }
