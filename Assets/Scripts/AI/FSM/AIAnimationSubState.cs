@@ -21,6 +21,8 @@ public class AIAnimationSubState : AIBaseState
     private string _stringAnimation;
     private AudioClip _audioClip;
 
+    public string StringAnimation { get { return _stringAnimation; } }
+
     public AIAnimationSubState(AIStateMachine currentContext, AIStateFactory aiStateFactory, string strAnimation, string strTrigger, AudioClip audioClip) : base(currentContext, aiStateFactory)
     {
         IsRootState = false; // substate only
@@ -71,4 +73,9 @@ public class AIAnimationSubState : AIBaseState
     }
     public override void InitializeSubState() { }
 
+    public static bool CheckAnimationString(AIBaseState baseState, string stringAnimation)
+    {
+
+        return ((baseState is AIAnimationSubState) && ((AIAnimationSubState)baseState).StringAnimation == stringAnimation);
+    }
 }

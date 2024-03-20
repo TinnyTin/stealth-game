@@ -46,26 +46,30 @@ public class AIPursuitState : AIBaseState
             // if the target is no longer in view, need to find the guy
             if ((Ctx.countInView == 0) && (targetpos == null))
             {
-                if (!Ctx.anim.GetCurrentAnimatorStateInfo(0).IsName("LookAroundCut"))
+                // loop animation LookAroundCut 
+                if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Look"))
                 {
-                    Ctx.anim.SetTrigger("triggerLook");
+                    AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null);
+                    SwitchSubState(animationLookAround);
                 }
             }
-            else if (!Ctx.anim.GetCurrentAnimatorStateInfo(0).IsName("Angry Point"))
+            // Else, target is in view. catch him
+            else
             {
-                Ctx.anim.SetTrigger("triggerAngry");
+                // loop animation LookAroundCut 
+                if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Angry"))
+                {
+                    AIBaseState animationAngryPoint = Factory.animationSubState("Angry", "triggerAngry", null);
+                    SwitchSubState(animationAngryPoint);
+                }
                 Ctx.CatchPlayer();
 
             }
-
         }
     }
-
     public override void ExitState()
     {
         Ctx.setSpeed(lastSpeed);
-        Ctx.anim.ResetTrigger("triggerLook");
-        Ctx.anim.ResetTrigger("triggerAngry");
     }
     public override void CheckSwitchState()
     {

@@ -27,7 +27,7 @@ public class AIInvestigateState : AIBaseState
     {
 
         // play surprised animation
-        AIBaseState animationSurprised = Factory.animationSubState("surprised", "triggerSurprised", Ctx.audioClipGasp);
+        AIBaseState animationSurprised = Factory.animationSubState("Surprised", "triggerSurprised", Ctx.audioClipGasp);
         SwitchSubState(animationSurprised);
         
         Ctx.setSpeed(Ctx.walkSpeed);
@@ -38,10 +38,10 @@ public class AIInvestigateState : AIBaseState
         Ctx.agent.SetDestination(Ctx.lastThreat);
         if ((Ctx.agent.remainingDistance < 5) && !Ctx.agent.pathPending)
         {
-            if (!(CurrentSubState is AIAnimationSubState))
-            {
-                // play surprised animation
-                AIBaseState animationLookAround = Factory.animationSubState("LookAroundCut", "triggerLook", null);
+            // loop LookAroundCut animation
+            if (!AIAnimationSubState.CheckAnimationString(CurrentSubState,"Look"))
+            { 
+                AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null);
                 SwitchSubState(animationLookAround);
             }
         }
