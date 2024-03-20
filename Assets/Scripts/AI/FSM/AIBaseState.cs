@@ -14,21 +14,27 @@ public abstract class AIBaseState
     private AIStateFactory _factory;
     private AIBaseState _currentSuperState;
     private AIBaseState _currentSubState;
+    protected AIBaseState CurrentSubState { get { return _currentSubState; } }
 
     protected bool IsRootState { get { return _isRootState; } set { _isRootState = value; } }
     protected AIStateMachine Ctx { get { return _ctx; } }
     protected AIStateFactory Factory { get { return _factory; } }
+
+    
     public AIBaseState(AIStateMachine currentContext, AIStateFactory aiStateFactory)
     {
         _ctx = currentContext;
         _factory = aiStateFactory;
     }
-    public abstract void SetAIThreatPriority();
+    public abstract bool SetAIThreatPriority();
     public abstract void EnterState();
     public abstract void UpdateState();
     public abstract void ExitState();
-    public abstract void CheckSwitchStates();
+    public abstract void CheckSwitchState();
+    // only implemented if you always plan on having a substate for a superstate.
+    // if that is the case, call InitializeSubstate() in the parent's constructor.
     public abstract void InitializeSubState();
+
 
     public void UpdateStates()
     {
@@ -39,29 +45,39 @@ public abstract class AIBaseState
         }
     }
 
+    public void CheckSwitchStates()
+    {
+        CheckSwitchState();
+        if (_currentSubState != null)
+        {
+            _currentSubState.CheckSwitchStates();
+        }
+    }
+
     public void ExitStates()
     {
-        ExitState();
         if (_currentSubState != null)
         {
             _currentSubState.ExitStates();
         }
+        ExitState();
     }
 
     public void SwitchState(AIBaseState newState)
     {
         // current state exits state
-        ExitState();
+        ExitStates();
 
         // set threat priority
-        newState.SetAIThreatPriority();
+        if (newState.SetAIThreatPriority())
+        {
+            // update AI Manager
+            if (Ctx.aiManager != null)
+                Ctx.aiManager.UpdateThreatPriority();
+        }
 
         // new state enters state
         newState.EnterState();
-
-        // update AI Manager
-        if (Ctx.aiManager != null)
-            Ctx.aiManager.UpdateThreatPriority();
 
         if (_isRootState)
         {
@@ -78,14 +94,33 @@ public abstract class AIBaseState
     {
         _currentSuperState = newSuperState;
     }
-    protected void SetSubState(AIBaseState newSubState)
+    private void SetSubState(AIBaseState newSubState)
     {
         _currentSubState = newSubState;
         newSubState.SetSuperState(this);
     }
-
-    protected void CheckOverallSwitchState()
+    
+    // allow current State to switch its subState on the fly in updateState() or checkSwitchState()
+    protected void SwitchSubState(AIBaseState newSubState)
     {
-        //TODO based on threatmeter can switch states here
+        if (_currentSubState != null)
+        {
+            _currentSubState.ExitState();
+        }
+
+        // set threat priority
+        if (newSubState.SetAIThreatPriority())
+        {
+            // update AI Manager
+            if (Ctx.aiManager != null)
+                Ctx.aiManager.UpdateThreatPriority();
+        }
+        
+        // new state enters state
+        newSubState.EnterState();
+
+        // set the substate
+        SetSubState(newSubState);
     }
+
 }

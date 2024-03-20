@@ -24,9 +24,10 @@ public class AIWaypointState : AIBaseState
         IsRootState = true;
         InitializeSubState();
     }
-    public override void SetAIThreatPriority()
+    public override bool SetAIThreatPriority()
     {
         Ctx.aiThreatPriority = AIThreatPriority.Idle;
+        return true;
     }
     public override void EnterState()
     {
@@ -47,7 +48,7 @@ public class AIWaypointState : AIBaseState
     {
         Ctx.LastWaypointIdx = currWaypoint-1;
     }
-    public override void CheckSwitchStates()
+    public override void CheckSwitchState()
     {
 
     }

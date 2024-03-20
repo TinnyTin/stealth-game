@@ -18,13 +18,18 @@ public class AIInvestigateState : AIBaseState
         IsRootState = true;
         InitializeSubState();
     }
-    public override void SetAIThreatPriority()
+    public override bool SetAIThreatPriority()
     {
         Ctx.aiThreatPriority = AIThreatPriority.Investigate;
+        return true;
     }
     public override void EnterState()
     {
-        Ctx.anim.SetTrigger("triggerSurprised");
+
+        // play surprised animation
+        AIBaseState animationSurprised = Factory.animationSubState("surprised", "triggerSurprised", Ctx.audioClipGasp);
+        SwitchSubState(animationSurprised);
+        
         Ctx.setSpeed(Ctx.walkSpeed);
         Ctx.AudioChannel.Raise(Ctx.audioClipGasp, Ctx.transform.position, AudioSourceParams.Default);
     }
@@ -33,18 +38,18 @@ public class AIInvestigateState : AIBaseState
         Ctx.agent.SetDestination(Ctx.lastThreat);
         if ((Ctx.agent.remainingDistance < 5) && !Ctx.agent.pathPending)
         {
-            if (!Ctx.anim.GetCurrentAnimatorStateInfo(0).IsName("LookAroundCut"))
+            if (!(CurrentSubState is AIAnimationSubState))
             {
-                Ctx.anim.SetTrigger("triggerLook");
+                // play surprised animation
+                AIBaseState animationLookAround = Factory.animationSubState("LookAroundCut", "triggerLook", null);
+                SwitchSubState(animationLookAround);
             }
         }
     }
     public override void ExitState()
     {
-        Ctx.anim.ResetTrigger("triggerSurprised");
-        Ctx.anim.ResetTrigger("triggerLook");
     }
-    public override void CheckSwitchStates()
+    public override void CheckSwitchState()
     {
 
     }

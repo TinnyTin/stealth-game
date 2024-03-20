@@ -17,9 +17,10 @@ public class AIPursuitState : AIBaseState
         IsRootState = true;
         InitializeSubState();
     }
-    public override void SetAIThreatPriority()
+    public override bool SetAIThreatPriority()
     {
         Ctx.aiThreatPriority = AIThreatPriority.Pursuit;
+        return true;
     }
     public override void EnterState()
     {
@@ -66,7 +67,7 @@ public class AIPursuitState : AIBaseState
         Ctx.anim.ResetTrigger("triggerLook");
         Ctx.anim.ResetTrigger("triggerAngry");
     }
-    public override void CheckSwitchStates()
+    public override void CheckSwitchState()
     {
 
     }
