@@ -65,7 +65,6 @@ public class SceneCameraController : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-        GetComponent<CursorLock>().lockCursorControl(true);
         // get player in order to cache reference to PlayerControl 
         // as we need to disable input controls during
         // IntroAnimationCamera playback.
