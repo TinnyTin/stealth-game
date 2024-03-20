@@ -200,6 +200,7 @@ public class PlayerControl : MonoBehaviour
             Quaternion rot = Quaternion.AngleAxis(_playerLookX * LookCamSensitivity, upVec);
             if (isPlayerControlEnabled)
                 camLookOffset *= rot;
+                
 
             camDiff = camLookOffset * camPosZeroOffset;
             cameraFrom.transform.position = cameraTarget.transform.position + camDiff;
@@ -238,7 +239,6 @@ public class PlayerControl : MonoBehaviour
         if (_playerActionGrab)
         {
             _playerActionGrab = false;
-            Debug.Log("Grab item");
             if (stealableObject != null && isStealableObjectInRangetoSteal && !HasStolenObject)
             {
                 stealableObject.SetActive(false);
