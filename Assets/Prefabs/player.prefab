@@ -1921,7 +1921,6 @@ GameObject:
   - component: {fileID: 3328063616006301}
   - component: {fileID: 7782657151578292332}
   - component: {fileID: 8253768475201227382}
-  - component: {fileID: 1916069260220394769}
   - component: {fileID: 5827533647574211381}
   m_Layer: 0
   m_Name: player
@@ -2012,6 +2011,7 @@ MonoBehaviour:
   isPlayerControlEnabled: 1
   cameraFrom: {fileID: 2983081745679500551}
   cameraTarget: {fileID: 2087507608084657057}
+  playerData: {fileID: 11400000, guid: 15901981171d3984bad2e1974e5b7aa7, type: 2}
 --- !u!114 &7782657151578292332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2055,33 +2055,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!114 &1916069260220394769
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5869065785445247254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c29702b46b59e04cb460b50fc5ce538, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioClipWalk:
-  - {fileID: 8300000, guid: d557c7e9171740e45b83d95f00010250, type: 3}
-  - {fileID: 8300000, guid: 23037fb54da85b74fad4ed63f08501a2, type: 3}
-  - {fileID: 8300000, guid: 9b94f704427218743bc7044b5e989e9a, type: 3}
-  - {fileID: 8300000, guid: d91a38481af413a4a912f208f4930e9a, type: 3}
-  - {fileID: 8300000, guid: 0bd6bbe114984e04bb3d2649d0fa2c70, type: 3}
-  - {fileID: 8300000, guid: b831b899c9758c74596390e35ed4b6df, type: 3}
-  audioClipRun:
-  - {fileID: 8300000, guid: c2c4c67e0abbd3e4e83ae08ca4beaa4e, type: 3}
-  - {fileID: 8300000, guid: 8286854a485842a4cb254761358a83c8, type: 3}
-  - {fileID: 8300000, guid: 97eebeed650ce8b44b555e99c0e5cb22, type: 3}
-  - {fileID: 8300000, guid: 48f0724c312689e45bfb1419396d6f84, type: 3}
-  - {fileID: 8300000, guid: 147252c3475dd644aa1dc602cb8b3cb0, type: 3}
-  - {fileID: 8300000, guid: e2a1300db2c50714a805a46534a3d9f5, type: 3}
-  eventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
 --- !u!114 &5827533647574211381
 MonoBehaviour:
   m_ObjectHideFlags: 0
