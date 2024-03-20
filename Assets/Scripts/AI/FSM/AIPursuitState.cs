@@ -12,6 +12,7 @@ using UnityEngine;
 public class AIPursuitState : AIBaseState
 {
     private float lastSpeed;
+    private bool hasRequestedCatchPlayer = false;
     public AIPursuitState(AIStateMachine currentContext, AIStateFactory aiStateFactory) : base(currentContext, aiStateFactory)
     {
         IsRootState = true;
@@ -28,6 +29,9 @@ public class AIPursuitState : AIBaseState
         Ctx.setSpeed(Ctx.runSpeed);
         // play metal gear solid sound
         Ctx.AudioChannel.Raise(Ctx.audioClipAlert, Ctx.transform.position, AudioSourceParams.Default);
+
+        // trigger to catch player 
+        hasRequestedCatchPlayer = false;
     }
     public override void UpdateState()
     {
@@ -36,36 +40,44 @@ public class AIPursuitState : AIBaseState
         if (targetpos != null)
         {
             Ctx.lastThreat = (Vector3)targetpos;
-            Ctx.agent.SetDestination(Ctx.lastThreat);
         }
 
         // pursue Target
         Ctx.agent.SetDestination(Ctx.lastThreat);
+
+        // All checks to make sure the player is able to get caught.
+        // 1. agent is close enough to its destination by finalCaughtRadius AND
         if ((Ctx.agent.remainingDistance < Ctx.finalCaughtRadius) && !Ctx.agent.pathPending)
         {
-            // if the target is no longer in view, need to find the guy
-            if ((Ctx.countInView == 0) && (targetpos == null))
+            // 2. player position is within that finalCaughtRadius AND
+            // 3. player is either in view OR within AI auto-sense radius 
+            if ((Ctx.playerData.PlayerPosition != null) && (Vector3.Magnitude(Ctx.playerData.PlayerPosition - Ctx.transform.position) < Ctx.finalCaughtRadius) &&
+            ((Ctx.countInView == 0) || (targetpos != null)))
             {
-                // loop animation LookAroundCut 
+                // loop animation Angry Point 
+                if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Angry"))
+                {
+                    AIBaseState animationAngryPoint = Factory.animationSubState("Angry", "triggerAngry", null);
+                    SwitchSubState(animationAngryPoint);
+                }
+                if (!hasRequestedCatchPlayer)
+                {
+                    Ctx.CatchPlayer();
+                    hasRequestedCatchPlayer = true;
+                }
+            }
+            // only look around confused when you are close to your final caught radius
+            else
+            {
+                // loop animation Look 
                 if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Look"))
                 {
                     AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null);
                     SwitchSubState(animationLookAround);
                 }
             }
-            // Else, target is in view. catch him
-            else
-            {
-                // loop animation LookAroundCut 
-                if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Angry"))
-                {
-                    AIBaseState animationAngryPoint = Factory.animationSubState("Angry", "triggerAngry", null);
-                    SwitchSubState(animationAngryPoint);
-                }
-                Ctx.CatchPlayer();
-
-            }
         }
+
     }
     public override void ExitState()
     {
