@@ -34,7 +34,8 @@ public class PlayerInput : MonoBehaviour
     void Update()
     {
         playerActionGrab = Input.GetButtonDown("Fire1");
-        playerActionCrouch = Input.GetButtonDown("Jump") || Input.GetKeyDown(KeyCode.C);
+        playerActionCrouch = Input.GetKeyDown(KeyCode.C);
+
 
         float inputH = Input.GetAxisRaw("Horizontal");
         float inputV = Input.GetAxisRaw("Vertical");
