@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Rendering;
+using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
 
 /*
@@ -15,7 +17,6 @@ using UnityEngine;
  */
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(PlayerInput))]
-[RequireComponent(typeof(FollowCamera))]
 public class PlayerControl : MonoBehaviour
 {
     // stealable object
@@ -46,19 +47,17 @@ public class PlayerControl : MonoBehaviour
 
     // data for footstep tracking and sound event emitter
     public FootStepFactory footStepFactory;
-    bool leftFootDown, rightFootDown;
-    Vector3 prevPosition;
-    float velocityFiltered;
+    private bool leftFootDown, rightFootDown;
+    private Vector3 prevPosition;
+    private float velocityFiltered;
 
     // joints in the player skeleton rig for footstep calculations
     public GameObject rigBase;
     public GameObject leftFoot;
     public GameObject rightFoot;
 
-    public float LookCamSensitivity = 3f;
-
     // if true, enable mouse / right analog stick camera control
-    public bool LookCamEnabled;
+    public bool lookCamEnabled;
 
     // cached values from PlayerInput
     private float _playerForward = 0f;
@@ -72,24 +71,14 @@ public class PlayerControl : MonoBehaviour
 
     public bool isPlayerControlEnabled = true;
 
-    // camera transforms, must be in the player gameobject hierarchy
-    public GameObject cameraFrom;
-    public GameObject cameraTarget;
 
-    // current world space camera roation
-    // used to calculate camera transforms when LookCamEnabled
+    // direction of the Cinemachine virtual 3rd person follow camera
+    public GameObject cameraDir;
+    public float LookCamSensitivity = 5f;
 
-    // store the zero rotation camera from position offset
-    private Vector3 camPosZeroOffset;
-
-    // camera look offset from the initial camera rotation
-    // (directly behind, looking at player is zero)
-    private Quaternion camLookOffset;
-
-    // store initial player game object rotation, which must 
-    // be used as an offset for all later rotation calculations
-    private Quaternion playerInitialRot;
-
+    public float movementSpeedWalk = 1f;
+    public float movementSpeedRun = 2f;
+    public float movementSpeedCrouch = 0.5f;
 
     public void Initialize()
     {
@@ -134,22 +123,15 @@ public class PlayerControl : MonoBehaviour
             Debug.LogError("PlayerControl: no PlayerInput component.");
         }
 
-        // the from/to follow camera objects must be assigned by reference from
-        // the player object's hierarchy
-        if (cameraFrom == null || cameraTarget == null)
+        // the Cinemachine camera requires a target CameraDir gameobject
+        if (cameraDir == null)
         {
-            Debug.LogError("PlayerControl: no CameraFrom or CameraTo component.");
+            Debug.LogError("PlayerControl: no CameraDir component.");
         }
 
-        // cache the original camera offset from its target attached to the player
-        camPosZeroOffset = cameraFrom.transform.position - cameraTarget.transform.position;
-
-        // zero out the look camera offset rotation (mouse / right analog stick look)
-        //camLookOffset = transform.rotation;
-        playerInitialRot = transform.rotation;
-
-        camLookOffset = new Quaternion(0, 0, 0, 1);
-
+        // initialize the cameraDir target to match the player's transform
+        cameraDir.transform.rotation = transform.rotation;
+        cameraDir.transform.position = transform.position;
 
         if (rigBase == null || leftFoot == null || rightFoot == null)
         {
@@ -159,9 +141,6 @@ public class PlayerControl : MonoBehaviour
         rightFootDown = false;
         prevPosition = transform.position;
         velocityFiltered = 0f;
-
-        // reinit the follow camera script
-        GetComponent<FollowCamera>().Initialize();
 
         isPlayerControlEnabled = true;
     }
@@ -188,43 +167,67 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (LookCamEnabled && cameraFrom && cameraTarget)
+        if (cameraDir)
         {
-            // update the look camera based on inputs from mouse and right analog stick
+            // update the cinemachine camera based on inputs from mouse and right analog stick
 
             // calculate new input axes relative to the camera's offset 
             // from the player's forward vector
 
-            Vector3 camDiff = cameraFrom.transform.position - cameraTarget.transform.position;
-            Vector3 upVec = new Vector3(0f, 1f, 0f);
-            Quaternion rot = Quaternion.AngleAxis(_playerLookX * LookCamSensitivity, upVec);
+            // the camera target gameobject follows the player
+            cameraDir.transform.position = transform.position;
+
+            Quaternion rot = Quaternion.AngleAxis(_playerLookX * LookCamSensitivity, Vector3.up);
             if (isPlayerControlEnabled)
-                camLookOffset *= rot;
-
-            camDiff = camLookOffset * camPosZeroOffset;
-            cameraFrom.transform.position = cameraTarget.transform.position + camDiff;
-            Vector3 inputXY = new Vector3(0f, 0f, 0f);
-            if (isPlayerControlEnabled)
-                inputXY = new Vector3(_playerTurn, 0f, _playerForward);
-
-            // rotate the input hor/vert vector by the difference between the player's heading and
-            // the current camera look offset
-            inputXY = playerInitialRot * camLookOffset * Quaternion.Inverse(cameraTarget.transform.rotation) * inputXY;
-
-            _playerTurn = inputXY.x;
-            _playerForward = inputXY.z;
-
-            // direct backwards movement doesn't work well in the blend tree, so
-            // offset with a turn if it occurs
-            if (_playerForward < -0.4f && Mathf.Abs(_playerTurn) < 0.05f)
             {
-                _playerTurn = 1f;
+                cameraDir.transform.rotation *= rot;
             }
+
+            Vector3 inputXZ = Vector3.zero;
+            if (isPlayerControlEnabled)
+                inputXZ = new Vector3(_playerTurn, 0f, _playerForward);
+
+            Quaternion headingOffsetFromCamera = Quaternion.Inverse(transform.rotation) * cameraDir.transform.rotation;
+
+            // rotate the input hor/vert vector by the difference between the player's
+            // heading and the current camera look offset
+            inputXZ = headingOffsetFromCamera * inputXZ;
+
+            // update the animation controller with the corrected forward and turn values
+            // relative to the camera and player
+            anim.SetFloat("velx", 0f);// inputXZ.x);
+            anim.SetFloat("vely", inputXZ.z);
+
+            float movementScaleFactor = 0.001f;
+            if (isCrouched)
+                movementScaleFactor *= movementSpeedCrouch;
+            else
+                movementScaleFactor *= movementSpeedWalk;
+
+            // move the player using the forward vector component
+            Vector3 forwardMoveVec = transform.forward / Time.fixedDeltaTime * inputXZ.z * movementScaleFactor;
+            
+            // move the player using the lateral vector component
+            Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * transform.forward).normalized /
+                                     Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
+
+            transform.position += forwardMoveVec + lateralMoveVec;
+
+
+            // now rotate the player toward the desired input direction. 
+            // try doing it directly, later add interpolation
+
+            // get the relative rotation of the input vector to the camera
+            // here, z is forward
+            Vector3 inputXZHeading = new Vector3(_playerTurn, 0f, _playerForward);
+            float inputRot = Vector3.SignedAngle(Vector3.forward, inputXZHeading.normalized, Vector3.up);
+            Quaternion inputRotQuat = Quaternion.AngleAxis(inputRot, Vector3.up);
+
+            // mouse-look when not in motion.  if moving, mouse X will change forward vector
+            if (inputXZHeading.magnitude > 0.2f)
+                transform.rotation = cameraDir.transform.rotation * inputRotQuat;
         }
 
-        //Debug.Log(_playerTurn + " " +  _playerForward);
-        anim.SetFloat("velx", _playerTurn);
-        anim.SetFloat("vely", _playerForward);
 
         if (_playerActionCrouch)
         {
@@ -341,6 +344,7 @@ public class PlayerControl : MonoBehaviour
     // manage the root motion depending on animator state and input
     void OnAnimatorMove()
     {
+        /*
         Quaternion newRot = anim.rootRotation;
         Vector3 newPos = anim.rootPosition;
 
@@ -354,6 +358,7 @@ public class PlayerControl : MonoBehaviour
 
         rbody.MovePosition(newPos);
         rbody.MoveRotation(newRot);
+        */
     }
 
     // emit footstep event for left and right foot
