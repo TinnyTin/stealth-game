@@ -56,25 +56,32 @@ public class PlayerControl : MonoBehaviour
     public GameObject leftFoot;
     public GameObject rightFoot;
 
-    // if true, enable mouse / right analog stick camera control
-    public bool lookCamEnabled;
-
     // cached values from PlayerInput
     private float _playerForward = 0f;
     private float _playerTurn = 0f;
     private float _playerLookX = 0f;
-
+    private float _playerLookY = 0f;
     private bool _playerActionGrab = false;
     private bool _playerActionCrouch = false;
 
     private bool isCrouched = false;
 
+    // enable/disable player control from inputs
     public bool isPlayerControlEnabled = true;
-
 
     // direction of the Cinemachine virtual 3rd person follow camera
     public GameObject cameraDir;
-    public float LookCamSensitivity = 5f;
+    public float LookCamSensitivityX = 5f;
+    public float LookCamSensitivityY = 5f;
+
+    // internal camera heading and pitch rotation state
+    private Quaternion cameraHeading;
+    private float cameraPitch;
+    
+    // limits for the camera pitch controls
+    public float cameraPitchMax = 30f;
+    public float cameraPitchMin = -20f;
+    public bool invertMouseY = false;
 
     public float movementSpeedWalk = 1f;
     public float movementSpeedRun = 2f;
@@ -137,6 +144,8 @@ public class PlayerControl : MonoBehaviour
         // initialize the cameraDir target to match the player's transform
         cameraDir.transform.rotation = transform.rotation;
         cameraDir.transform.position = transform.position;
+        cameraHeading = transform.rotation;
+        cameraPitch = 0;
 
         if (rigBase == null || leftFoot == null || rightFoot == null)
         {
@@ -164,6 +173,7 @@ public class PlayerControl : MonoBehaviour
         _playerForward = input.playerForward;
         _playerTurn = input.playerTurn;
         _playerLookX = input.playerLookX;
+        _playerLookY = input.playerLookY;
 
         // don't overwrite the cached input buttons (if true, not yet handled)
         _playerActionGrab = input.playerActionGrab || _playerActionGrab;
@@ -184,14 +194,32 @@ public class PlayerControl : MonoBehaviour
 
             // calculate new input axes relative to the camera's offset 
             // from the player's forward vector
-
-            // the camera target gameobject follows the player
-            cameraDir.transform.position = transform.position;
-
-            Quaternion rot = Quaternion.AngleAxis(_playerLookX * LookCamSensitivity, Vector3.up);
             if (isPlayerControlEnabled)
             {
-                cameraDir.transform.rotation *= rot;
+                // the camera target gameobject follows the player
+                
+                Vector3 crouchTargetPosition = transform.position;
+                if (isCrouched)
+                    crouchTargetPosition.y += 0.7f;
+                else
+                    crouchTargetPosition.y += 1.4f;
+
+                cameraDir.transform.position = crouchTargetPosition;
+
+                // update the camera heading
+                Quaternion rotX = Quaternion.AngleAxis(_playerLookX * LookCamSensitivityX, Vector3.up);
+                cameraHeading *= rotX;
+
+                // update the camera pitch
+                cameraPitch += _playerLookY * LookCamSensitivityY;
+                cameraPitch = Mathf.Clamp(cameraPitch, cameraPitchMin, cameraPitchMax);
+                Quaternion rotY;
+                if (invertMouseY)
+                    rotY = Quaternion.AngleAxis(cameraPitch, Vector3.left);
+                else
+                    rotY = Quaternion.AngleAxis(cameraPitch, Vector3.right);
+
+                cameraDir.transform.rotation = cameraHeading * rotY;
             }
                 
 
@@ -199,7 +227,7 @@ public class PlayerControl : MonoBehaviour
             if (isPlayerControlEnabled)
                 inputXZ = new Vector3(_playerTurn, 0f, _playerForward);
 
-            Quaternion headingOffsetFromCamera = Quaternion.Inverse(transform.rotation) * cameraDir.transform.rotation;
+            Quaternion headingOffsetFromCamera = Quaternion.Inverse(transform.rotation) * cameraHeading; // cameraDir.transform.rotation;
 
             // rotate the input hor/vert vector by the difference between the player's
             // heading and the current camera look offset
@@ -217,10 +245,13 @@ public class PlayerControl : MonoBehaviour
                 movementScaleFactor *= movementSpeedWalk;
 
             // move the player using the forward vector component
-            Vector3 forwardMoveVec = transform.forward / Time.fixedDeltaTime * inputXZ.z * movementScaleFactor;
+            Vector3 flatPlayerForward = transform.forward;
+            flatPlayerForward.y = 0f;
+            flatPlayerForward.Normalize();
+            Vector3 forwardMoveVec = flatPlayerForward / Time.fixedDeltaTime * inputXZ.z * movementScaleFactor;
             
             // move the player using the lateral vector component
-            Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * transform.forward).normalized /
+            Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * flatPlayerForward).normalized /
                                      Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
 
             transform.position += forwardMoveVec + lateralMoveVec;
@@ -246,7 +277,6 @@ public class PlayerControl : MonoBehaviour
             //anim.SetBool("doButtonPress", _playerActionCrouch);
             _playerActionCrouch = false;
             isCrouched = !isCrouched;
-            Debug.Log("Crouch: " + isCrouched);
             anim.SetBool("crouch", isCrouched);
         }
 
@@ -260,10 +290,6 @@ public class PlayerControl : MonoBehaviour
 
                 if (stealableObjectComponent != null && stealableObjectComponent.AudioClipSteal != null)
                     stealableObjectComponent.Steal();
-
-                // fire off an event indicating that the object is stolen
-                //
-                //
             }
         }
 

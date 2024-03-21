@@ -24,7 +24,9 @@ public class PlayerInput : MonoBehaviour
     public float playerForward = 0f;
     public float playerTurn = 0f;
     public float playerLookX = 0f;
+    public float playerLookY = 0f;
     public float mouseXScale = 3f;
+    public float mouseYScale = 3f;
     public bool playerActionGrab = false;
     public bool playerActionCrouch = false;
 
@@ -37,9 +39,11 @@ public class PlayerInput : MonoBehaviour
         float inputH = Input.GetAxisRaw("Horizontal");
         float inputV = Input.GetAxisRaw("Vertical");
 
-        // controls for controlling the camera relative to player
-        // mouse x
+        // controls for controlling the camera relative to player mouse x
         float inputMouseX = Input.GetAxisRaw("Mouse X") * mouseXScale;
+        // controls for controlling the camera relative to player mouse y
+        float inputMouseY = Input.GetAxisRaw("Mouse Y") * mouseYScale;
+
         // right analog stick x
         float inputLookX = Input.GetAxisRaw("LookX");
         //Debug.Log("mouse, look: " + inputMouseX + " " + inputLookX);
@@ -56,12 +60,19 @@ public class PlayerInput : MonoBehaviour
         if (Mathf.Abs(inputLookXClamped) < 0.25f)
             inputLookXClamped = 0f;
 
+        if (Mathf.Abs(inputMouseXClamped) < 0.1f)
+            inputMouseXClamped = 0f;
+
         // set the player look x output value to the largest magnitude of mouse
         // or right analog stick x 
         if (Mathf.Abs(inputMouseXClamped) < 0.01f)
             playerLookX = Mathf.Lerp(playerLookX, inputLookXClamped, Time.deltaTime * maxTurnInput);
         else
             playerLookX = Mathf.Lerp(playerLookX, inputMouseXClamped, Time.deltaTime * maxTurnInput);
+
+        // vertical mouse look
+        float inputMouseYClamped = Mathf.Clamp(inputMouseY, -1f, 1f);
+        playerLookY = Mathf.Lerp(playerLookY, inputMouseYClamped, Time.deltaTime * maxTurnInput);
 
 
 
