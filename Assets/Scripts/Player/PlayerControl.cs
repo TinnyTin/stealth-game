@@ -265,7 +265,7 @@ public class PlayerControl : MonoBehaviour
         // relative to the camera and player
 
         // update sprint stamina
-        if (_playerIsSprint && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
+        if (_playerIsSprint && !isCrouched && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
         {
             // deplete stamina
             sprintStamina -= sprintStaminaDepletionRate * Time.fixedDeltaTime;
