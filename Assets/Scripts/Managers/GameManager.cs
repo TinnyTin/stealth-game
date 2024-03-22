@@ -63,4 +63,10 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Kleptocrat has reached an extraction point.");
     }
+
+    public void SetCursorVisible(bool visible)
+    {
+        Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
+        Cursor.visible = visible;
+    }
 }

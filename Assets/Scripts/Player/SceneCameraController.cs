@@ -65,11 +65,11 @@ public class SceneCameraController : MonoBehaviour
   // Start is called before the first frame update
   void Start()
   {
-    // get player in order to cache reference to PlayerControl 
-    // as we need to disable input controls during
-    // IntroAnimationCamera playback.
+        // get player in order to cache reference to PlayerControl 
+        // as we need to disable input controls during
+        // IntroAnimationCamera playback.
 
-    GameObject player = GameObject.Find("player");
+        GameObject player = GameObject.Find("player");
     if(player == null)
     {
       Debug.Log("SceneCameraController: player not found.");
@@ -100,15 +100,17 @@ public class SceneCameraController : MonoBehaviour
     isPlayIntroAnimation = false;
 
     Play();
-    
-        //playerControl.isPlayerControlEnabled = true;
+
     }
 
     private void Update()
     {
-        if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Space) || Input.GetButtonDown("Fire1"))
-        {
-            skipIntro();
+        // Skip cutscene if any of the Skip cutscene buttons are pressed
+        if(isPlayIntroAnimation) {
+            if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Space) || Input.GetButtonDown("Fire1"))
+            {
+                skipIntro();
+            }
         }
     }
 
@@ -179,9 +181,9 @@ public class SceneCameraController : MonoBehaviour
     }
   }
 
-  // switch to the IntroAnimationCamera and start playing the intro
-  // pan animation.
-  public void Play()
+    // switch to the IntroAnimationCamera and start playing the intro
+    // pan animation.
+    public void Play()
   {
     if (isPlayIntroAnimation)
     {
@@ -201,6 +203,8 @@ public class SceneCameraController : MonoBehaviour
   }
 
     private void skipIntro() {
+        isPlayIntroAnimation = false;
+        ppColorAdjust.postExposure.value = 0f;
         PlayerCamera.GetComponent<Camera>().enabled = true;
         skipIntroText.SetActive(false);
         IntroAnimationCamera.SetActive(false);
