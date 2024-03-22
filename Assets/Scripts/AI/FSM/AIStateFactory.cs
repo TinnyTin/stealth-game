@@ -48,9 +48,9 @@ public class AIStateFactory
         return _pursuitState;
     }
 
-    public AIAnimationSubState animationSubState(string strAnimation, string strTrigger, AudioClip audioClip)
+    public AIAnimationSubState animationSubState(string strAnimation, string strTrigger, AudioClip audioClip, bool freezeFOV)
     {
-        return new AIAnimationSubState(_context, this, strAnimation, strTrigger, audioClip);
+        return new AIAnimationSubState(_context, this, strAnimation, strTrigger, audioClip, freezeFOV);
     }
 
     public AIBaseState EmptySubState()
