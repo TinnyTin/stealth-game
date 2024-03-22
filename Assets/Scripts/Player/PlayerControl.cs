@@ -64,6 +64,7 @@ public class PlayerControl : MonoBehaviour
     private bool _playerActionGrab = false;
     private bool _playerActionCrouch = false;
     private bool _playerIsSprint = false;
+    public bool infiniteSprint = false;
 
     private bool isCrouched = false;
 
@@ -265,7 +266,7 @@ public class PlayerControl : MonoBehaviour
         // relative to the camera and player
 
         // update sprint stamina
-        if (_playerIsSprint && !isCrouched && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
+        if (!infiniteSprint && _playerIsSprint && !isCrouched && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
         {
             // deplete stamina
             sprintStamina -= sprintStaminaDepletionRate * Time.fixedDeltaTime;
