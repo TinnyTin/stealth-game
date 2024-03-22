@@ -78,7 +78,7 @@ public class PlayerControl : MonoBehaviour
     // internal camera heading and pitch rotation state
     private Quaternion cameraHeading;
     private float cameraPitch;
-    
+
     // limits for the camera pitch controls
     public float cameraPitchMax = 30f;
     public float cameraPitchMin = -20f;
@@ -87,6 +87,7 @@ public class PlayerControl : MonoBehaviour
     public float movementSpeedWalk = 1f;
     public float movementSpeedSprint = 2f;
     public float movementSpeedCrouch = 0.5f;
+    private float smoothMovement = 0f;
 
     // sprint stamina is depleted during sprinting at
     // this rate, represented in percentage per second.
@@ -160,7 +161,7 @@ public class PlayerControl : MonoBehaviour
             Debug.LogError("PlayerControl: no CameraDir component.");
         }
 
-        if(sprintStaminaOutOfBreathAudioClip == null || audioEventToRaise == null)
+        if (sprintStaminaOutOfBreathAudioClip == null || audioEventToRaise == null)
         {
             Debug.LogError("PlayerControl: no audioEventToRaise, sprintStaminaOutOfBreath audio clip component.");
         }
@@ -208,7 +209,7 @@ public class PlayerControl : MonoBehaviour
         {
             playerData.PlayerPosition = transform.position;
         }
-        
+
     }
 
     private void FixedUpdate()
@@ -216,15 +217,15 @@ public class PlayerControl : MonoBehaviour
         if (!isPlayerControlEnabled || cameraDir == null)
             return;
 
-        
+
         // update the cinemachine camera based on inputs from mouse and right analog stick
 
         // calculate new input axes relative to the camera's offset 
         // from the player's forward vector
-            
+
         {
             // the camera target gameobject follows the player
-                
+
             Vector3 crouchTargetPosition = transform.position;
             if (isCrouched)
                 crouchTargetPosition.y += 0.7f;
@@ -248,7 +249,7 @@ public class PlayerControl : MonoBehaviour
 
             cameraDir.transform.rotation = cameraHeading * rotY;
         }
-                
+
 
         Vector3 inputXZ = Vector3.zero;
         if (isPlayerControlEnabled)
@@ -264,7 +265,7 @@ public class PlayerControl : MonoBehaviour
         // relative to the camera and player
 
         // update sprint stamina
-        if (_playerIsSprint && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
+        if (_playerIsSprint && !isCrouched && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
         {
             // deplete stamina
             sprintStamina -= sprintStaminaDepletionRate * Time.fixedDeltaTime;
@@ -277,22 +278,20 @@ public class PlayerControl : MonoBehaviour
             }
             sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
 
-            // update the PlayerData SO sprint stamina
-            //
-            //
-
         }
         if (!_playerIsSprint && sprintStamina < 1f)
         {
             // recharge stamina
             sprintStamina += sprintStaminaRechargeRate * Time.fixedDeltaTime;
             sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
-            // update the PlayerData SO sprint stamina
-            //
-            //
 
         }
 
+        // update the PlayerData SO sprint stamina
+        if ((playerData != null))
+        {
+            playerData.PlayerSprintStamina = sprintStamina;
+        }
 
         float movementScaleFactor = 0.001f;
         float animControlVelY;
@@ -316,7 +315,7 @@ public class PlayerControl : MonoBehaviour
         flatPlayerForward.y = 0f;
         flatPlayerForward.Normalize();
         Vector3 forwardMoveVec = flatPlayerForward / Time.fixedDeltaTime * inputXZ.z * movementScaleFactor;
-            
+
         // move the player using the lateral vector component
         Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * flatPlayerForward).normalized /
                                     Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
@@ -327,7 +326,8 @@ public class PlayerControl : MonoBehaviour
         // lateral velocity is zero currently, can add later if we want
         // turning walk/run animations
         anim.SetFloat("velx", 0f);// inputXZ.x);
-        anim.SetFloat("vely", inputXZ.z * animControlVelY);
+        smoothMovement = Mathf.Lerp(smoothMovement, inputXZ.z * animControlVelY, Time.fixedDeltaTime * 5);
+        anim.SetFloat("vely", smoothMovement);
 
         // now rotate the player toward the desired input direction. 
         // try doing it directly, later add interpolation
