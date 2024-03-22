@@ -405,7 +405,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8759923796965552694}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -443,7 +443,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8759923797073108173}
   - component: {fileID: 8759923797073108172}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: ThreatBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -536,7 +536,7 @@ GameObject:
   - component: {fileID: 8759923797194673356}
   - component: {fileID: 8759923797194673357}
   - component: {fileID: 8759923797194673353}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -637,7 +637,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9c04354cb6fb23a4797ecfcbb42dea82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tcam: {fileID: 0}
+  mainCameraData: {fileID: 11400000, guid: 9d9185f6f8a19b74392638ebd1171ebf, type: 2}
 --- !u!1 &8759923797364176789
 GameObject:
   m_ObjectHideFlags: 0
@@ -784,7 +784,7 @@ GameObject:
   - component: {fileID: 8759923798041994961}
   - component: {fileID: 8759923798041994963}
   - component: {fileID: 8759923798041994960}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -860,7 +860,7 @@ GameObject:
   - component: {fileID: 8759923798061208553}
   - component: {fileID: 8759923798061208555}
   - component: {fileID: 8759923798061208552}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2976,7 +2976,6 @@ MonoBehaviour:
   pursuitAutoSenseRadius: 3
   finalCaughtRadius: 1.5
   isAIActive: 0
-  isAnimatorMoving: 1
   WaypointDistanceTolerance: 1
   waypoints:
   - {fileID: 8759923798512796713}
