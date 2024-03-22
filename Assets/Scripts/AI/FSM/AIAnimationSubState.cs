@@ -60,7 +60,7 @@ public class AIAnimationSubState : AIBaseState
         // Check if animation should not affect FOV moving around
         if (_freezeFOV)
         {
-            lastFOVupdateState = Ctx.FOV.updateTransform;
+            Ctx.FOV.updateTransform = false;
         }
     }
     public override void UpdateState()
