@@ -51,8 +51,9 @@ public class AIPursuitState : AIBaseState
         {
             // 2. player position is within that finalCaughtRadius AND
             // 3. player is either in view OR within AI auto-sense radius 
-            if ((Ctx.playerData.PlayerPosition != null) && (Vector3.Magnitude(Ctx.playerData.PlayerPosition - Ctx.transform.position) < Ctx.finalCaughtRadius) &&
-            ((Ctx.countInView == 0) || (targetpos != null)))
+            if ((Ctx.playerData.PlayerPosition != null) &&
+                (Vector3.Magnitude(Ctx.playerData.PlayerPosition - Ctx.agent.nextPosition) < Ctx.finalCaughtRadius + Ctx.finalCaughtNavMeshTolerance) &&
+                ((Ctx.countInView != 0) || (targetpos.HasValue)))
             {
                 // loop animation Angry Point 
                 if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Angry"))
@@ -75,8 +76,14 @@ public class AIPursuitState : AIBaseState
                     AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null, true);
                     SwitchSubState(animationLookAround);
                 }
+
+
             }
         }
+        // exit out of animation lock if the target is in view or a sound is made
+        if (((Ctx.countInView != 0) || (targetpos.HasValue)))
+            if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Angry"))
+                SwitchSubState(Factory.EmptySubState());
 
     }
     public override void ExitState()

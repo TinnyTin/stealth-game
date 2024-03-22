@@ -35,7 +35,16 @@ public class AIInvestigateState : AIBaseState
     }
     public override void UpdateState()
     {
+        // Feature to find target if you're in pursuit State and the target is already close by
+        Vector3? targetpos = Ctx.FOV.FindTargetWithinRadius(Ctx.pursuitAutoSenseRadius);
+        if (targetpos != null)
+        {
+            Ctx.lastThreat = (Vector3)targetpos;
+        }
+
+        // pursue Target
         Ctx.agent.SetDestination(Ctx.lastThreat);
+
         if ((Ctx.agent.remainingDistance < 5) && !Ctx.agent.pathPending)
         {
             // loop Look animation
@@ -46,6 +55,11 @@ public class AIInvestigateState : AIBaseState
                 SwitchSubState(animationLookAround);
             }
         }
+
+        // exit out of animation lock if the target is in view or a sound is made
+        if (((Ctx.countInView != 0) || (targetpos.HasValue)))
+            if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Surprised"))
+                SwitchSubState(Factory.EmptySubState());
     }
     public override void ExitState()
     {
