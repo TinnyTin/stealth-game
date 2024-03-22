@@ -278,22 +278,20 @@ public class PlayerControl : MonoBehaviour
             }
             sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
 
-            // update the PlayerData SO sprint stamina
-            //
-            //
-
         }
         if (!_playerIsSprint && sprintStamina < 1f)
         {
             // recharge stamina
             sprintStamina += sprintStaminaRechargeRate * Time.fixedDeltaTime;
             sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
-            // update the PlayerData SO sprint stamina
-            //
-            //
 
         }
 
+        // update the PlayerData SO sprint stamina
+        if ((playerData != null))
+        {
+            playerData.PlayerSprintStamina = sprintStamina;
+        }
 
         float movementScaleFactor = 0.001f;
         float animControlVelY;
