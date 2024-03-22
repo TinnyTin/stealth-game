@@ -62,6 +62,8 @@ public class SceneCameraController : MonoBehaviour
     private bool isFadePlayer = false;
     public GameObject skipIntroText;
 
+    public MainCameraData mainCameraData;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -145,6 +147,7 @@ public class SceneCameraController : MonoBehaviour
                 // the IntroAnimationCamera animation and fade is complete.
                 IntroAnimationCamera.GetComponent<Camera>().enabled = false;
                 PlayerCamera.GetComponent<Camera>().enabled = true;
+                mainCameraData.mainCamera = PlayerCamera;
 
                 playerControl.isPlayerControlEnabled = true;
 
@@ -192,6 +195,7 @@ public class SceneCameraController : MonoBehaviour
         }
         PlayerCamera.GetComponent<Camera>().enabled = false;
         IntroAnimationCamera.GetComponent<Camera>().enabled = true;
+        mainCameraData.mainCamera = IntroAnimationCamera;
         HUD.SetActive(false); // Deactivate HUD while intro sequence is playing
         skipIntroText.SetActive(true);
 
@@ -208,6 +212,7 @@ public class SceneCameraController : MonoBehaviour
         isPlayIntroAnimation = false;
         ppColorAdjust.postExposure.value = 0f;
         PlayerCamera.GetComponent<Camera>().enabled = true;
+        mainCameraData.mainCamera = PlayerCamera;
         skipIntroText.SetActive(false);
         IntroAnimationCamera.SetActive(false);
         ppColorAdjust.postExposure.value = 0f; // turn off black post-processing entirely
