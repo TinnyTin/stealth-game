@@ -14,8 +14,7 @@ using UnityEngine.Events;
  * Source Credit:       
  *                      
  */
-[RequireComponent(typeof(AIStateMachine))]
-[RequireComponent(typeof(ThreatMeter))]
+
 public class FieldOfView : MonoBehaviour
 {
     [Header("FOV settings")]
@@ -24,6 +23,7 @@ public class FieldOfView : MonoBehaviour
     public float viewRadius;
     [Range(0, 360)]
     public float viewAngle;
+    public bool updateTransform = true;
     [Header("Visual Field of View")]
     public float meshResolution = 1f;
     [Tooltip("Based on how close viewRadius is to Player, fade in the FOV as a mesh alpha")]
@@ -39,22 +39,25 @@ public class FieldOfView : MonoBehaviour
     private List<Transform> lastVisibleTargets = new List<Transform>();
     private int countInView = 0;
 
+    [Header("Other components")]
+    public AIStateMachine ai;
+    public ThreatMeter threatmeter;
+    public GameObject anchor;
+
+
     // private
     private Mesh viewMesh;
-    private ThreatMeter threatmeter;
     private float meshAlpha = 0.0f;
-    private AIStateMachine ai;
 
+    
     // TODO remove this secion and add in fixedupdate...?
     private void Start()
     {
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
-        threatmeter = GetComponent<ThreatMeter>();
         meshAlpha = 0.0f;
-        ai = GetComponent<AIStateMachine>();
-
+        
         StartCoroutine("FindTargetsWithDelay", refreshInterval);
     }
     IEnumerator FindTargetsWithDelay(float delay)
@@ -69,6 +72,11 @@ public class FieldOfView : MonoBehaviour
     private void Update()
     {
         DrawFieldOfView();
+        if (updateTransform)
+        {
+            transform.position = anchor.transform.position;
+            transform.rotation = anchor.transform.rotation;
+        }
     }
 
     //  Find targets

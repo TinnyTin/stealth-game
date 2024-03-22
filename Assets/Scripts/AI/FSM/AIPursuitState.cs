@@ -36,7 +36,7 @@ public class AIPursuitState : AIBaseState
     public override void UpdateState()
     {
         // Feature to find target if you're in pursuit State and the target is already close by
-        Vector3? targetpos = Ctx._FOV.FindTargetWithinRadius(Ctx.pursuitAutoSenseRadius);
+        Vector3? targetpos = Ctx.FOV.FindTargetWithinRadius(Ctx.pursuitAutoSenseRadius);
         if (targetpos != null)
         {
             Ctx.lastThreat = (Vector3)targetpos;
@@ -57,7 +57,7 @@ public class AIPursuitState : AIBaseState
                 // loop animation Angry Point 
                 if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Angry"))
                 {
-                    AIBaseState animationAngryPoint = Factory.animationSubState("Angry", "triggerAngry", null);
+                    AIBaseState animationAngryPoint = Factory.animationSubState("Angry", "triggerAngry", null, true);
                     SwitchSubState(animationAngryPoint);
                 }
                 if (!hasRequestedCatchPlayer)
@@ -72,7 +72,7 @@ public class AIPursuitState : AIBaseState
                 // loop animation Look 
                 if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Look"))
                 {
-                    AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null);
+                    AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null, true);
                     SwitchSubState(animationLookAround);
                 }
             }

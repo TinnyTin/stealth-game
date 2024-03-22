@@ -19,8 +19,6 @@ public enum AIThreatPriority
     Pursuit
 }
 
-[RequireComponent(typeof(ThreatMeter))]
-[RequireComponent(typeof(FieldOfView))]
 public class AIStateMachine : MonoBehaviour
 {
     // configurable from inspector
@@ -54,10 +52,11 @@ public class AIStateMachine : MonoBehaviour
     public AudioClip audioClipAlert;
 
 
+    [Header("Components")]
+    public FieldOfView FOV;
+
     [HideInInspector]
     public AIThreatPriority aiThreatPriority;
-    [HideInInspector]
-    public FieldOfView _FOV;
 
     // state variables
     protected AIBaseState _currentState;
@@ -89,7 +88,7 @@ public class AIStateMachine : MonoBehaviour
         // set up context
         anim = GetComponent<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        anim.applyRootMotion = true;
+        anim.applyRootMotion = true; // doesn't matter if OnAnimatorMove() is implemented
         agent.updatePosition = false;
         agent.updateRotation = false; // let rootmotion handle this
 
@@ -108,10 +107,7 @@ public class AIStateMachine : MonoBehaviour
 
     }
 
-    private void Start()
-    {
-        _FOV = GetComponent<FieldOfView>();
-    }
+    private void Start() { }
 
     private void Update()
     {

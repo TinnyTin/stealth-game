@@ -27,9 +27,9 @@ public class AIInvestigateState : AIBaseState
     {
 
         // play surprised animation
-        AIBaseState animationSurprised = Factory.animationSubState("Surprised", "triggerSurprised", Ctx.audioClipGasp);
+        AIBaseState animationSurprised = Factory.animationSubState("Surprised", "triggerSurprised", Ctx.audioClipGasp, true);
         SwitchSubState(animationSurprised);
-        
+
         Ctx.setSpeed(Ctx.walkSpeed);
         Ctx.AudioChannel.Raise(Ctx.audioClipGasp, Ctx.transform.position, AudioSourceParams.Default);
     }
@@ -39,15 +39,17 @@ public class AIInvestigateState : AIBaseState
         if ((Ctx.agent.remainingDistance < 5) && !Ctx.agent.pathPending)
         {
             // loop Look animation
-            if (!AIAnimationSubState.CheckAnimationString(CurrentSubState,"Look"))
-            { 
-                AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null);
+            if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Look"))
+            {
+                Ctx.FOV.updateTransform = false;
+                AIBaseState animationLookAround = Factory.animationSubState("Look", "triggerLook", null, true);
                 SwitchSubState(animationLookAround);
             }
         }
     }
     public override void ExitState()
     {
+        Ctx.FOV.updateTransform = true;
     }
     public override void CheckSwitchState()
     {

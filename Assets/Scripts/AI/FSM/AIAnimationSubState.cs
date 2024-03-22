@@ -21,9 +21,11 @@ public class AIAnimationSubState : AIBaseState
     private string _stringAnimation;
     private AudioClip _audioClip;
 
+    private bool _freezeFOV;
+
     public string StringAnimation { get { return _stringAnimation; } }
 
-    public AIAnimationSubState(AIStateMachine currentContext, AIStateFactory aiStateFactory, string strAnimation, string strTrigger, AudioClip audioClip) : base(currentContext, aiStateFactory)
+    public AIAnimationSubState(AIStateMachine currentContext, AIStateFactory aiStateFactory, string strAnimation, string strTrigger, AudioClip audioClip, bool freezeFOV) : base(currentContext, aiStateFactory)
     {
         IsRootState = false; // substate only
         InitializeSubState();
@@ -36,6 +38,8 @@ public class AIAnimationSubState : AIBaseState
         // set audioclip
         _audioClip = audioClip;
 
+        // freeze FOV
+        _freezeFOV = freezeFOV
     }
     public override bool SetAIThreatPriority()
     {
@@ -52,6 +56,12 @@ public class AIAnimationSubState : AIBaseState
         // raise audio sound 3D
         if (_audioClip != null)
             Ctx.AudioChannel.Raise(_audioClip, Ctx.transform.position, AudioSourceParams.Default);
+
+        // Check if animation should not affect FOV moving around
+        if (_freezeFOV)
+        {
+            lastFOVupdateState = Ctx.FOV.updateTransform;
+        }
     }
     public override void UpdateState()
     {
@@ -61,6 +71,12 @@ public class AIAnimationSubState : AIBaseState
     {
         Ctx.anim.ResetTrigger(_stringTrigger);
         Ctx.anim.SetTrigger(_stringTriggerExit);
+
+        // reset FOV update state
+        if (_freezeFOV)
+        {
+            Ctx.FOV.updateTransform = true;
+        }
     }
     public override void CheckSwitchState()
     {
