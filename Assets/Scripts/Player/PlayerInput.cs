@@ -29,6 +29,7 @@ public class PlayerInput : MonoBehaviour
     public float mouseYScale = 3f;
     public bool playerActionGrab = false;
     public bool playerActionCrouch = false;
+    public bool playerIsSprint = false;
 
     // Update is called once per frame
     void Update()
@@ -53,6 +54,12 @@ public class PlayerInput : MonoBehaviour
         curForwardVal = Mathf.Lerp(curForwardVal, inputV, Time.deltaTime * maxForwardInput);
         curForwardVal = Mathf.Clamp(curForwardVal, -maxForwardSpeed, maxForwardSpeed);
         playerForward = curForwardVal;
+
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+            playerIsSprint = true;
+        if (Input.GetKeyUp(KeyCode.LeftShift))
+            playerIsSprint = false;
+
 
         float inputMouseXClamped = Mathf.Clamp(inputMouseX, -1f, 1f);
         float inputLookXClamped = Mathf.Clamp(inputLookX, -1f, 1f);

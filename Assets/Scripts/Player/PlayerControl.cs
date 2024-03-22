@@ -63,6 +63,7 @@ public class PlayerControl : MonoBehaviour
     private float _playerLookY = 0f;
     private bool _playerActionGrab = false;
     private bool _playerActionCrouch = false;
+    private bool _playerIsSprint = false;
 
     private bool isCrouched = false;
 
@@ -84,8 +85,25 @@ public class PlayerControl : MonoBehaviour
     public bool invertMouseY = false;
 
     public float movementSpeedWalk = 1f;
-    public float movementSpeedRun = 2f;
+    public float movementSpeedSprint = 2f;
     public float movementSpeedCrouch = 0.5f;
+
+    // sprint stamina is depleted during sprinting at
+    // this rate, represented in percentage per second.
+    // For example, 0.2 == 20%
+    // depletion from full to zero will take 5 seconds.
+    public float sprintStaminaDepletionRate = 0.2f;
+
+    // recharge rate for sprint stamina, represented in 
+    // percentage per second.  For example, 0.1 == 10%
+    // recharge from zero will take 10 seconds.
+    public float sprintStaminaRechargeRate = 0.1f;
+
+    // stamina for sprinting.  Value range 0 to 1
+    public float sprintStamina = 1f;
+
+    public GameEvent audioEventToRaise;
+    public AudioClip sprintStaminaOutOfBreathAudioClip;
 
     public void Initialize()
     {
@@ -136,6 +154,11 @@ public class PlayerControl : MonoBehaviour
             Debug.LogError("PlayerControl: no CameraDir component.");
         }
 
+        if(sprintStaminaOutOfBreathAudioClip == null || audioEventToRaise == null)
+        {
+            Debug.LogError("PlayerControl: no audioEventToRaise, sprintStaminaOutOfBreath audio clip component.");
+        }
+
         // initialize the cameraDir target to match the player's transform
         cameraDir.transform.rotation = transform.rotation;
         cameraDir.transform.position = transform.position;
@@ -169,6 +192,7 @@ public class PlayerControl : MonoBehaviour
         _playerTurn = input.playerTurn;
         _playerLookX = input.playerLookX;
         _playerLookY = input.playerLookY;
+        _playerIsSprint = input.playerIsSprint;
 
         // don't overwrite the cached input buttons (if true, not yet handled)
         _playerActionGrab = input.playerActionGrab || _playerActionGrab;
@@ -177,92 +201,136 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (cameraDir)
-        {
-            // update the cinemachine camera based on inputs from mouse and right analog stick
+        if (!isPlayerControlEnabled || cameraDir == null)
+            return;
 
-            // calculate new input axes relative to the camera's offset 
-            // from the player's forward vector
-            if (isPlayerControlEnabled)
-            {
-                // the camera target gameobject follows the player
-                
-                Vector3 crouchTargetPosition = transform.position;
-                if (isCrouched)
-                    crouchTargetPosition.y += 0.7f;
-                else
-                    crouchTargetPosition.y += 1.4f;
+        
+        // update the cinemachine camera based on inputs from mouse and right analog stick
 
-                cameraDir.transform.position = crouchTargetPosition;
-
-                // update the camera heading
-                Quaternion rotX = Quaternion.AngleAxis(_playerLookX * LookCamSensitivityX, Vector3.up);
-                cameraHeading *= rotX;
-
-                // update the camera pitch
-                cameraPitch += _playerLookY * LookCamSensitivityY;
-                cameraPitch = Mathf.Clamp(cameraPitch, cameraPitchMin, cameraPitchMax);
-                Quaternion rotY;
-                if (invertMouseY)
-                    rotY = Quaternion.AngleAxis(cameraPitch, Vector3.left);
-                else
-                    rotY = Quaternion.AngleAxis(cameraPitch, Vector3.right);
-
-                cameraDir.transform.rotation = cameraHeading * rotY;
-            }
-
-            Vector3 inputXZ = Vector3.zero;
-            if (isPlayerControlEnabled)
-                inputXZ = new Vector3(_playerTurn, 0f, _playerForward);
-
-            Quaternion headingOffsetFromCamera = Quaternion.Inverse(transform.rotation) * cameraHeading; // cameraDir.transform.rotation;
-
-            // rotate the input hor/vert vector by the difference between the player's
-            // heading and the current camera look offset
-            inputXZ = headingOffsetFromCamera * inputXZ;
-
-            // update the animation controller with the corrected forward and turn values
-            // relative to the camera and player
-            anim.SetFloat("velx", 0f);// inputXZ.x);
-            anim.SetFloat("vely", inputXZ.z);
-
-            float movementScaleFactor = 0.001f;
-            if (isCrouched)
-                movementScaleFactor *= movementSpeedCrouch;
-            else
-                movementScaleFactor *= movementSpeedWalk;
-
-            // move the player using the forward vector component
-            Vector3 flatPlayerForward = transform.forward;
-            flatPlayerForward.y = 0f;
-            flatPlayerForward.Normalize();
-            Vector3 forwardMoveVec = flatPlayerForward / Time.fixedDeltaTime * inputXZ.z * movementScaleFactor;
+        // calculate new input axes relative to the camera's offset 
+        // from the player's forward vector
             
-            // move the player using the lateral vector component
-            Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * flatPlayerForward).normalized /
-                                     Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
+        {
+            // the camera target gameobject follows the player
+                
+            Vector3 crouchTargetPosition = transform.position;
+            if (isCrouched)
+                crouchTargetPosition.y += 0.7f;
+            else
+                crouchTargetPosition.y += 1.4f;
 
-            transform.position += forwardMoveVec + lateralMoveVec;
+            cameraDir.transform.position = crouchTargetPosition;
 
+            // update the camera heading
+            Quaternion rotX = Quaternion.AngleAxis(_playerLookX * LookCamSensitivityX, Vector3.up);
+            cameraHeading *= rotX;
 
-            // now rotate the player toward the desired input direction. 
-            // try doing it directly, later add interpolation
+            // update the camera pitch
+            cameraPitch += _playerLookY * LookCamSensitivityY;
+            cameraPitch = Mathf.Clamp(cameraPitch, cameraPitchMin, cameraPitchMax);
+            Quaternion rotY;
+            if (invertMouseY)
+                rotY = Quaternion.AngleAxis(cameraPitch, Vector3.left);
+            else
+                rotY = Quaternion.AngleAxis(cameraPitch, Vector3.right);
 
-            // get the relative rotation of the input vector to the camera
-            // here, z is forward
-            Vector3 inputXZHeading = new Vector3(_playerTurn, 0f, _playerForward);
-            float inputRot = Vector3.SignedAngle(Vector3.forward, inputXZHeading.normalized, Vector3.up);
-            Quaternion inputRotQuat = Quaternion.AngleAxis(inputRot, Vector3.up);
+            cameraDir.transform.rotation = cameraHeading * rotY;
+        }
 
-            // mouse-look when not in motion.  if moving, mouse X will change forward vector
-            if (inputXZHeading.magnitude > 0.2f)
-                transform.rotation = cameraDir.transform.rotation * inputRotQuat;
+        Vector3 inputXZ = Vector3.zero;
+        if (isPlayerControlEnabled)
+            inputXZ = new Vector3(_playerTurn, 0f, _playerForward);
+
+        Quaternion headingOffsetFromCamera = Quaternion.Inverse(transform.rotation) * cameraHeading; // cameraDir.transform.rotation;
+
+        // rotate the input hor/vert vector by the difference between the player's
+        // heading and the current camera look offset
+        inputXZ = headingOffsetFromCamera * inputXZ;
+
+        // update the animation controller with the corrected forward and turn values
+        // relative to the camera and player
+
+        // update sprint stamina
+        if (_playerIsSprint && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
+        {
+            // deplete stamina
+            sprintStamina -= sprintStaminaDepletionRate * Time.fixedDeltaTime;
+
+            if (sprintStamina <= 0f)
+            {
+                // fire off audio event that the player has run out of stamina
+                audioEventToRaise.Raise(this, sprintStaminaOutOfBreathAudioClip, transform.position);
+                Debug.Log("Stamina depleted!");
+            }
+            sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
+
+            // update the PlayerData SO sprint stamina
+            //
+            //
+
+        }
+        if (!_playerIsSprint && sprintStamina < 1f)
+        {
+            // recharge stamina
+            sprintStamina += sprintStaminaRechargeRate * Time.fixedDeltaTime;
+            sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
+            // update the PlayerData SO sprint stamina
+            //
+            //
+
         }
 
 
+        float movementScaleFactor = 0.001f;
+        float animControlVelY;
+        if (isCrouched)
+        {
+            movementScaleFactor *= movementSpeedCrouch;
+            animControlVelY = 0.25f;
+        }
+        else if (_playerIsSprint && sprintStamina > 0f)
+        {
+            movementScaleFactor *= movementSpeedSprint;
+            animControlVelY = 1f;
+        }
+        else
+        {
+            movementScaleFactor *= movementSpeedWalk;
+            animControlVelY = 0.3f;
+        }
+        // move the player using the forward vector component
+        Vector3 flatPlayerForward = transform.forward;
+        flatPlayerForward.y = 0f;
+        flatPlayerForward.Normalize();
+        Vector3 forwardMoveVec = flatPlayerForward / Time.fixedDeltaTime * inputXZ.z * movementScaleFactor;
+            
+        // move the player using the lateral vector component
+        Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * flatPlayerForward).normalized /
+                                    Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
+
+        transform.position += forwardMoveVec + lateralMoveVec;
+
+        // update the animation controller with correct forward velocity.
+        // lateral velocity is zero currently, can add later if we want
+        // turning walk/run animations
+        anim.SetFloat("velx", 0f);// inputXZ.x);
+        anim.SetFloat("vely", inputXZ.z * animControlVelY);
+
+        // now rotate the player toward the desired input direction. 
+        // try doing it directly, later add interpolation
+
+        // get the relative rotation of the input vector to the camera
+        // here, z is forward
+        Vector3 inputXZHeading = new Vector3(_playerTurn, 0f, _playerForward);
+        float inputRot = Vector3.SignedAngle(Vector3.forward, inputXZHeading.normalized, Vector3.up);
+        Quaternion inputRotQuat = Quaternion.AngleAxis(inputRot, Vector3.up);
+
+        // mouse-look when not in motion.  if moving, mouse X will change forward vector
+        if (inputXZHeading.magnitude > 0.2f)
+            transform.rotation = cameraDir.transform.rotation * inputRotQuat;
+
         if (_playerActionCrouch)
         {
-            //anim.SetBool("doButtonPress", _playerActionCrouch);
             _playerActionCrouch = false;
             isCrouched = !isCrouched;
             anim.SetBool("crouch", isCrouched);
