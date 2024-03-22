@@ -13,4 +13,5 @@ public class PlayerData : ScriptableObject
     //public float PlayerHealth = 10.0f;
     [Space]
     public Vector3 PlayerPosition;
+    public float PlayerSprintStamina;
 }
