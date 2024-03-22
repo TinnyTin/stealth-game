@@ -78,7 +78,7 @@ public class PlayerControl : MonoBehaviour
     // internal camera heading and pitch rotation state
     private Quaternion cameraHeading;
     private float cameraPitch;
-    
+
     // limits for the camera pitch controls
     public float cameraPitchMax = 30f;
     public float cameraPitchMin = -20f;
@@ -160,7 +160,7 @@ public class PlayerControl : MonoBehaviour
             Debug.LogError("PlayerControl: no CameraDir component.");
         }
 
-        if(sprintStaminaOutOfBreathAudioClip == null || audioEventToRaise == null)
+        if (sprintStaminaOutOfBreathAudioClip == null || audioEventToRaise == null)
         {
             Debug.LogError("PlayerControl: no audioEventToRaise, sprintStaminaOutOfBreath audio clip component.");
         }
@@ -208,7 +208,7 @@ public class PlayerControl : MonoBehaviour
         {
             playerData.PlayerPosition = transform.position;
         }
-        
+
     }
 
     private void FixedUpdate()
@@ -216,15 +216,15 @@ public class PlayerControl : MonoBehaviour
         if (!isPlayerControlEnabled || cameraDir == null)
             return;
 
-        
+
         // update the cinemachine camera based on inputs from mouse and right analog stick
 
         // calculate new input axes relative to the camera's offset 
         // from the player's forward vector
-            
+
         {
             // the camera target gameobject follows the player
-                
+
             Vector3 crouchTargetPosition = transform.position;
             if (isCrouched)
                 crouchTargetPosition.y += 0.7f;
@@ -248,7 +248,7 @@ public class PlayerControl : MonoBehaviour
 
             cameraDir.transform.rotation = cameraHeading * rotY;
         }
-                
+
 
         Vector3 inputXZ = Vector3.zero;
         if (isPlayerControlEnabled)
@@ -316,7 +316,7 @@ public class PlayerControl : MonoBehaviour
         flatPlayerForward.y = 0f;
         flatPlayerForward.Normalize();
         Vector3 forwardMoveVec = flatPlayerForward / Time.fixedDeltaTime * inputXZ.z * movementScaleFactor;
-            
+
         // move the player using the lateral vector component
         Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * flatPlayerForward).normalized /
                                     Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
