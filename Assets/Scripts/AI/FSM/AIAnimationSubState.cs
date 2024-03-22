@@ -39,7 +39,7 @@ public class AIAnimationSubState : AIBaseState
         _audioClip = audioClip;
 
         // freeze FOV
-        _freezeFOV = freezeFOV
+        _freezeFOV = freezeFOV;
     }
     public override bool SetAIThreatPriority()
     {
