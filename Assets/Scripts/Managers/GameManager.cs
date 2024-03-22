@@ -117,6 +117,5 @@ public class GameManager : MonoBehaviour
     private void TestLoadSave()
     {
         GameSave test = _gameSaveUtil.LoadSave("test.sav");
-        int a = 0; 
     }
 }
