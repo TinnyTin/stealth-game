@@ -259,8 +259,8 @@ public class PlayerControl : MonoBehaviour
             if (sprintStamina <= 0f)
             {
                 // fire off audio event that the player has run out of stamina
-                audioEventToRaise.Raise(this, sprintStaminaOutOfBreathAudioClip, transform.position);
-                Debug.Log("Stamina depleted!");
+                audioEventToRaise.Raise(sprintStaminaOutOfBreathAudioClip, transform.position, AudioSourceParams.Default);
+                //Debug.Log("Stamina depleted!");
             }
             sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
 
