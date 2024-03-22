@@ -1,15 +1,14 @@
-﻿public class GameSave
+﻿using System;
+using System.Collections.Generic;
+
+public class GameSave
 {
-
-    // Use this for initialization
-    void Start()
+    public class LevelStat
     {
-
+        public int LevelNumber { get; set; }
+        public TimeSpan BestTime { get; set; }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    public int UnlockedToLevel { get; set; }
+    public List<LevelStat> LevelStats { get; set; } = new(); 
 }

@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 
 /*
@@ -30,7 +31,11 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    [SerializeField] private PlayerData _playerData; 
+    [SerializeField] private PlayerData _playerData;
+
+    [DoNotSerialize] public readonly MissionTimer MissionTimer = new();
+
+    private readonly GameSaveUtil _gameSaveUtil = new(); 
 
     // Start is called before the first frame update
     void Start()
@@ -41,7 +46,10 @@ public class GameManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            TestGameSave();
+        }
     }
 
     public void OnPlayerGoalCameraPanCompleted(Component sender)
@@ -68,5 +76,21 @@ public class GameManager : MonoBehaviour
     {
         Cursor.lockState = visible ? CursorLockMode.None : CursorLockMode.Locked;
         Cursor.visible = visible;
+    }
+
+    private void TestGameSave()
+    {
+        MissionTimer.Stop();
+
+        GameSave gameSave = new();
+        gameSave.UnlockedToLevel = 2;
+
+        GameSave.LevelStat levelStat = new();
+        levelStat.LevelNumber = 1;
+        levelStat.BestTime = MissionTimer.GetTimespan(); 
+
+        gameSave.LevelStats.Add(levelStat);
+
+        _gameSaveUtil.WriteSave(gameSave, Application.dataPath, "test.sav");
     }
 }
