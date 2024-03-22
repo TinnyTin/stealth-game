@@ -354,42 +354,6 @@ BlendTree:
     m_CycleOffset: 0
     m_DirectBlendParameter: velx
     m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: ffefc61cac5e21b49ada14bec8e335c9,
-      type: 3}
-    m_Threshold: 0.6666667
-    m_Position: {x: -0.1, y: -0.4}
-    m_TimeScale: 80
-    m_CycleOffset: 0
-    m_DirectBlendParameter: velx
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: ffefc61cac5e21b49ada14bec8e335c9,
-      type: 3}
-    m_Threshold: 0.6666667
-    m_Position: {x: -0.3, y: -0.05}
-    m_TimeScale: 40
-    m_CycleOffset: 0
-    m_DirectBlendParameter: velx
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 0617579f26cc90c45aeebd8f075181a1,
-      type: 3}
-    m_Threshold: 0.6666667
-    m_Position: {x: 0.2, y: -0.4}
-    m_TimeScale: 80
-    m_CycleOffset: 0
-    m_DirectBlendParameter: velx
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: -203655887218126122, guid: 0617579f26cc90c45aeebd8f075181a1,
-      type: 3}
-    m_Threshold: 0.6666667
-    m_Position: {x: 0.3, y: -0.05}
-    m_TimeScale: 40
-    m_CycleOffset: 0
-    m_DirectBlendParameter: velx
-    m_Mirror: 0
   m_BlendParameter: velx
   m_BlendParameterY: vely
   m_MinThreshold: 0.6666667
@@ -464,42 +428,6 @@ BlendTree:
     m_Threshold: 0.6666667
     m_Position: {x: 0, y: 0}
     m_TimeScale: 1
-    m_CycleOffset: 0
-    m_DirectBlendParameter: velx
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 1827226128182048838, guid: c819b4ae53da27b46b0ec8b6b8498400,
-      type: 3}
-    m_Threshold: 0.6666667
-    m_Position: {x: -0.2, y: -0.4}
-    m_TimeScale: 80
-    m_CycleOffset: 0
-    m_DirectBlendParameter: velx
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 1827226128182048838, guid: c819b4ae53da27b46b0ec8b6b8498400,
-      type: 3}
-    m_Threshold: 0.6666667
-    m_Position: {x: -0.313, y: -0.1}
-    m_TimeScale: 40
-    m_CycleOffset: 0
-    m_DirectBlendParameter: velx
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 1827226128182048838, guid: d6dd8e6bac9f9724ebb80501eef3d2aa,
-      type: 3}
-    m_Threshold: 0.6666667
-    m_Position: {x: 0.2, y: -0.4}
-    m_TimeScale: 80
-    m_CycleOffset: 0
-    m_DirectBlendParameter: velx
-    m_Mirror: 0
-  - serializedVersion: 2
-    m_Motion: {fileID: 1827226128182048838, guid: d6dd8e6bac9f9724ebb80501eef3d2aa,
-      type: 3}
-    m_Threshold: 0.6666667
-    m_Position: {x: 0.307, y: -0.1}
-    m_TimeScale: 40
     m_CycleOffset: 0
     m_DirectBlendParameter: velx
     m_Mirror: 0
