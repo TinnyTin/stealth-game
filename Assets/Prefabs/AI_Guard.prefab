@@ -2975,6 +2975,7 @@ MonoBehaviour:
   currentSpeed: 0.3
   pursuitAutoSenseRadius: 3
   finalCaughtRadius: 1.5
+  finalCaughtNavMeshTolerance: 1
   isAIActive: 0
   WaypointDistanceTolerance: 1
   waypoints:
@@ -3095,7 +3096,7 @@ MonoBehaviour:
   threatBar: {fileID: 8759923797073108172}
   minThreatMeter: 0
   maxThreatMeter: 100
-  sightThreatRate: 20
+  sightThreatRate: 10
   NeuroticMultiplier: 1
   DegredationRate: 10
   threatLevel: 0
