@@ -87,6 +87,7 @@ public class PlayerControl : MonoBehaviour
     public float movementSpeedWalk = 1f;
     public float movementSpeedSprint = 2f;
     public float movementSpeedCrouch = 0.5f;
+    private float smoothMovement = 0f;
 
     // sprint stamina is depleted during sprinting at
     // this rate, represented in percentage per second.
@@ -327,7 +328,8 @@ public class PlayerControl : MonoBehaviour
         // lateral velocity is zero currently, can add later if we want
         // turning walk/run animations
         anim.SetFloat("velx", 0f);// inputXZ.x);
-        anim.SetFloat("vely", inputXZ.z * animControlVelY);
+        smoothMovement = Mathf.Lerp(smoothMovement, inputXZ.z * animControlVelY, Time.fixedDeltaTime * 5);
+        anim.SetFloat("vely", smoothMovement);
 
         // now rotate the player toward the desired input direction. 
         // try doing it directly, later add interpolation
