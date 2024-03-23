@@ -47,6 +47,8 @@ public class PlayerControl : MonoBehaviour
 
     // data for footstep tracking and sound event emitter
     public FootStepFactory footStepFactory;
+    public GameEvent soundThreatEvent;
+    public float soundThreatWeight = 0.4f;
     private bool leftFootDown, rightFootDown;
     private Vector3 prevPosition;
     private float velocityFiltered;
@@ -374,7 +376,7 @@ public class PlayerControl : MonoBehaviour
             isRunning = true;
 
         // emit footstep events to sound manager
-        triggerFootsteps(isRunning);
+        triggerFootsteps(_playerIsSprint);
 
         // update the stealable object state 
         UpdateStealableObject();
@@ -473,6 +475,7 @@ public class PlayerControl : MonoBehaviour
     private void triggerFootsteps(bool isRunning)
     {
         StepCharacteristic stepCharacteristic = isRunning ? StepCharacteristic.Run : StepCharacteristic.Walk;
+        bool stepCreated = false;
         if (rigBase && leftFoot)
         {
             float leftFootY = leftFoot.transform.position.y - rigBase.transform.position.y;
@@ -483,6 +486,7 @@ public class PlayerControl : MonoBehaviour
                 if (!leftFootDown)
                 {
                     footStepFactory.playFootStepRandom(FloorCharacteristic.Dirt, stepCharacteristic, transform.position);
+                    stepCreated = true;
                 }
                 leftFootDown = true;
             }
@@ -503,6 +507,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     //Debug.Log("r foot: " + rbody.velocity.magnitude);
                     footStepFactory.playFootStepRandom(FloorCharacteristic.Dirt, stepCharacteristic, transform.position);
+                    stepCreated = true;
                 }
                 rightFootDown = true;
             }
@@ -510,6 +515,15 @@ public class PlayerControl : MonoBehaviour
             {
                 rightFootDown = false;
             }
+        }
+
+        if (isRunning && stepCreated)
+        {
+            if (soundThreatEvent != null)
+            {
+                soundThreatEvent.Raise(transform.position, soundThreatWeight);
+            }
+
         }
     }
 

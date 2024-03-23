@@ -1215,6 +1215,7 @@ MonoBehaviour:
   HilightRangeExtractionPoint: 7
   IsExtractionSuccess: 0
   footStepFactory: {fileID: 11400000, guid: 4643d944ea5b1f74d9660238939e6009, type: 2}
+  soundThreatEvent: {fileID: 11400000, guid: 0da2e8288a9ed8e4aba8d9cd74db75e6, type: 2}
   rigBase: {fileID: 7766791674418879720}
   leftFoot: {fileID: 8280454458903076262}
   rightFoot: {fileID: 3882963269370595538}

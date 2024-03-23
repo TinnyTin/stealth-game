@@ -380,7 +380,9 @@ MonoBehaviour:
   viewCastStartingPoint: {fileID: 5832243423728098345}
   refreshInterval: 0.2
   viewRadius: 11
+  fadeInMeshRadiusMultiplier: 1.1
   viewAngle: 130
+  fadeInMeshviewAngleMultiplier: 1.1
   updateTransform: 1
   meshResolution: 1
   meshFadeInMultiplier: 1
@@ -3031,34 +3033,6 @@ MonoBehaviour:
   _rigBase: {fileID: 6480657095118862769}
   _leftFoot: {fileID: 4773808666291769502}
   _rightFoot: {fileID: 1314333477564791915}
---- !u!114 &8292152907300419981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4642304207773468597}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc7ae5b36a150fb468189645e67388af, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 4fb5bd836f516464f99d7d30cf89ed89, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 3292665219539485694}
-        m_TargetAssemblyTypeName: AIAudioListener, Assembly-CSharp
-        m_MethodName: onSound3DStringInGameCreated
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!195 &8759923798378871545
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -3114,6 +3088,34 @@ MonoBehaviour:
     min: 0
     max: 50
     threatChooseState: 2
+--- !u!114 &9019845228498428912
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4642304207773468597}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aca805c3b37b51648a1b5f858112ef48, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 0da2e8288a9ed8e4aba8d9cd74db75e6, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3292665219539485694}
+        m_TargetAssemblyTypeName: AIAudioListener, Assembly-CSharp
+        m_MethodName: onSoundThreatCreated
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4773808666291769502 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4300508801551825144, guid: c49392c42316aa747ac88209726d7c0f,
