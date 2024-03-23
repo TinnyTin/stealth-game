@@ -207,6 +207,7 @@ GameObject:
   - component: {fileID: 6897885801393024837}
   - component: {fileID: 3217239379779745115}
   - component: {fileID: 3217239379779745116}
+  - component: {fileID: 8327856187946703319}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -239,7 +240,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7523417464582312799}
   serializedVersion: 2
-  m_Mass: 10
+  m_Mass: 5
   m_Drag: 10
   m_AngularDrag: 10
   m_UseGravity: 1
@@ -260,6 +261,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioClipCollision: {fileID: 8300000, guid: a7fc1d392a7c7d9448a7dce9961158af, type: 3}
+  impulseThreshold: 3
   soundEventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
   soundThreatEvent: {fileID: 11400000, guid: 0da2e8288a9ed8e4aba8d9cd74db75e6, type: 2}
-  impulseThreshold: 3
+  threatWeight: 1
+--- !u!208 &8327856187946703319
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7523417464582312799}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.25, y: 0.25, z: 0.1}
+  m_MoveThreshold: 0.1
+  m_Carve: 1
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0, z: 0}
+  m_TimeToStationary: 0.5

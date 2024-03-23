@@ -1190,7 +1190,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3509601553406828711}
   serializedVersion: 2
-  m_Mass: 100
+  m_Mass: 10
   m_Drag: 100
   m_AngularDrag: 100
   m_UseGravity: 1
@@ -1216,6 +1216,7 @@ MonoBehaviour:
   IsExtractionSuccess: 0
   footStepFactory: {fileID: 11400000, guid: 4643d944ea5b1f74d9660238939e6009, type: 2}
   soundThreatEvent: {fileID: 11400000, guid: 0da2e8288a9ed8e4aba8d9cd74db75e6, type: 2}
+  soundThreatWeight: 0.4
   rigBase: {fileID: 7766791674418879720}
   leftFoot: {fileID: 8280454458903076262}
   rightFoot: {fileID: 3882963269370595538}
