@@ -9,9 +9,15 @@ using UnityEngine;
 
 public class SoundEmittingObject : MonoBehaviour
 {
+    [Header("Audio")]
     public AudioClip AudioClipCollision;
-    public GameEvent eventToRaise;
+    [Header("Physics")]
     public float impulseThreshold = 5f;
+    [Header("Events")]
+    public GameEvent soundEventToRaise;
+    public GameEvent soundThreatEvent;
+    public float threatWeight = 1f;
+
 
     // Start is called before the first frame update
     void Start()
@@ -28,7 +34,14 @@ public class SoundEmittingObject : MonoBehaviour
         if (c.impulse.magnitude > impulseThreshold)
         {
             if (AudioClipCollision != null)
-                eventToRaise.Raise(AudioClipCollision, transform.position,"SoundThreat",AudioSourceParams.Default);
+            {
+                // raise sound event
+                soundEventToRaise.Raise(AudioClipCollision, transform.position, "SoundThreat", AudioSourceParams.Default);
+                // raise threat increase event
+                soundThreatEvent.Raise(transform.position, threatWeight);
+
+            }
+                
         }
     }
 }
