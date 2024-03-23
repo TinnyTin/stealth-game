@@ -128,4 +128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioClipCollision: {fileID: 8300000, guid: 86236203f34e1084d8253536d12458ae, type: 3}
-  eventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
+  impulseThreshold: 5
+  soundEventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
+  soundThreatEvent: {fileID: 11400000, guid: 0da2e8288a9ed8e4aba8d9cd74db75e6, type: 2}
+  threatWeight: 1

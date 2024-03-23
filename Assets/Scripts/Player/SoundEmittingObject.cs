@@ -36,7 +36,7 @@ public class SoundEmittingObject : MonoBehaviour
             if (AudioClipCollision != null)
             {
                 // raise sound event
-                soundEventToRaise.Raise(AudioClipCollision, transform.position, "SoundThreat", AudioSourceParams.Default);
+                soundEventToRaise.Raise(AudioClipCollision, transform.position, AudioSourceParams.Default);
                 // raise threat increase event
                 soundThreatEvent.Raise(transform.position, threatWeight);
 
