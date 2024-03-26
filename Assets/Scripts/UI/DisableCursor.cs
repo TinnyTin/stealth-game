@@ -13,6 +13,12 @@ public class DisableCursor : MonoBehaviour
 {
     void OnEnable()
     {
-        GameManager.Instance.SetCursorVisible(false);
+        if (GameManager.Instance)
+        {
+            GameManager.Instance.SetCursorVisible(false);
+            return;
+        }
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 }

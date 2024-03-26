@@ -71,7 +71,7 @@ public class SceneCameraController : MonoBehaviour
         // as we need to disable input controls during
         // IntroAnimationCamera playback.
 
-        GameObject player = GameObject.Find("player");
+        GameObject player = GameObject.Find("Player Model");
         if (player == null)
         {
             Debug.Log("SceneCameraController: player not found.");
