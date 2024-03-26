@@ -12,6 +12,12 @@ public class EnableCursor : MonoBehaviour
 {
     void OnEnable()
     {
-        GameManager.Instance.SetCursorVisible(true);
+        if (GameManager.Instance)
+        {
+            GameManager.Instance.SetCursorVisible(true);
+            return;
+        }
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 }

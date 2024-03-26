@@ -18,8 +18,7 @@ public class ExtractionPoint : MonoBehaviour
 
   private GameObject childDefault, childHilighted;
 
-    // Temporary referencing structure until SO's are setup
-    public GameObject gameplayObject;
+    public GameEvent PlayerReachedExit;
 
   // Start is called before the first frame update
   void Start()
@@ -51,11 +50,7 @@ public class ExtractionPoint : MonoBehaviour
     if(AudioClipExtract != null)
       eventToRaise.Raise(AudioClipExtract, AudioSourceParams.Default);
 
-    // Temporary until SO's are setup. Raise a "Player Reached Exit" SO event in the future.
-    if(gameplayObject != null)
-        {
-            gameplayObject.GetComponent<MissionSummary>().missionComplete();
-        }
+        PlayerReachedExit.Raise();
   }
 
   public void SetHilight(bool isHilighted)

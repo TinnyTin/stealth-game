@@ -205,8 +205,12 @@ public class PlayerControl : MonoBehaviour
         _playerIsSprint = input.playerIsSprint;
 
         // don't overwrite the cached input buttons (if true, not yet handled)
-        _playerActionGrab = input.playerActionGrab || _playerActionGrab;
-        _playerActionCrouch = input.playerActionCrouch || _playerActionCrouch;
+        // but only if player input is currently enabled
+        if (isPlayerControlEnabled)
+        {
+            _playerActionGrab = input.playerActionGrab || _playerActionGrab;
+            _playerActionCrouch = input.playerActionCrouch || _playerActionCrouch;
+        }
 
         if (playerData != null)
         {
@@ -525,6 +529,11 @@ public class PlayerControl : MonoBehaviour
             }
 
         }
+    }
+
+    public void setPlayerControl(bool enable)
+    {
+        isPlayerControlEnabled = enable;
     }
 
 }
