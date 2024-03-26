@@ -432,8 +432,6 @@ GameObject:
   - component: {fileID: 8562978254733664052}
   - component: {fileID: 8562978254733664054}
   - component: {fileID: 8562978254733664053}
-  - component: {fileID: 8562978254733664048}
-  - component: {fileID: 8562978254733664055}
   m_Layer: 5
   m_Name: Mission Success Text
   m_TagString: Untagged
@@ -559,48 +557,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8562978254733664048
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8562978254733664059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ccb869ff16892c4ba4aeabafba1cba5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: b984adb34e019c549be34216320474f0, type: 2}
-  response:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 8562978254733664055}
-        m_TargetAssemblyTypeName: ChangeMissionText, Assembly-CSharp
-        m_MethodName: changeMissionTextToFailure
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &8562978254733664055
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8562978254733664059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 82699c042e4f85b4e81b79d358c87d3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  missionSuccess: Mission Success
-  missionFail: Caught by a Guard
 --- !u!1 &8562978254934765339
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,7 +1165,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8562978256182024011
 RectTransform:
   m_ObjectHideFlags: 0

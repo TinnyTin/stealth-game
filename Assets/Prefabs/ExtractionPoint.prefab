@@ -294,6 +294,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AudioClipExtract: {fileID: 8300000, guid: a07b75e0cdef84446b89b8c6eee939c0, type: 3}
   eventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
+  PlayerReachedExit: {fileID: 11400000, guid: 0e15176b7ba250247ae0607c12a16324, type: 2}
 --- !u!1001 &4515485670344143708
 PrefabInstance:
   m_ObjectHideFlags: 0

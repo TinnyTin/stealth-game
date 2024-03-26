@@ -527,4 +527,9 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    public void setPlayerControl(bool enable)
+    {
+        isPlayerControlEnabled = enable;
+    }
+
 }
