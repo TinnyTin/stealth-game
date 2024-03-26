@@ -21,8 +21,11 @@ public class FieldOfView : MonoBehaviour
     public GameObject viewCastStartingPoint;
     public float refreshInterval = 0.2f;
     public float viewRadius;
+    public float fadeInMeshRadiusMultiplier = 1.1f;
     [Range(0, 360)]
     public float viewAngle;
+    public float fadeInMeshviewAngleMultiplier = 1.1f;
+
     public bool updateTransform = true;
     [Header("Visual Field of View")]
     public float meshResolution = 1f;
@@ -49,7 +52,7 @@ public class FieldOfView : MonoBehaviour
     private Mesh viewMesh;
     private float meshAlpha = 0.0f;
 
-    
+
     // TODO remove this secion and add in fixedupdate...?
     private void Start()
     {
@@ -57,7 +60,7 @@ public class FieldOfView : MonoBehaviour
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
         meshAlpha = 0.0f;
-        
+
         StartCoroutine("FindTargetsWithDelay", refreshInterval);
     }
     IEnumerator FindTargetsWithDelay(float delay)
@@ -143,7 +146,22 @@ public class FieldOfView : MonoBehaviour
 
     void DrawFieldOfView()
     {
-        if (countInView > 0)
+        bool closeToView = false;
+
+        Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius * fadeInMeshRadiusMultiplier, targetMask);
+        for (int i = 0; i < targetsInViewRadius.Length; i++)
+        {
+            // check within viewing ANGLE
+            Transform target = targetsInViewRadius[i].transform;
+            Vector3 dirToTarget = (target.position - viewCastStartingPoint.transform.position).normalized;
+            if (Vector3.Angle(transform.forward, dirToTarget) < (viewAngle * fadeInMeshviewAngleMultiplier) / 2)
+            {
+                closeToView = true;
+                break;
+            }
+        }
+
+        if (closeToView)
         {
             meshAlpha = Mathf.Lerp(meshAlpha, 0.3f, Time.deltaTime);
         }

@@ -33,80 +33,83 @@ Color Adjustments override applied.  This is how we apply fade-in/out
 
 public class SceneCameraController : MonoBehaviour
 {
-  public GameObject PlayerCamera;
-  public GameObject IntroAnimationCamera;
-  public GameObject HUD;
+    public GameObject PlayerCamera;
+    public GameObject IntroAnimationCamera;
+    public GameObject HUD;
 
-  // IntroAnimationCamera Animator component
-  private Animator introCameraAnimator;
+    // IntroAnimationCamera Animator component
+    private Animator introCameraAnimator;
 
-  private string playStateName = "PlayCameraAnimation";
-  private int playStateNameHash;
+    private string playStateName = "PlayCameraAnimation";
+    private int playStateNameHash;
 
-  // duration in seconds to fade out the IntroAnimationCamera
-  public float FadeOutDuration = 2f;
-  // duration in seconds to fade in the PlayerCamera
-  public float FadeInDuration = 2f;
+    // duration in seconds to fade out the IntroAnimationCamera
+    public float FadeOutDuration = 2f;
+    // duration in seconds to fade in the PlayerCamera
+    public float FadeInDuration = 2f;
 
-  private bool isPlayIntroAnimation = false;
+    private bool isPlayIntroAnimation = false;
 
-  private PlayerControl playerControl;
+    private PlayerControl playerControl;
 
-  public GameObject ppVolumeGameObj;
-  private Volume ppVolume;
-  private VolumeProfile ppProfile;
+    public GameObject ppVolumeGameObj;
+    private Volume ppVolume;
+    private VolumeProfile ppProfile;
 
-  private ColorAdjustments ppColorAdjust;
+    private ColorAdjustments ppColorAdjust;
 
-  private float fadePlayerStartTime;
-  private bool isFadePlayer = false;
+    private float fadePlayerStartTime;
+    private bool isFadePlayer = false;
     public GameObject skipIntroText;
 
-  // Start is called before the first frame update
-  void Start()
-  {
+    public MainCameraData mainCameraData;
+
+    // Start is called before the first frame update
+    void Start()
+    {
         // get player in order to cache reference to PlayerControl 
         // as we need to disable input controls during
         // IntroAnimationCamera playback.
 
         GameObject player = GameObject.Find("player");
-    if(player == null)
-    {
-      Debug.Log("SceneCameraController: player not found.");
-      return;
-    }
-    playerControl = player.GetComponent<PlayerControl>();
+        if (player == null)
+        {
+            Debug.Log("SceneCameraController: player not found.");
+            return;
+        }
+        playerControl = player.GetComponent<PlayerControl>();
 
-    playStateNameHash = Animator.StringToHash("Base Layer." + playStateName);
+        playStateNameHash = Animator.StringToHash("Base Layer." + playStateName);
 
-    if (PlayerCamera == null || IntroAnimationCamera == null)
-    {
-      Debug.LogError("SceneCameraController: No PlayerCamera, IntroAnimationCamera.");
-    }
+        if (PlayerCamera == null || IntroAnimationCamera == null)
+        {
+            Debug.LogError("SceneCameraController: No PlayerCamera, IntroAnimationCamera.");
+        }
 
-    introCameraAnimator = IntroAnimationCamera.GetComponent<Animator>();
-    if(introCameraAnimator == null)
-    {
-      Debug.LogError("SceneCameraController: No IntroAnimationCamera Animator component.");
-    }
+        introCameraAnimator = IntroAnimationCamera.GetComponent<Animator>();
+        if (introCameraAnimator == null)
+        {
+            Debug.LogError("SceneCameraController: No IntroAnimationCamera Animator component.");
+        }
 
-    // get the post process volume color adjust layer
-    ppProfile = ppVolumeGameObj.GetComponent<UnityEngine.Rendering.Volume>()?.profile;
-    ppProfile.TryGet(out ppColorAdjust);
-    if(ppProfile == null)
-    {
-      Debug.LogError("SceneCameraController: Postprocess profile invalid.");
-    }
-    isPlayIntroAnimation = false;
+        // get the post process volume color adjust layer
+        ppProfile = ppVolumeGameObj.GetComponent<UnityEngine.Rendering.Volume>()?.profile;
+        ppProfile.TryGet(out ppColorAdjust);
+        if (ppProfile == null)
+        {
+            Debug.LogError("SceneCameraController: Postprocess profile invalid.");
+        }
+        isPlayIntroAnimation = false;
 
-    Play();
+        Play();
 
     }
 
     private void Update()
     {
         // Skip cutscene if any of the Skip cutscene buttons are pressed
-        if(isPlayIntroAnimation) {
+        if (isPlayIntroAnimation)
+        {
             if (Input.GetKeyUp(KeyCode.Escape) || Input.GetKeyUp(KeyCode.Space) || Input.GetButtonDown("Fire1"))
             {
                 skipIntro();
@@ -115,97 +118,101 @@ public class SceneCameraController : MonoBehaviour
     }
 
     void FixedUpdate()
-  {
-    //test checking the path hash
-    if (introCameraAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash != playStateNameHash)
-      return;
-
-    if (!isPlayIntroAnimation)
     {
-        return;
+        //test checking the path hash
+        if (introCameraAnimator.GetCurrentAnimatorStateInfo(0).fullPathHash != playStateNameHash)
+            return;
+
+        if (!isPlayIntroAnimation)
+        {
+            return;
+        }
+
+        if (!isFadePlayer)
+        {
+            // intro animation camera state, but we haven't begun fading effects.
+
+            // manage fades based on the IntroAnimationCamera animation 
+            // playback
+
+            Animator introAnim = IntroAnimationCamera.GetComponent<Animator>();
+
+            float animTimeNormalized = introAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
+            float animLength = introAnim.GetCurrentAnimatorStateInfo(0).length;
+            float animTime = (animLength * animTimeNormalized);
+            float animTimeToEndOfState = animLength - animTime;
+
+            if (animTimeNormalized >= 1f)
+            {
+                // the IntroAnimationCamera animation and fade is complete.
+                IntroAnimationCamera.GetComponent<Camera>().enabled = false;
+                PlayerCamera.GetComponent<Camera>().enabled = true;
+                mainCameraData.mainCamera = PlayerCamera;
+
+                playerControl.isPlayerControlEnabled = true;
+
+                isFadePlayer = true;
+                fadePlayerStartTime = Time.realtimeSinceStartup;
+            }
+            else if (animTime <= FadeInDuration)
+            {
+                float t = 1f - (animTime / FadeInDuration);
+                ppColorAdjust.postExposure.value = t * -16f;
+            }
+            else if (animTimeToEndOfState <= FadeOutDuration)
+            {
+                // near end of the IntroAnimationCamera's anim clip.  fade to black.
+                float t = (FadeOutDuration - animTimeToEndOfState) / FadeOutDuration;
+                ppColorAdjust.postExposure.value = t * -16f;
+            }
+        }
+        else
+        {
+            // animated pan camera fade out complete. fade back to player camera
+            // this fade is not based on any animation clip playback
+            float fadeTime = Time.realtimeSinceStartup - fadePlayerStartTime;
+            float t = 1f - (fadeTime / FadeInDuration);
+            ppColorAdjust.postExposure.value = t * -16f;
+
+            if (t <= 0f)
+            {
+                // done with all fades. reset the exposure adjustment to zero and activate HUD
+                ppColorAdjust.postExposure.value = 0f;
+                isPlayIntroAnimation = false;
+                HUD.SetActive(true);
+                skipIntroText.SetActive(false);
+            }
+        }
     }
-
-    if (!isFadePlayer)
-    {
-      // intro animation camera state, but we haven't begun fading effects.
-
-      // manage fades based on the IntroAnimationCamera animation 
-      // playback
-
-      Animator introAnim = IntroAnimationCamera.GetComponent<Animator>();
-
-      float animTimeNormalized = introAnim.GetCurrentAnimatorStateInfo(0).normalizedTime;
-      float animLength = introAnim.GetCurrentAnimatorStateInfo(0).length;
-      float animTime = (animLength * animTimeNormalized);
-      float animTimeToEndOfState = animLength - animTime;
-
-      if (animTimeNormalized >= 1f)
-      {
-        // the IntroAnimationCamera animation and fade is complete.
-        IntroAnimationCamera.GetComponent<Camera>().enabled = false;
-        PlayerCamera.GetComponent<Camera>().enabled = true;
-
-        playerControl.isPlayerControlEnabled = true;
-
-        isFadePlayer = true;
-        fadePlayerStartTime = Time.realtimeSinceStartup;
-      }
-      else if (animTime <= FadeInDuration)
-      {
-        float t = 1f - (animTime / FadeInDuration);
-        ppColorAdjust.postExposure.value = t * -16f;
-      }
-      else if (animTimeToEndOfState <= FadeOutDuration)
-      {
-        // near end of the IntroAnimationCamera's anim clip.  fade to black.
-        float t = (FadeOutDuration - animTimeToEndOfState) / FadeOutDuration;
-        ppColorAdjust.postExposure.value = t * -16f;
-      }
-    }
-    else
-    {
-      // animated pan camera fade out complete. fade back to player camera
-      // this fade is not based on any animation clip playback
-      float fadeTime = Time.realtimeSinceStartup - fadePlayerStartTime;
-      float t = 1f - (fadeTime / FadeInDuration);
-      ppColorAdjust.postExposure.value = t * -16f;
-
-      if (t <= 0f)
-      {
-        // done with all fades. reset the exposure adjustment to zero and activate HUD
-        ppColorAdjust.postExposure.value = 0f;
-        isPlayIntroAnimation = false;
-        HUD.SetActive(true);
-        skipIntroText.SetActive(false);
-      }
-    }
-  }
 
     // switch to the IntroAnimationCamera and start playing the intro
     // pan animation.
     public void Play()
-  {
-    if (isPlayIntroAnimation)
     {
+        if (isPlayIntroAnimation)
+        {
             return;
+        }
+        PlayerCamera.GetComponent<Camera>().enabled = false;
+        IntroAnimationCamera.GetComponent<Camera>().enabled = true;
+        mainCameraData.mainCamera = IntroAnimationCamera;
+        HUD.SetActive(false); // Deactivate HUD while intro sequence is playing
+        skipIntroText.SetActive(true);
+
+        introCameraAnimator.Play(playStateName);
+
+        playerControl.isPlayerControlEnabled = false;
+
+        isPlayIntroAnimation = true;
+        isFadePlayer = false;
     }
-    PlayerCamera.GetComponent<Camera>().enabled = false;
-    IntroAnimationCamera.GetComponent<Camera>().enabled = true;
-    HUD.SetActive(false); // Deactivate HUD while intro sequence is playing
-    skipIntroText.SetActive(true);
 
-    introCameraAnimator.Play(playStateName);
-
-    playerControl.isPlayerControlEnabled = false;
-
-    isPlayIntroAnimation = true;
-    isFadePlayer = false;
-  }
-
-    private void skipIntro() {
+    private void skipIntro()
+    {
         isPlayIntroAnimation = false;
         ppColorAdjust.postExposure.value = 0f;
         PlayerCamera.GetComponent<Camera>().enabled = true;
+        mainCameraData.mainCamera = PlayerCamera;
         skipIntroText.SetActive(false);
         IntroAnimationCamera.SetActive(false);
         ppColorAdjust.postExposure.value = 0f; // turn off black post-processing entirely

@@ -47,6 +47,8 @@ public class PlayerControl : MonoBehaviour
 
     // data for footstep tracking and sound event emitter
     public FootStepFactory footStepFactory;
+    public GameEvent soundThreatEvent;
+    public float soundThreatWeight = 0.4f;
     private bool leftFootDown, rightFootDown;
     private Vector3 prevPosition;
     private float velocityFiltered;
@@ -64,6 +66,7 @@ public class PlayerControl : MonoBehaviour
     private bool _playerActionGrab = false;
     private bool _playerActionCrouch = false;
     private bool _playerIsSprint = false;
+    public bool infiniteSprint = false;
 
     private bool isCrouched = false;
 
@@ -78,7 +81,7 @@ public class PlayerControl : MonoBehaviour
     // internal camera heading and pitch rotation state
     private Quaternion cameraHeading;
     private float cameraPitch;
-    
+
     // limits for the camera pitch controls
     public float cameraPitchMax = 30f;
     public float cameraPitchMin = -20f;
@@ -87,6 +90,7 @@ public class PlayerControl : MonoBehaviour
     public float movementSpeedWalk = 1f;
     public float movementSpeedSprint = 2f;
     public float movementSpeedCrouch = 0.5f;
+    private float smoothMovement = 0f;
 
     // sprint stamina is depleted during sprinting at
     // this rate, represented in percentage per second.
@@ -160,7 +164,7 @@ public class PlayerControl : MonoBehaviour
             Debug.LogError("PlayerControl: no CameraDir component.");
         }
 
-        if(sprintStaminaOutOfBreathAudioClip == null || audioEventToRaise == null)
+        if (sprintStaminaOutOfBreathAudioClip == null || audioEventToRaise == null)
         {
             Debug.LogError("PlayerControl: no audioEventToRaise, sprintStaminaOutOfBreath audio clip component.");
         }
@@ -208,7 +212,7 @@ public class PlayerControl : MonoBehaviour
         {
             playerData.PlayerPosition = transform.position;
         }
-        
+
     }
 
     private void FixedUpdate()
@@ -216,15 +220,15 @@ public class PlayerControl : MonoBehaviour
         if (!isPlayerControlEnabled || cameraDir == null)
             return;
 
-        
+
         // update the cinemachine camera based on inputs from mouse and right analog stick
 
         // calculate new input axes relative to the camera's offset 
         // from the player's forward vector
-            
+
         {
             // the camera target gameobject follows the player
-                
+
             Vector3 crouchTargetPosition = transform.position;
             if (isCrouched)
                 crouchTargetPosition.y += 0.7f;
@@ -248,7 +252,7 @@ public class PlayerControl : MonoBehaviour
 
             cameraDir.transform.rotation = cameraHeading * rotY;
         }
-                
+
 
         Vector3 inputXZ = Vector3.zero;
         if (isPlayerControlEnabled)
@@ -264,7 +268,7 @@ public class PlayerControl : MonoBehaviour
         // relative to the camera and player
 
         // update sprint stamina
-        if (_playerIsSprint && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
+        if (!infiniteSprint && _playerIsSprint && !isCrouched && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
         {
             // deplete stamina
             sprintStamina -= sprintStaminaDepletionRate * Time.fixedDeltaTime;
@@ -277,22 +281,20 @@ public class PlayerControl : MonoBehaviour
             }
             sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
 
-            // update the PlayerData SO sprint stamina
-            //
-            //
-
         }
         if (!_playerIsSprint && sprintStamina < 1f)
         {
             // recharge stamina
             sprintStamina += sprintStaminaRechargeRate * Time.fixedDeltaTime;
             sprintStamina = Mathf.Clamp(sprintStamina, 0f, 1f);
-            // update the PlayerData SO sprint stamina
-            //
-            //
 
         }
 
+        // update the PlayerData SO sprint stamina
+        if ((playerData != null))
+        {
+            playerData.PlayerSprintStamina = sprintStamina;
+        }
 
         float movementScaleFactor = 0.001f;
         float animControlVelY;
@@ -316,7 +318,7 @@ public class PlayerControl : MonoBehaviour
         flatPlayerForward.y = 0f;
         flatPlayerForward.Normalize();
         Vector3 forwardMoveVec = flatPlayerForward / Time.fixedDeltaTime * inputXZ.z * movementScaleFactor;
-            
+
         // move the player using the lateral vector component
         Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * flatPlayerForward).normalized /
                                     Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
@@ -327,7 +329,8 @@ public class PlayerControl : MonoBehaviour
         // lateral velocity is zero currently, can add later if we want
         // turning walk/run animations
         anim.SetFloat("velx", 0f);// inputXZ.x);
-        anim.SetFloat("vely", inputXZ.z * animControlVelY);
+        smoothMovement = Mathf.Lerp(smoothMovement, inputXZ.z * animControlVelY, Time.fixedDeltaTime * 5);
+        anim.SetFloat("vely", smoothMovement);
 
         // now rotate the player toward the desired input direction. 
         // try doing it directly, later add interpolation
@@ -373,7 +376,7 @@ public class PlayerControl : MonoBehaviour
             isRunning = true;
 
         // emit footstep events to sound manager
-        triggerFootsteps(isRunning);
+        triggerFootsteps(_playerIsSprint);
 
         // update the stealable object state 
         UpdateStealableObject();
@@ -472,6 +475,7 @@ public class PlayerControl : MonoBehaviour
     private void triggerFootsteps(bool isRunning)
     {
         StepCharacteristic stepCharacteristic = isRunning ? StepCharacteristic.Run : StepCharacteristic.Walk;
+        bool stepCreated = false;
         if (rigBase && leftFoot)
         {
             float leftFootY = leftFoot.transform.position.y - rigBase.transform.position.y;
@@ -482,6 +486,7 @@ public class PlayerControl : MonoBehaviour
                 if (!leftFootDown)
                 {
                     footStepFactory.playFootStepRandom(FloorCharacteristic.Dirt, stepCharacteristic, transform.position);
+                    stepCreated = true;
                 }
                 leftFootDown = true;
             }
@@ -502,6 +507,7 @@ public class PlayerControl : MonoBehaviour
                 {
                     //Debug.Log("r foot: " + rbody.velocity.magnitude);
                     footStepFactory.playFootStepRandom(FloorCharacteristic.Dirt, stepCharacteristic, transform.position);
+                    stepCreated = true;
                 }
                 rightFootDown = true;
             }
@@ -509,6 +515,15 @@ public class PlayerControl : MonoBehaviour
             {
                 rightFootDown = false;
             }
+        }
+
+        if (isRunning && stepCreated)
+        {
+            if (soundThreatEvent != null)
+            {
+                soundThreatEvent.Raise(transform.position, soundThreatWeight);
+            }
+
         }
     }
 

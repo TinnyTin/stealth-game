@@ -27,6 +27,7 @@ public class AIStateMachine : MonoBehaviour
     public float currentSpeed = 0.2f;
     public float pursuitAutoSenseRadius = 2f;
     public float finalCaughtRadius = 1.5f;
+    public float finalCaughtNavMeshTolerance = 1f;
     public bool isAIActive = false;
 
     // public

@@ -14,7 +14,8 @@ using UnityEngine.SceneManagement;
 
 public class CanvasLookatCamera : MonoBehaviour
 {
-    public Camera tcam;
+
+    public MainCameraData mainCameraData;
 
     // Start is called before the first frame update
     void Start()
@@ -25,18 +26,10 @@ public class CanvasLookatCamera : MonoBehaviour
     void Update()
     {
         //FindMainCamera();
+        if (mainCameraData.mainCamera != null)
+        {
+            this.transform.LookAt(this.transform.position - (mainCameraData.mainCamera.transform.position - this.transform.position));
+        }
 
-        this.transform.LookAt(this.transform.position - (tcam.transform.position - this.transform.position));
-    }
-
-    // old implementation based on scenecontroller grabbing camera 
-    private void FindMainCamera()
-    {
-        // Find the main camera in the global scene
-        GameObject activeCamera = SceneController.Instance.GetActiveCameraGameObject(); 
-        tcam = activeCamera.GetComponent<Camera>();
-
-        if (tcam == null)
-            Debug.LogError("Could not get camera from SceneController. Canvas will not face camera.");
     }
 }

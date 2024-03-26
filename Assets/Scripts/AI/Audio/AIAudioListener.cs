@@ -49,6 +49,16 @@ public class AIAudioListener : MonoBehaviour
                 ai.lastThreat = position;
             }
         }
+    }
+
+    public void onSoundThreatCreated(Vector3 position, float weightThreatOfSound)
+    {
+        if (Vector3.Distance(position, this.transform.position) <= radiusListenable)
+        {
+            float val = baseThreatPerSound * weightThreatOfSound;
+            tm.changeThreat(val);
+            ai.lastThreat = position;
+        }
 
     }
 }
