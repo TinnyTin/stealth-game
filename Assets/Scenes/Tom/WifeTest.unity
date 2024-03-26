@@ -319,6 +319,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 83f2b927bcc662044b9dbc5af2cf1097, type: 3}
+--- !u!1 &636723684 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6507293658030574497, guid: 5aaee7ff667b8b741af7c64cebcaef20,
+    type: 3}
+  m_PrefabInstance: {fileID: 8742930949681647844}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &638923047
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -333,12 +339,12 @@ PrefabInstance:
     - target: {fileID: 8759923798041994961, guid: 0f94441eee2ef6e468273b5e24380862,
         type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8759923798041994961, guid: 0f94441eee2ef6e468273b5e24380862,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8759923798360583305, guid: 0f94441eee2ef6e468273b5e24380862,
         type: 3}
@@ -403,7 +409,7 @@ PrefabInstance:
     - target: {fileID: 8759923798360583309, guid: 0f94441eee2ef6e468273b5e24380862,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0f94441eee2ef6e468273b5e24380862, type: 3}
@@ -846,11 +852,11 @@ MonoBehaviour:
     threatChooseState: 0
   - name: Investigate
     min: 0
-    max: 0
+    max: 15
     threatChooseState: 1
   - name: Pursuit
     min: 0
-    max: 0
+    max: 50
     threatChooseState: 2
 --- !u!114 &1269477550
 MonoBehaviour:
@@ -864,10 +870,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5508bfa78d74544ba096c5b592de1bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  walkSpeed: 0.2
-  runSpeed: 1
-  currentSpeed: 0.2
-  pursuitAutoSenseRadius: 2
+  walkSpeed: 1
+  runSpeed: 3
+  currentSpeed: 0.3
+  pursuitAutoSenseRadius: 3
   finalCaughtRadius: 1.5
   finalCaughtNavMeshTolerance: 1
   isAIActive: 0
@@ -903,7 +909,7 @@ Animator:
   m_GameObject: {fileID: 1269477543}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b0e49746c6b03814c82ce91571b06fbe, type: 3}
-  m_Controller: {fileID: 9100000, guid: 72547fed88d4dfc41bb33df5e0e9bfb3, type: 2}
+  m_Controller: {fileID: 9100000, guid: fecf14245e49c3143bfbfca04fcb819a, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 1
   m_ApplyRootMotion: 0
@@ -1380,7 +1386,7 @@ PrefabInstance:
         type: 3}
       propertyPath: viewCastStartingPoint
       value: 
-      objectReference: {fileID: 1271922174}
+      objectReference: {fileID: 636723684}
     - target: {fileID: 8847466136136063679, guid: 5aaee7ff667b8b741af7c64cebcaef20,
         type: 3}
       propertyPath: m_LocalPosition.z
