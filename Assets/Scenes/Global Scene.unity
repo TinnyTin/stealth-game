@@ -1157,7 +1157,7 @@ PrefabInstance:
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
@@ -1190,12 +1190,12 @@ PrefabInstance:
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.data[0].guid
-      value: 8619c375b4ba6594dbf6009a2e07c8ad
+      value: 7beb9e9c3b807014398bce7ea2cc66b9
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.data[1].guid
-      value: 7beb9e9c3b807014398bce7ea2cc66b9
+      value: 8619c375b4ba6594dbf6009a2e07c8ad
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
@@ -1221,13 +1221,13 @@ PrefabInstance:
         type: 3}
       propertyPath: _scenePlaylist.Array.data[0].asset
       value: 
-      objectReference: {fileID: 102900000, guid: 8619c375b4ba6594dbf6009a2e07c8ad,
+      objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,
         type: 3}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.data[1].asset
       value: 
-      objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,
+      objectReference: {fileID: 102900000, guid: 8619c375b4ba6594dbf6009a2e07c8ad,
         type: 3}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
@@ -1256,7 +1256,7 @@ PrefabInstance:
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scriptableObjectsWithInit.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
@@ -1289,6 +1289,12 @@ PrefabInstance:
       propertyPath: _scriptableObjectsWithInit.Array.data[1]
       value: 
       objectReference: {fileID: 11400000, guid: 377799429c11fac41b531c976d95caaf,
+        type: 2}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _scriptableObjectsWithInit.Array.data[2]
+      value: 
+      objectReference: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3,
         type: 2}
     - target: {fileID: 3042039951656423746, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
