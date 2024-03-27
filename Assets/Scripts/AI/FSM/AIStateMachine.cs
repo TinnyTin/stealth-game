@@ -70,6 +70,7 @@ public class AIStateMachine : MonoBehaviour
     public NavMeshAgent agent;
 
     // navmeshagent velocity and movement smoothing
+    private bool shouldMove;
     private Vector2 _velocity;
     private Vector2 SmoothDeltaDirection;
     protected int _lastWaypointIdx = -1;
@@ -128,10 +129,9 @@ public class AIStateMachine : MonoBehaviour
     // https://www.youtube.com/watch?v=uAGjKxH4sDQ
     private void SynchronizeAnimatorAndAgent()
     {
-        bool shouldMove;
         _velocity.x = 0f;
         _velocity.y = 0f;
-        if (agent.path.corners == null)
+        if (agent.path.corners == null || agent.path.corners.Length == 0)
         {
             shouldMove = false;
         }
@@ -175,15 +175,19 @@ public class AIStateMachine : MonoBehaviour
 
     private void OnAnimatorMove()
     {
-        Vector3 rootPosition = anim.rootPosition;
-        rootPosition.y = agent.nextPosition.y; // follow navmesh slopes
+        if (shouldMove)
+        {
+            Vector3 rootPosition = anim.rootPosition;
+            rootPosition.y = agent.nextPosition.y; // follow navmesh slopes
 
-        // update transform position and rotation based on animation + navmesh height
-        transform.position = rootPosition;
-        transform.rotation = anim.rootRotation;
+            // update transform position and rotation based on animation + navmesh height
+            transform.position = rootPosition;
+            transform.rotation = anim.rootRotation;
 
-        // update navmesh agent with new animation root position
-        agent.nextPosition = rootPosition;
+            // update navmesh agent with new animation root position
+            agent.nextPosition = rootPosition;
+        }
+
     }
 
     public void setSpeed(float speed)
