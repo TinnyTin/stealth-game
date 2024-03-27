@@ -68,15 +68,10 @@ public class AIManager : ScriptableObjectWithInit
 
     public void RegisterAI(GameObject ai)
     {
-        if (AIs.Contains(ai))
-        {
-            Debug.Log("Error: tried to add AI twice to AI list!");
-        }
-        else
+        if (!AIs.Contains(ai))
         {
             AIs.Add(ai);
         }
-
     }
 
     public void setAIActive(bool isActive)
