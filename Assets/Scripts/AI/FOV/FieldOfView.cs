@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
+using UnityEditor.AnimatedValues;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -7,7 +9,7 @@ using UnityEngine.Events;
  * CS6457 Attributions
  * Tiny Brain
  * Original Author:     Justin Wu
- * Contributors:
+ * Contributors:        Tom
  * Description: AI "eyes" includes view Radius, view Angle, view Raycasting.
  *              Also includes red cone FOV using a mesh renderer and viewCasting to objects in scene
  * External
@@ -28,6 +30,7 @@ public class FieldOfView : MonoBehaviour
 
     public bool updateTransform = true;
     [Header("Visual Field of View")]
+    public bool forceVisible = false;
     public float meshResolution = 1f;
     [Tooltip("Based on how close viewRadius is to Player, fade in the FOV as a mesh alpha")]
     public float meshFadeInMultiplier = 1f;
@@ -51,6 +54,9 @@ public class FieldOfView : MonoBehaviour
     // private
     private Mesh viewMesh;
     private float meshAlpha = 0.0f;
+
+    [SerializeField] private bool _fovIsGrowing = false; 
+    [SerializeField] private bool _fovIsShrinking = false;
 
 
     // TODO remove this secion and add in fixedupdate...?
@@ -146,7 +152,7 @@ public class FieldOfView : MonoBehaviour
 
     void DrawFieldOfView()
     {
-        bool closeToView = false;
+        bool closeToView = forceVisible;
 
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius * fadeInMeshRadiusMultiplier, targetMask);
         for (int i = 0; i < targetsInViewRadius.Length; i++)
@@ -234,5 +240,66 @@ public class FieldOfView : MonoBehaviour
             dist = _dist;
             angle = _angle;
         }
+    }
+
+    public void SetImmediateFOVAngle(float angle)
+    {
+        _fovIsShrinking = false;
+        _fovIsGrowing = false;
+        viewAngle = angle; 
+    }
+
+    public void GrowFOVAngle(float maxAngle, float growTimeSeconds)
+    {
+        _fovIsShrinking = false; 
+        _fovIsGrowing = true;
+        StartCoroutine(CoroutineGrowFOVAngle(maxAngle, growTimeSeconds));
+    }
+
+    private IEnumerator CoroutineGrowFOVAngle(float maxAngle, float growTimeSeconds)
+    {
+        float startAngle = viewAngle;
+        float timeStep = 0.1f; 
+        float growAnglePerTimeStep = (maxAngle-startAngle) / (growTimeSeconds / timeStep); 
+
+        while (viewAngle < maxAngle)
+        {
+            if (_fovIsGrowing == false)
+                break;
+
+            viewAngle += growAnglePerTimeStep;
+            if (viewAngle > maxAngle)
+                viewAngle = maxAngle;
+            yield return new WaitForSeconds(timeStep); 
+        }
+
+        _fovIsGrowing = false; 
+    }
+
+    public void ShrinkFOVAngle(float minAngle, float shrinkTimeSeconds)
+    {
+        _fovIsShrinking = true;
+        _fovIsGrowing = false;
+        StartCoroutine(CoroutineShrinkFOVAngle(minAngle, shrinkTimeSeconds)); 
+    }
+
+    public IEnumerator CoroutineShrinkFOVAngle(float minAngle, float shrinkTimeSeconds)
+    {
+        float startAngle = viewAngle;
+        float timeStep = 0.1f;
+        float shrinkAnglePerTimeStep = (startAngle - minAngle) / (shrinkTimeSeconds / timeStep);
+
+        while (viewAngle > minAngle)
+        {
+            if (_fovIsShrinking == false)
+                break; 
+
+            viewAngle -= shrinkAnglePerTimeStep;
+            if (viewAngle < minAngle)
+                viewAngle = minAngle;
+            yield return new WaitForSeconds(timeStep);
+        }
+
+        _fovIsShrinking = false;
     }
 }
