@@ -674,47 +674,6 @@ MonoBehaviour:
     min: 0
     max: 50
     threatChooseState: 2
---- !u!114 &1269477550
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1269477543}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5508bfa78d74544ba096c5b592de1bf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  walkSpeed: 1
-  runSpeed: 3
-  currentSpeed: 0.3
-  pursuitAutoSenseRadius: 3
-  finalCaughtRadius: 1.5
-  finalCaughtNavMeshTolerance: 1
-  isAIActive: 0
-  WaypointDistanceTolerance: 1
-  waypoints:
-  - {fileID: 159552022}
-  - {fileID: 1464435786}
-  - {fileID: 484544981}
-  - {fileID: 281467506}
-  - {fileID: 962394412}
-  - {fileID: 222872950}
-  - {fileID: 1618840285}
-  - {fileID: 1837668210}
-  lastThreat: {x: 0, y: 0, z: 0}
-  countInView: 0
-  aiManager: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
-  PlayerCaught: {fileID: 11400000, guid: b984adb34e019c549be34216320474f0, type: 2}
-  AudioChannel: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
-  playerData: {fileID: 11400000, guid: 15901981171d3984bad2e1974e5b7aa7, type: 2}
-  audioClipGasp: {fileID: 0}
-  audioClipAlert: {fileID: 0}
-  FOV: {fileID: 1294144435}
-  aiThreatPriority: 0
-  anim: {fileID: 0}
-  agent: {fileID: 0}
 --- !u!95 &1269477551
 Animator:
   serializedVersion: 5
@@ -736,6 +695,52 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1269477553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1269477543}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6f1d0b0e139e0634c9a72a72166d91eb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  walkSpeed: 1
+  runSpeed: 2.25
+  currentSpeed: 0.3
+  pursuitAutoSenseRadius: 3
+  finalCaughtRadius: 5
+  finalCaughtNavMeshTolerance: 1
+  isAIActive: 0
+  WaypointDistanceTolerance: 1
+  waypoints:
+  - {fileID: 159552022}
+  - {fileID: 1464435786}
+  - {fileID: 484544981}
+  - {fileID: 281467506}
+  - {fileID: 962394412}
+  - {fileID: 222872950}
+  - {fileID: 1618840285}
+  - {fileID: 1837668210}
+  lastThreat: {x: 0, y: 0, z: 0}
+  countInView: 0
+  aiManager: {fileID: 11400000, guid: bbdb7db90ae99174a81c6c9036a8b5b3, type: 2}
+  PlayerCaught: {fileID: 11400000, guid: b984adb34e019c549be34216320474f0, type: 2}
+  AudioChannel: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
+  playerData: {fileID: 11400000, guid: 15901981171d3984bad2e1974e5b7aa7, type: 2}
+  audioClipGasp: {fileID: 8300000, guid: d057d178863110b40ba323b9e1185edd, type: 3}
+  audioClipAlert: {fileID: 0}
+  FOV: {fileID: 1294144435}
+  aiThreatPriority: 0
+  anim: {fileID: 0}
+  agent: {fileID: 0}
+  _audioClipCatch: {fileID: 8300000, guid: 54a099a7eeb412d4ab3b45c76485b26d, type: 3}
+  minFOVAngle: 45
+  maxFOVAngle: 180
+  growFOVAngleTime: 5
+  shrinkFOVAngleTime: 5
 --- !u!1 &1271922174 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5832243423728098345, guid: 0f94441eee2ef6e468273b5e24380862,
@@ -1103,7 +1108,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ai
       value: 
-      objectReference: {fileID: 1269477550}
+      objectReference: {fileID: 1269477553}
     - target: {fileID: 8487070036920386541, guid: 5aaee7ff667b8b741af7c64cebcaef20,
         type: 3}
       propertyPath: anchor
@@ -1111,9 +1116,19 @@ PrefabInstance:
       objectReference: {fileID: 1269477543}
     - target: {fileID: 8487070036920386541, guid: 5aaee7ff667b8b741af7c64cebcaef20,
         type: 3}
+      propertyPath: viewAngle
+      value: 45
+      objectReference: {fileID: 0}
+    - target: {fileID: 8487070036920386541, guid: 5aaee7ff667b8b741af7c64cebcaef20,
+        type: 3}
       propertyPath: threatmeter
       value: 
       objectReference: {fileID: 1269477549}
+    - target: {fileID: 8487070036920386541, guid: 5aaee7ff667b8b741af7c64cebcaef20,
+        type: 3}
+      propertyPath: forceVisible
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8487070036920386541, guid: 5aaee7ff667b8b741af7c64cebcaef20,
         type: 3}
       propertyPath: viewCastStartingPoint
