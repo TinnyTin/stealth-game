@@ -6,17 +6,22 @@ using UnityEngine;
  * CS6457 Attributions
  * Tiny Brain
  * Original Author:     Justin Wu
- * Contributors:
+ * Contributors:        Tom
  * Description: Investigate AI State class
  * External Source Credit: https://www.youtube.com/watch?v=kV06GiJgFhc&t=1535s
  *                      
  */
-public class AIInvestigateState : AIBaseState
+public class AIInvestigateState_Wife : AIBaseState
 {
-    public AIInvestigateState(AIStateMachine currentContext, AIStateFactory aiStateFactory) : base(currentContext, aiStateFactory)
+    private AIStateMachine_Wife _ctxWife = null; 
+
+    public AIInvestigateState_Wife(AIStateMachine currentContext, AIStateFactory aiStateFactory) : base(currentContext, aiStateFactory)
     {
         IsRootState = true;
         InitializeSubState();
+
+        if (Ctx is AIStateMachine_Wife ctxWife)
+            _ctxWife = ctxWife;
     }
     public override bool SetAIThreatPriority()
     {
@@ -25,15 +30,18 @@ public class AIInvestigateState : AIBaseState
     }
     public override void EnterState()
     {
-
-        // play surprised animation
-        AIBaseState animationSurprised = Factory.animationSubState("Surprised", "triggerSurprised", Ctx.audioClipGasp, true);
-        SwitchSubState(animationSurprised);
+        // play thinking animation
+        AIBaseState animationThinking = Factory.animationSubState("Thinking", "triggerThinking", Ctx.audioClipGasp, true);
+        SwitchSubState(animationThinking);
 
         Ctx.setSpeed(Ctx.walkSpeed);
         AudioSourceParams audioSourceParams = new();
         audioSourceParams.MinDistance = 250;
         Ctx.AudioChannel.Raise(Ctx.audioClipGasp, Ctx.transform.position, audioSourceParams);
+
+        // Begin growing the FOV view radius
+        if (_ctxWife != null)
+            Ctx.FOV.GrowFOVAngle(_ctxWife.maxFOVAngle, _ctxWife.growFOVAngleTime);
     }
     public override void UpdateState()
     {
@@ -60,12 +68,16 @@ public class AIInvestigateState : AIBaseState
 
         // exit out of animation lock if the target is in view or a sound is made
         if (((Ctx.countInView != 0) || (targetpos.HasValue)))
-            if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Surprised"))
+            if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Thinking"))
                 SwitchSubState(Factory.EmptySubState());
     }
     public override void ExitState()
     {
         Ctx.FOV.updateTransform = true;
+        
+        // Begin shrinking the FOV view radius
+        if (_ctxWife != null)
+            Ctx.FOV.ShrinkFOVAngle(_ctxWife.minFOVAngle, _ctxWife.shrinkFOVAngleTime);
     }
     public override void CheckSwitchState()
     {

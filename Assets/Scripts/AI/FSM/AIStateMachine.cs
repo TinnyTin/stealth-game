@@ -16,7 +16,7 @@ public enum AIThreatPriority
 {
     Idle,
     Investigate,
-    Pursuit
+    Pursuit,
 }
 
 public class AIStateMachine : MonoBehaviour
@@ -80,7 +80,7 @@ public class AIStateMachine : MonoBehaviour
     public bool IsAIActive { get { return isAIActive; } set { isAIActive = value; } }
 
 
-    private void Awake()
+    protected virtual void Awake()
     {
 
         // Register in AI Data SO
@@ -108,9 +108,9 @@ public class AIStateMachine : MonoBehaviour
 
     }
 
-    private void Start() { }
+    protected virtual void Start() { }
 
-    private void Update()
+    protected virtual void Update()
     {
         SynchronizeAnimatorAndAgent();
         if (isAIActive)
@@ -126,7 +126,7 @@ public class AIStateMachine : MonoBehaviour
     // ======================================================
 
     // https://www.youtube.com/watch?v=uAGjKxH4sDQ
-    private void SynchronizeAnimatorAndAgent()
+    protected virtual void SynchronizeAnimatorAndAgent()
     {
         bool shouldMove;
         _velocity.x = 0f;
@@ -173,7 +173,7 @@ public class AIStateMachine : MonoBehaviour
 
     }
 
-    private void OnAnimatorMove()
+    protected virtual void OnAnimatorMove()
     {
         Vector3 rootPosition = anim.rootPosition;
         rootPosition.y = agent.nextPosition.y; // follow navmesh slopes
@@ -196,27 +196,27 @@ public class AIStateMachine : MonoBehaviour
     // Switching Behavior
     // ======================================================
 
-    public void BehaviorWaypoint()
+    public virtual void BehaviorWaypoint()
     {
         _currentState.SwitchState(_states.Waypoint());
     }
 
-    public void BehaviorInvestigate()
+    public virtual void BehaviorInvestigate()
     {
         _currentState.SwitchState(_states.Investigate());
     }
 
-    public void BehaviorPursuit()
+    public virtual void BehaviorPursuit()
     {
         _currentState.SwitchState(_states.Pursuit());
     }
 
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         aiManager.RegisterAI(this.gameObject);
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         aiManager.UnRegisterAI(this.gameObject);
     }
@@ -224,7 +224,7 @@ public class AIStateMachine : MonoBehaviour
     // ======================================================
     // Catch Callback
     // ======================================================
-    public void CatchPlayer()
+    public virtual void CatchPlayer()
     {
         StartCoroutine("CoroutineCatchPlayer", 1.0f);
     }
