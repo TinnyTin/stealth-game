@@ -296,7 +296,7 @@ BlendTree:
       type: 3}
     m_Threshold: 0.6666667
     m_Position: {x: 0, y: 0.3}
-    m_TimeScale: 1
+    m_TimeScale: 1.1
     m_CycleOffset: 0
     m_DirectBlendParameter: velx
     m_Mirror: 0
