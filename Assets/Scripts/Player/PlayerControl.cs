@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEditor.Rendering;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
+using UnityEngine.AI;
 
 /*
  * CS6457 Attributions
@@ -17,6 +18,7 @@ using UnityEngine;
  */
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(PlayerInput))]
+[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerControl : MonoBehaviour
 {
     // stealable object
@@ -52,6 +54,12 @@ public class PlayerControl : MonoBehaviour
     private bool leftFootDown, rightFootDown;
     private Vector3 prevPosition;
     private float velocityFiltered;
+
+    // reference to player mesh with capsule collider
+    public GameObject playerMesh;
+    private CapsuleCollider playerMeshCapsuleCollider;
+
+    private NavMeshAgent playerNavMeshAgent;
 
     // joints in the player skeleton rig for footstep calculations
     public GameObject rigBase;
@@ -174,6 +182,21 @@ public class PlayerControl : MonoBehaviour
         cameraDir.transform.position = transform.position;
         cameraHeading = transform.rotation;
         cameraPitch = 0;
+
+        if(playerMesh == null)
+        {
+            Debug.LogError("PlayerControl: playerMesh not set.");
+        }
+        else
+        {
+            playerMeshCapsuleCollider = playerMesh.GetComponent<CapsuleCollider>();
+            if(playerMeshCapsuleCollider != null ) 
+            {
+                Debug.LogError("PlayerControl: playerMesh has no CapsuleCollider.");
+            }
+        }
+        
+        playerNavMeshAgent = GetComponent<NavMeshAgent>();
 
         if (rigBase == null || leftFoot == null || rightFoot == null)
         {
@@ -347,13 +370,35 @@ public class PlayerControl : MonoBehaviour
 
         // mouse-look when not in motion.  if moving, mouse X will change forward vector
         if (inputXZHeading.magnitude > 0.2f)
-            transform.rotation = cameraDir.transform.rotation * inputRotQuat;
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                                                 cameraDir.transform.rotation * inputRotQuat,
+                                                 0.3f);
 
         if (_playerActionCrouch)
         {
             _playerActionCrouch = false;
             isCrouched = !isCrouched;
             anim.SetBool("crouch", isCrouched);
+
+            // update player capsule collider and navmesh height
+            if(playerMeshCapsuleCollider)
+            {
+                Vector3 capsuleCenter = playerMeshCapsuleCollider.center;
+                if (isCrouched)
+                {
+                    playerMeshCapsuleCollider.height = 1.1f;
+                    capsuleCenter.y = 0.6f;
+                    playerMeshCapsuleCollider.center = capsuleCenter;
+                    playerNavMeshAgent.height = 1f;
+                }
+                else
+                {
+                    playerMeshCapsuleCollider.height = 1.8f;
+                    playerNavMeshAgent.height = 1.8f;
+                    capsuleCenter.y = 1f;
+                    playerMeshCapsuleCollider.center = capsuleCenter;
+                }
+            }
         }
 
         if (_playerActionGrab)
