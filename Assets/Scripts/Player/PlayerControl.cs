@@ -370,7 +370,9 @@ public class PlayerControl : MonoBehaviour
 
         // mouse-look when not in motion.  if moving, mouse X will change forward vector
         if (inputXZHeading.magnitude > 0.2f)
-            transform.rotation = cameraDir.transform.rotation * inputRotQuat;
+            transform.rotation = Quaternion.Lerp(transform.rotation,
+                                                 cameraDir.transform.rotation * inputRotQuat,
+                                                 0.3f);
 
         if (_playerActionCrouch)
         {
