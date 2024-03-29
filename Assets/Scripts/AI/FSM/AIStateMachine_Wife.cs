@@ -1,6 +1,15 @@
 using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
+
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:        Tom
+ * Description: AI State Machine + Context for AI state functionality - Wife specific 
+ * External Source Credit: https://www.youtube.com/watch?v=kV06GiJgFhc&t=1535s
+ *
+ */
 
 public class AIStateMachine_Wife : AIStateMachine
 {
@@ -11,7 +20,7 @@ public class AIStateMachine_Wife : AIStateMachine
     [SerializeField] private AudioClip _audioClipCatch;
 
     [Space]
-    [Header("FOV Grow/Shrink (Units: Degrees & Seconds")]
+    [Header("FOV Grow/Shrink (Units: Degrees & Seconds)")]
     public float minFOVAngle = 0f;
     public float maxFOVAngle = 180f;
     public float growFOVAngleTime = 5f;

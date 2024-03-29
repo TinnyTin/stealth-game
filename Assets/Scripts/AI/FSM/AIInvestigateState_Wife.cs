@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
@@ -7,7 +5,7 @@ using UnityEngine;
  * Tiny Brain
  * Original Author:     Justin Wu
  * Contributors:        Tom
- * Description: Investigate AI State class
+ * Description: Investigate AI State class - Wife specific
  * External Source Credit: https://www.youtube.com/watch?v=kV06GiJgFhc&t=1535s
  *                      
  */

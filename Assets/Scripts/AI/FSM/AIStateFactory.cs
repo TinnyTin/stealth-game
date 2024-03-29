@@ -1,12 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 /*
  * CS6457 Attributions
  * Tiny Brain
  * Original Author:     Justin Wu
- * Contributors:
+ * Contributors:        Tom
  * Description: AI State Factory
  * External Source Credit: https://www.youtube.com/watch?v=kV06GiJgFhc&t=1535s
  *                      
