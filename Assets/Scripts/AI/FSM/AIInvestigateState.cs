@@ -25,6 +25,7 @@ public class AIInvestigateState : AIBaseState
     }
     public override void EnterState()
     {
+        Ctx.agent.isStopped = false;
 
         // play surprised animation
         AIBaseState animationSurprised = Factory.animationSubState("Surprised", "triggerSurprised", Ctx.audioClipGasp, true);

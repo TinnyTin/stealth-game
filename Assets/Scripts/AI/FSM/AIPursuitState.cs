@@ -27,6 +27,7 @@ public class AIPursuitState : AIBaseState
     {
         lastSpeed = Ctx.agent.speed;
         Ctx.setSpeed(Ctx.runSpeed);
+        Ctx.agent.isStopped = false; 
         // play metal gear solid sound
         Ctx.AudioChannel.Raise(Ctx.audioClipAlert, Ctx.transform.position, AudioSourceParams.Default);
 

@@ -31,6 +31,7 @@ public class AIPursuitState_Wife : AIBaseState
     }
     public override void EnterState()
     {
+        Ctx.agent.isStopped = false;
         lastSpeed = Ctx.agent.speed;
         Ctx.setSpeed(Ctx.runSpeed);
         

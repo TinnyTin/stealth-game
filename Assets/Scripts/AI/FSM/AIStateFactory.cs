@@ -17,6 +17,7 @@ public class AIStateFactory
     AIInvestigateState_Wife _wifeInvestigateState;
     AIPursuitState _pursuitState;
     AIPursuitState_Wife _wifePursuitState;
+    AIIdleState_Civilian _civilianIdleState; 
     AIEmptySubState _emptySubState;
     public AIStateFactory(AIStateMachine currentContext)
     {
@@ -62,6 +63,18 @@ public class AIStateFactory
             _wifePursuitState = new AIPursuitState_Wife(_context, this);
         }
         return _wifePursuitState;
+    }
+    public AIBaseState Idle_Civilian(string animStateName)
+    {
+        if (_civilianIdleState == null)
+        {
+            _civilianIdleState = new AIIdleState_Civilian(_context, this, animStateName);
+        }
+        else
+        {
+            _civilianIdleState.animStateName = animStateName; 
+        }
+        return _civilianIdleState;
     }
 
     public AIAnimationSubState animationSubState(string strAnimation, string strTrigger, AudioClip audioClip, bool freezeFOV)
