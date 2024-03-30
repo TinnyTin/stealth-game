@@ -48,7 +48,7 @@ public class AIInvestigateState : AIBaseState
         // pursue Target
         Ctx.agent.SetDestination(Ctx.lastThreat);
 
-        if ((Ctx.agent.remainingDistance < 5) && !Ctx.agent.pathPending)
+        if ((Ctx.agent.remainingDistance < Ctx.InvestigateLookAroundRadius) && !Ctx.agent.pathPending)
         {
             // loop Look animation
             if (!AIAnimationSubState.CheckAnimationString(CurrentSubState, "Look"))

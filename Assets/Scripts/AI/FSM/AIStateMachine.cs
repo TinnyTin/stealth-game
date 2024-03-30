@@ -25,6 +25,7 @@ public class AIStateMachine : MonoBehaviour
     public float walkSpeed = 0.2f;
     public float runSpeed = 1.0f;
     public float currentSpeed = 0.2f;
+    public float InvestigateLookAroundRadius = 2f;
     public float pursuitAutoSenseRadius = 2f;
     public float finalCaughtRadius = 1.5f;
     public float finalCaughtNavMeshTolerance = 1f;
@@ -248,7 +249,7 @@ public class AIStateMachine : MonoBehaviour
     // ======================================================
     public virtual void OnWaypointReached(int waypointIndex)
     {
-      
+
     }
 }
 
