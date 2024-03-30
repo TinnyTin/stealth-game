@@ -52,8 +52,8 @@ public class FieldOfView : MonoBehaviour
     private Mesh viewMesh;
     private float meshAlpha = 0.0f;
 
-    [SerializeField] private bool _fovIsGrowing = false; 
-    [SerializeField] private bool _fovIsShrinking = false;
+    private bool _fovIsGrowing = false; 
+    private bool _fovIsShrinking = false;
 
 
     // TODO remove this secion and add in fixedupdate...?

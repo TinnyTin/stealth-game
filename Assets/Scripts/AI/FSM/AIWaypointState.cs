@@ -36,17 +36,20 @@ public class AIWaypointState : AIBaseState
 
         setNextWaypoint();
         Ctx.setSpeed(Ctx.walkSpeed);
+        Ctx.agent.isStopped = false; 
     }
     public override void UpdateState()
     {
         if ((Ctx.agent.remainingDistance < WaypointDistanceTolerance) && !Ctx.agent.pathPending)
         {
+            Ctx.OnWaypointReached(currWaypoint);
             setNextWaypoint();
         }
     }
     public override void ExitState()
     {
         Ctx.LastWaypointIdx = currWaypoint-1;
+        Ctx.agent.isStopped = true; 
     }
     public override void CheckSwitchState()
     {

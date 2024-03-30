@@ -83,7 +83,6 @@ public class AIStateMachine : MonoBehaviour
 
     protected virtual void Awake()
     {
-
         // Register in AI Data SO
         aiManager.RegisterAI(this.gameObject);
 
@@ -97,16 +96,11 @@ public class AIStateMachine : MonoBehaviour
         // set up navmesh and waypoints
         LastWaypointIdx = -1;
 
-        // setup state
         _states = new AIStateFactory(this);
-        _currentState = _states.Waypoint(); // TODO replace this with configurable default state from inspector
-        _currentState.SetAIThreatPriority();
-        _currentState.EnterState();
+        SetInitialState();
 
         // set active flag
         isAIActive = true;
-
-
     }
 
     protected virtual void Start() { }
@@ -120,6 +114,15 @@ public class AIStateMachine : MonoBehaviour
             _currentState.CheckSwitchStates();
         }
 
+    }
+
+    protected virtual void SetInitialState()
+    {
+        // setup state
+        _states = new AIStateFactory(this);
+        _currentState = _states.Waypoint(); // TODO replace this with configurable default state from inspector
+        _currentState.SetAIThreatPriority();
+        _currentState.EnterState();
     }
 
     // ======================================================
@@ -238,6 +241,14 @@ public class AIStateMachine : MonoBehaviour
     {
         yield return new WaitForSeconds(delay);
         PlayerCaught.Raise();
+    }
+
+    // ======================================================
+    // Waypoint Things
+    // ======================================================
+    public virtual void OnWaypointReached(int waypointIndex)
+    {
+      
     }
 }
 

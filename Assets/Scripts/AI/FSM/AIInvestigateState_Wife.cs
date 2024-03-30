@@ -28,6 +28,8 @@ public class AIInvestigateState_Wife : AIBaseState
     }
     public override void EnterState()
     {
+        Ctx.agent.isStopped = false;
+
         // play thinking animation
         AIBaseState animationThinking = Factory.animationSubState("Thinking", "triggerThinking", Ctx.audioClipGasp, true);
         SwitchSubState(animationThinking);
