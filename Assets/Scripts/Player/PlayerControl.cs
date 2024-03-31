@@ -40,8 +40,6 @@ public class PlayerControl : MonoBehaviour
     // highlight the target object when the player is within range
     public float HilightRangeExtractionPoint = 7f;
 
-    public bool IsExtractionSuccess = false;
-
 
     private Rigidbody rbody;
     private Animator anim;
@@ -125,6 +123,18 @@ public class PlayerControl : MonoBehaviour
 
     public void Initialize()
     {
+        HasStolenObject = false;
+
+        if (playerData == null)
+        {
+            Debug.LogError("PlayerControl: no PlayerData SO");
+        }
+        else
+        {
+            playerData.PlayerHasStolenObject = false;
+        }
+        
+
         // get stealable object and component
         stealableObject = GameObject.Find("StealableObject");
         if (stealableObject == null)
@@ -408,7 +418,10 @@ public class PlayerControl : MonoBehaviour
             {
                 stealableObject.SetActive(false);
                 HasStolenObject = true;
-
+                if (playerData != null)
+                {
+                    playerData.PlayerHasStolenObject = true;
+                }
                 if (stealableObjectComponent != null && stealableObjectComponent.AudioClipSteal != null)
                     stealableObjectComponent.Steal();
             }
@@ -486,16 +499,6 @@ public class PlayerControl : MonoBehaviour
                 extractionPointComponent.SetHilight(false);
 
             isExtractionPointInRangeToHilight = false;
-        }
-
-        if (distance < 1.5f && !IsExtractionSuccess)
-        {
-            IsExtractionSuccess = true;
-            extractionPointComponent.Extract();
-            Debug.Log("Extraction: success.");
-            // fire off extraction success event to manager 
-            // 
-            //
         }
     }
 

@@ -15,4 +15,5 @@ public class PlayerData : ScriptableObject
     [Space]
     public Vector3 PlayerPosition;
     public float PlayerSprintStamina;
+    public bool PlayerHasStolenObject;
 }

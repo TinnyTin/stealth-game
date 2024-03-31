@@ -11,62 +11,80 @@ using UnityEngine;
  * Contributors:        Martin
  */
 
+[RequireComponent(typeof(BoxCollider))]
 public class ExtractionPoint : MonoBehaviour
 {
-  public AudioClip AudioClipExtract;
-  public GameEvent eventToRaise;
+    public AudioClip AudioClipExtract;
+    public GameEvent eventToRaise;
 
-  private GameObject childDefault, childHilighted;
+    private GameObject childDefault;
+    private GameObject childHilighted;
 
     public GameEvent PlayerReachedExit;
 
-  // Start is called before the first frame update
-  void Start()
-  {
-    if(AudioClipExtract == null)
+    public PlayerData playerData;
+
+    // Start is called before the first frame update
+    void Start()
     {
-      Debug.LogError("ExtractionPoint: No AudioClipExtract");
+        if (AudioClipExtract == null)
+        {
+            Debug.LogError("ExtractionPoint: No AudioClipExtract");
+        }
+
+        if (playerData == null)
+        {
+            Debug.LogError("ExtractionPoint: No PlayerData SO");
+        }
+
+        foreach (Transform child in transform)
+        {
+            if (child.name == "Default")
+                childDefault = child.GameObject();
+            else if (child.name == "Hilighted")
+                childHilighted = child.GameObject();
+        }
+        if (childDefault == null || childHilighted == null)
+        {
+            Debug.LogError("ExtractionPoint: Default, Hilight objects not found.");
+        }
+        else
+        {
+            SetHilight(false);
+        }
     }
 
-    foreach(Transform child in transform)
+    void OnTriggerEnter(Collider c)
     {
-      if(child.name == "Default")
-        childDefault = child.GameObject();
-      else if (child.name == "Hilighted")
-        childHilighted = child.GameObject();
+        if(playerData.PlayerHasStolenObject)
+        {
+            Debug.Log("ExtractionPoint: collide.");
+            Extract();
+        }
     }
-    if(childDefault == null || childHilighted == null)
-    {
-      Debug.LogError("StealableObject: Default, Hilight objects not found.");
-    }
-    else
-    {
-      SetHilight(false);
-    }
-  }
 
-  public void Extract()
-  {
-    if(AudioClipExtract != null)
-      eventToRaise.Raise(AudioClipExtract, AudioSourceParams.Default);
+    public void Extract()
+    {
+        if (AudioClipExtract != null)
+            eventToRaise.Raise(AudioClipExtract, AudioSourceParams.Default);
 
         PlayerReachedExit.Raise();
-  }
-
-  public void SetHilight(bool isHilighted)
-  {
-    if (childDefault == null || childHilighted == null)
-      return;
-
-    if (isHilighted)
-    {
-      childDefault.SetActive(false);
-      childHilighted.SetActive(true);
     }
-    else
+
+    public void SetHilight(bool isHilighted)
     {
-      childDefault.SetActive(true);
-      childHilighted.SetActive(false);
+        if (childDefault == null || childHilighted == null)
+            return;
+
+        if (isHilighted)
+        {
+            childDefault.SetActive(false);
+            childHilighted.SetActive(true);
+        }
+        else
+        {
+            childDefault.SetActive(true);
+            childHilighted.SetActive(false);
+        }
     }
-  }
 }
