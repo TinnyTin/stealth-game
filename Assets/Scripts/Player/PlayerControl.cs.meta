@@ -3,7 +3,18 @@ guid: e3326b463fdf14249ae19d1ccfa4cd53
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - footStepFactory: {instanceID: 0}
+  - soundThreatEvent: {instanceID: 0}
+  - playerMesh: {instanceID: 0}
+  - rigBase: {instanceID: 0}
+  - leftFoot: {instanceID: 0}
+  - rightFoot: {instanceID: 0}
+  - cameraDir: {instanceID: 0}
+  - audioEventToRaise: {instanceID: 0}
+  - sprintStaminaOutOfBreathAudioClip: {instanceID: 0}
+  - playerData: {instanceID: 0}
+  - playerStoleItem: {fileID: 11400000, guid: ddd30594d6fccb445a37949dd52ce7a1, type: 2}
   executionOrder: 300
   icon: {instanceID: 0}
   userData: 
