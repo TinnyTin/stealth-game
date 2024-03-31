@@ -1473,7 +1473,6 @@ MonoBehaviour:
   HilightRangeStealableObject: 5
   HasStolenObject: 0
   HilightRangeExtractionPoint: 7
-  IsExtractionSuccess: 0
   footStepFactory: {fileID: 11400000, guid: 4643d944ea5b1f74d9660238939e6009, type: 2}
   soundThreatEvent: {fileID: 11400000, guid: 0da2e8288a9ed8e4aba8d9cd74db75e6, type: 2}
   soundThreatWeight: 0.4
@@ -1499,6 +1498,7 @@ MonoBehaviour:
   sprintStaminaOutOfBreathAudioClip: {fileID: 8300000, guid: 3f8b382c3c28f444b9070b5964819762,
     type: 3}
   playerData: {fileID: 11400000, guid: 15901981171d3984bad2e1974e5b7aa7, type: 2}
+  playerStoleItem: {fileID: 11400000, guid: ddd30594d6fccb445a37949dd52ce7a1, type: 2}
 --- !u!114 &7660907510663883841
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2974,7 +2974,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7660907511649920119}
   m_LocalRotation: {x: -0.071251735, y: 0.9103552, z: -0.17734869, w: -0.36704785}
-  m_LocalPosition: {x: 0.2, y: 1.8, z: -2}
+  m_LocalPosition: {x: 0.19999999, y: 1.8, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

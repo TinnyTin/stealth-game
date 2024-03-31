@@ -120,6 +120,7 @@ public class PlayerControl : MonoBehaviour
      */
 
     public PlayerData playerData;
+    public GameEvent playerStoleItem;
 
     public void Initialize()
     {
@@ -421,6 +422,9 @@ public class PlayerControl : MonoBehaviour
                 if (playerData != null)
                 {
                     playerData.PlayerHasStolenObject = true;
+                }
+                if (playerStoleItem != null) {
+                    playerStoleItem.Raise();
                 }
                 if (stealableObjectComponent != null && stealableObjectComponent.AudioClipSteal != null)
                     stealableObjectComponent.Steal();
