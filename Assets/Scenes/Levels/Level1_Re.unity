@@ -4818,7 +4818,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Extraction Point
+  m_text: Extraction Zone
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -5601,6 +5601,11 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1800361749803658924, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 2919616572776292154, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
         type: 3}
       propertyPath: m_Colors.m_NormalColor.b
@@ -5860,6 +5865,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Gameplay Bundle
+      objectReference: {fileID: 0}
+    - target: {fileID: 6048512243457630716, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 33.19995
       objectReference: {fileID: 0}
     - target: {fileID: 6048512243775060909, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
         type: 3}
