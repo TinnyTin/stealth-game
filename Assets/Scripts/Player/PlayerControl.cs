@@ -14,9 +14,9 @@ using UnityEngine.AI;
  */
 
 [RequireComponent(typeof(Animator), typeof(Rigidbody), typeof(PlayerInput))]
-[RequireComponent(typeof(NavMeshAgent))]
 public class PlayerControl : MonoBehaviour
 {
+    public float PlayerSpeedMultiplier = 50f;
     // stealable object
     private GameObject stealableObject;
     private StealableObject stealableObjectComponent;
@@ -130,7 +130,7 @@ public class PlayerControl : MonoBehaviour
         {
             playerData.PlayerHasStolenObject = false;
         }
-        
+
 
         // get stealable object and component
         stealableObject = GameObject.Find("StealableObject");
@@ -190,20 +190,19 @@ public class PlayerControl : MonoBehaviour
         cameraHeading = transform.rotation;
         cameraPitch = 0;
 
-        if(playerMesh == null)
+        if (playerMesh == null)
         {
             Debug.LogError("PlayerControl: playerMesh not set.");
         }
         else
         {
             playerMeshCapsuleCollider = playerMesh.GetComponent<CapsuleCollider>();
-            if(playerMeshCapsuleCollider != null ) 
+            if (playerMeshCapsuleCollider != null)
             {
                 Debug.LogError("PlayerControl: playerMesh has no CapsuleCollider.");
             }
         }
-        
-        playerNavMeshAgent = GetComponent<NavMeshAgent>();
+
 
         if (rigBase == null || leftFoot == null || rightFoot == null)
         {
@@ -357,7 +356,8 @@ public class PlayerControl : MonoBehaviour
         Vector3 lateralMoveVec = (Quaternion.AngleAxis(90f, Vector3.up) * flatPlayerForward).normalized /
                                     Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
 
-        transform.position += forwardMoveVec + lateralMoveVec;
+        // move using rbody velocity
+        rbody.velocity = PlayerSpeedMultiplier * forwardMoveVec + lateralMoveVec;
 
         // update the animation controller with correct forward velocity.
         // lateral velocity is zero currently, can add later if we want
@@ -376,9 +376,10 @@ public class PlayerControl : MonoBehaviour
         Quaternion inputRotQuat = Quaternion.AngleAxis(inputRot, Vector3.up);
 
         // mouse-look when not in motion.  if moving, mouse X will change forward vector
+        Quaternion tempQuat = new Quaternion(0, cameraDir.transform.rotation.y, 0, cameraDir.transform.rotation.w); // only extract y rotation
         if (inputXZHeading.magnitude > 0.2f)
             transform.rotation = Quaternion.Lerp(transform.rotation,
-                                                 cameraDir.transform.rotation * inputRotQuat,
+                                                 tempQuat * inputRotQuat,
                                                  0.3f);
 
         if (_playerActionCrouch)
@@ -388,7 +389,7 @@ public class PlayerControl : MonoBehaviour
             anim.SetBool("crouch", isCrouched);
 
             // update player capsule collider and navmesh height
-            if(playerMeshCapsuleCollider)
+            if (playerMeshCapsuleCollider)
             {
                 Vector3 capsuleCenter = playerMeshCapsuleCollider.center;
                 if (isCrouched)
@@ -396,12 +397,10 @@ public class PlayerControl : MonoBehaviour
                     playerMeshCapsuleCollider.height = 1.1f;
                     capsuleCenter.y = 0.6f;
                     playerMeshCapsuleCollider.center = capsuleCenter;
-                    playerNavMeshAgent.height = 1f;
                 }
                 else
                 {
                     playerMeshCapsuleCollider.height = 1.8f;
-                    playerNavMeshAgent.height = 1.8f;
                     capsuleCenter.y = 1f;
                     playerMeshCapsuleCollider.center = capsuleCenter;
                 }
@@ -419,7 +418,8 @@ public class PlayerControl : MonoBehaviour
                 {
                     playerData.PlayerHasStolenObject = true;
                 }
-                if (playerStoleItem != null) {
+                if (playerStoleItem != null)
+                {
                     playerStoleItem.Raise();
                 }
                 if (stealableObjectComponent != null && stealableObjectComponent.AudioClipSteal != null)
@@ -433,9 +433,6 @@ public class PlayerControl : MonoBehaviour
 
         velocityFiltered = Mathf.Lerp(velocityFiltered, velocityCur, 0.3f);
         prevPosition = transform.position;
-        bool isRunning = false;
-        if (velocityFiltered > 2f)
-            isRunning = true;
 
         // emit footstep events to sound manager
         triggerFootsteps(_playerIsSprint);
