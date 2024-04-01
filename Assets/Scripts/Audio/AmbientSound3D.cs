@@ -26,8 +26,14 @@ public class AmbientSound3D : MonoBehaviour
     private bool _randomOrdering = false;
 
     [SerializeField]
-    [Tooltip("Automatically loop. All but the first clip in the list will be ignored.")]
+    [Tooltip("Automatically loop through the playlist. If unchecked, once all sounds have been played one no further sounds will be emitted.")]
     private bool _loop = false;
+
+    [SerializeField]
+    [Range(0f, 5f)]
+    [Tooltip("Maximum delay on playback of first audio clip. Prevents overlap from multiple sources playing the same sound. Value is only " +
+             "relevant if there is a single audio clip in the playlist. If there are more than one use the min/max times below.")]
+    private float _maxDelayOnFirstPlayback;
 
     [SerializeField]
     [Range(0f, 60f)]
@@ -40,10 +46,12 @@ public class AmbientSound3D : MonoBehaviour
     private float _maxTimeBetweenClips;
 
     [SerializeField] 
-    [Tooltip("Optional name for emitter. Will only be used in console log messages.")]
+    [Tooltip("Optional name for emitter. Name will be inherited from the GameObject that owns this script if empty. Will only be used in console log messages.")]
     private string _emitterName = string.Empty;
 
-    private int _currClipIndex = 0; 
+    private int _currClipIndex = 0;
+
+    private List<bool> _playedState = new(); 
 
     // Use this for initialization
     void Awake()
@@ -62,11 +70,9 @@ public class AmbientSound3D : MonoBehaviour
 
         if (_audioClips.Any() && _audioSrc != null)
         {
-            if (_loop)
+            foreach (AudioClip clip in _audioClips)
             {
-                _audioSrc.loop = true;
-                _audioSrc.clip = _audioClips.First(); 
-                _audioSrc.Play();
+                _playedState.Add(false);
             }
         }
         else
@@ -77,27 +83,63 @@ public class AmbientSound3D : MonoBehaviour
 
     void Update()
     {
-        if (_audioSrc.isPlaying == false && _loop == false && _audioClips.Any())
-        {
-            AudioClip clipToPlay = null;
+        // Don't play any more clips if all have been played 
+        // looping has been disabled. 
+        if (_loop == false && _playedState.All(e => e) == true)
+            return; 
 
-            if (_randomOrdering)
+        if (_audioSrc.isPlaying == false && _audioClips.Any())
+        {
+            if (_audioClips.Count == 1)
             {
-                clipToPlay = _audioClips.ElementAt(Random.Range(0, _audioClips.Count));
+                // Play just the first item in the list, possibly forever
+                _audioSrc.loop = _loop;
+                _audioSrc.clip = _audioClips.First();
+                _audioSrc.PlayDelayed(_maxDelayOnFirstPlayback);
+                _playedState[0] = true;
             }
             else
             {
-                clipToPlay = _audioClips.ElementAt(_currClipIndex);
-                
-                _currClipIndex++;
-                if (_currClipIndex >= _audioClips.Count)
-                    _currClipIndex = 0;
+                // Pick the next item in the list to play. If looping is 
+                // disabled then the clip is marked as played and won't 
+                // be picked again. 
+                AudioClip clipToPlay = null;
+
+                if (_randomOrdering)
+                {
+                    // Pick random clip to play
+                    int rand = -1;
+                    do
+                    {
+                        rand = Random.Range(0, _audioClips.Count);
+                    } while (_playedState[rand] == true);
+
+                    clipToPlay = _audioClips.ElementAt(rand);
+
+                    // Only mark clip as played if looping is disabled
+                    if (_loop == false)
+                        _playedState[rand] = true; 
+                }
+                else
+                {
+                    clipToPlay = _audioClips.ElementAt(_currClipIndex);
+
+                    // Only mark clip as played if looping is disabled
+                    if (_loop == false)
+                        _playedState[_currClipIndex] = true;
+
+                    _currClipIndex++;
+                    if (_currClipIndex >= _audioClips.Count)
+                        _currClipIndex = 0;
+                }
+
+                // Set initial playback delay
+                float delay = Random.Range(_minTimeBetweenClips, _maxTimeBetweenClips);
+
+                // Play!
+                _audioSrc.clip = clipToPlay;
+                _audioSrc.PlayDelayed(delay);
             }
-
-            float delay = Random.Range(_minTimeBetweenClips, _maxTimeBetweenClips);
-
-            _audioSrc.clip = clipToPlay;
-            _audioSrc.PlayDelayed(delay);
         }
     }
 
@@ -105,5 +147,14 @@ public class AmbientSound3D : MonoBehaviour
     {
         if (_maxTimeBetweenClips < _minTimeBetweenClips)
             _maxTimeBetweenClips = _minTimeBetweenClips;
+
+        if (string.IsNullOrEmpty(_emitterName))
+            _emitterName = this.gameObject.name; 
+    }
+
+    void OnDisable()
+    {
+        if (_audioSrc.isPlaying)
+            _audioSrc.Stop();
     }
 }

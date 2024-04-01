@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class StealableObject : MonoBehaviour
   public GameObject objectiveTracker;
 
   private GameObject childDefault, childHilighted;
+
+  [SerializeField] private List<GameObject> _objectsToDisable; 
 
   // Start is called before the first frame update
   void Start()
@@ -43,11 +46,24 @@ public class StealableObject : MonoBehaviour
 
   public void Steal()
   {
-    if(AudioClipSteal != null)
-      eventToRaise.Raise(AudioClipSteal, transform.position, AudioSourceParams.Default);
-    if(objectiveTracker != null)
+      if (AudioClipSteal != null)
+      {
+          AudioSourceParams audioParams = new AudioSourceParams();
+          audioParams.Volume = 0.5f; 
+          eventToRaise.Raise(AudioClipSteal, audioParams);
+      }
+
+      if(objectiveTracker != null)
         {
             objectiveTracker.GetComponent<ObjectiveTracker>().mainObjectiveObtained();
+        }
+
+        foreach (GameObject gameObject in _objectsToDisable)
+        {
+            if (gameObject != null)
+            {
+                gameObject.SetActive(false);
+            }
         }
   }
 
