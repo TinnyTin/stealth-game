@@ -5591,6 +5591,11 @@ PrefabInstance:
       propertyPath: m_DynamicOccludee
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 861496522763662454, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
+        type: 3}
+      propertyPath: _level1SceneName
+      value: Level1_Re
+      objectReference: {fileID: 0}
     - target: {fileID: 1627727562279935409, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
         type: 3}
       propertyPath: m_AnchorMax.x
@@ -5600,6 +5605,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1764107448464730839, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 1800361749803658924, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
         type: 3}
@@ -5951,6 +5961,11 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: -46.584282
       objectReference: {fileID: 0}
+    - target: {fileID: 6176815402725676837, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7692582209892119351, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
         type: 3}
       propertyPath: distanceText
@@ -5965,6 +5980,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: DashedOutline
+      objectReference: {fileID: 0}
+    - target: {fileID: 8264007514659297313, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
+        type: 3}
+      propertyPath: _level1SceneName
+      value: Level1_Re
       objectReference: {fileID: 0}
     - target: {fileID: 8739312274806759335, guid: 7cbec0e90af3ebe4884eeccb7d732c19,
         type: 3}
