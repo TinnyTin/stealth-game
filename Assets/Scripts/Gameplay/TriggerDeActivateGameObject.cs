@@ -1,7 +1,14 @@
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:        
+ * Description: 
+ * External Source Credit:
+ *
+ */
 
 public class TriggerDeActivateGameObject: MonoBehaviour
 {
