@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Tom/WifeTest.unity
     guid: 8619c375b4ba6594dbf6009a2e07c8ad
+  - enabled: 1
+    path: Assets/Scenes/Levels/Level1_Re.unity
+    guid: 01170b8e4c2f2794d81cb5e06a60642f
   m_configObjects: {}
