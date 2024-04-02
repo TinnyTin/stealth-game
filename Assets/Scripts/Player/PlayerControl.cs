@@ -67,6 +67,7 @@ public class PlayerControl : MonoBehaviour
     private float _playerLookY = 0f;
     private bool _playerActionGrab = false;
     private bool _playerActionCrouch = false;
+    private float _playerActionCrouchCooldown = 0f;
     private bool _playerIsSprint = false;
     public bool infiniteSprint = false;
 
@@ -93,6 +94,7 @@ public class PlayerControl : MonoBehaviour
     public float movementSpeedSprint = 2f;
     public float movementSpeedCrouch = 0.5f;
     private float smoothMovement = 0f;
+    public float CrouchCoolDownAmount = 0.5f; // cooldown on crouch toggling
 
     // sprint stamina is depleted during sprinting at
     // this rate, represented in percentage per second.
@@ -238,7 +240,8 @@ public class PlayerControl : MonoBehaviour
         if (isPlayerControlEnabled)
         {
             _playerActionGrab = input.playerActionGrab || _playerActionGrab;
-            _playerActionCrouch = input.playerActionCrouch || _playerActionCrouch;
+            // only update crouch with the input if cooldown is finished
+            _playerActionCrouch = (_playerActionCrouchCooldown == 0f) ? (input.playerActionCrouch || _playerActionCrouch) : _playerActionCrouch;
         }
 
         if (playerData != null)
@@ -255,7 +258,8 @@ public class PlayerControl : MonoBehaviour
             rbody.velocity = Vector3.Lerp(rbody.velocity, Vector3.zero, Time.fixedDeltaTime);
         }
 
-
+        // update Crouch cooldown timer, prevents you from spamming other buttons like sprint when crouch is in progress
+        _playerActionCrouchCooldown = Mathf.Max(0f, _playerActionCrouchCooldown - Time.fixedDeltaTime);
 
         // update the cinemachine camera based on inputs from mouse and right analog stick
 
@@ -303,6 +307,11 @@ public class PlayerControl : MonoBehaviour
         // update the animation controller with the corrected forward and turn values
         // relative to the camera and player
 
+        // uncrouch if sprint pressed while trying to move
+        if (_playerIsSprint && inputXZ.magnitude > 0.1f && isCrouched && _playerActionCrouchCooldown == 0f)
+        {
+            _playerActionCrouch = true;
+        }
         // update sprint stamina
         if (!infiniteSprint && _playerIsSprint && !isCrouched && inputXZ.magnitude >= 0.5f && sprintStamina != 0f)
         {
@@ -389,8 +398,10 @@ public class PlayerControl : MonoBehaviour
                                                  yCameraRot * inputRotQuat,
                                                  0.3f);
 
-        if (_playerActionCrouch)
+        // check if crouch state needs to be updated. Rate limited by a cooldown
+        if (_playerActionCrouch && _playerActionCrouchCooldown == 0f)
         {
+            _playerActionCrouchCooldown = CrouchCoolDownAmount;
             _playerActionCrouch = false;
             isCrouched = !isCrouched;
             anim.SetBool("crouch", isCrouched);
