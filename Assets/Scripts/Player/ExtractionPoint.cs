@@ -24,6 +24,8 @@ public class ExtractionPoint : MonoBehaviour
 
     public PlayerData playerData;
 
+    private bool hastExtracted = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -52,14 +54,20 @@ public class ExtractionPoint : MonoBehaviour
         {
             SetHilight(false);
         }
+        hastExtracted = false;
     }
 
     void OnTriggerEnter(Collider c)
     {
-        if(playerData.PlayerHasStolenObject)
+        if (playerData.PlayerHasStolenObject)
         {
             Debug.Log("ExtractionPoint: collide.");
-            Extract();
+            if (!hastExtracted)
+            {
+                Extract();
+                hastExtracted = true;
+            }
+
         }
     }
 
