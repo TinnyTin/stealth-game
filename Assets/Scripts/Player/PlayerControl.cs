@@ -376,10 +376,14 @@ public class PlayerControl : MonoBehaviour
         Quaternion inputRotQuat = Quaternion.AngleAxis(inputRot, Vector3.up);
 
         // mouse-look when not in motion.  if moving, mouse X will change forward vector
-        Quaternion tempQuat = new Quaternion(0, cameraDir.transform.rotation.y, 0, cameraDir.transform.rotation.w); // only extract y rotation
+        // yCameraRot is only the Euler-Y component (not to be confused with Quaternion Y component which caused the turntable rotation)
+        // This was initially modified since cinemachine camera's rotation was causing Player to michael-jackson lean towards the floor or ceiling
+        //      Workaround masking the issue was the NavMesh agent snapping Player rotation back into place and preserving only the y-rotation
+        //      Now, Navmesh agent has been removed, and this is the proper application of rotation
+        Quaternion yCameraRot = Quaternion.Euler(0, cameraDir.transform.eulerAngles.y, 0); 
         if (inputXZHeading.magnitude > 0.2f)
             transform.rotation = Quaternion.Lerp(transform.rotation,
-                                                 tempQuat * inputRotQuat,
+                                                 yCameraRot * inputRotQuat,
                                                  0.3f);
 
         if (_playerActionCrouch)
