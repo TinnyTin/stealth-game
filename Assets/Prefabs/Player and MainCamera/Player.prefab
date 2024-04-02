@@ -1395,6 +1395,7 @@ GameObject:
   - component: {fileID: 7660907510663883841}
   - component: {fileID: 7660907510663883843}
   - component: {fileID: 7660907510663885756}
+  - component: {fileID: 8284240006436835972}
   m_Layer: 0
   m_Name: Player Model
   m_TagString: Untagged
@@ -1491,6 +1492,7 @@ MonoBehaviour:
   movementSpeedWalk: 0.7
   movementSpeedSprint: 2
   movementSpeedCrouch: 0.4
+  CrouchCoolDownAmount: 0.5
   sprintStaminaDepletionRate: 0.15
   sprintStaminaRechargeRate: 0.15
   sprintStamina: 1
@@ -1564,6 +1566,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEvent: {fileID: 11400000, guid: 0e15176b7ba250247ae0607c12a16324, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 7660907510663883840}
+        m_TargetAssemblyTypeName: PlayerControl, Assembly-CSharp
+        m_MethodName: setPlayerControl
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &8284240006436835972
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7660907510663885758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ccb869ff16892c4ba4aeabafba1cba5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gameEvent: {fileID: 11400000, guid: 78c96b826814349429d2019103e96aee, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -2952,8 +2982,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7660907511649920119}
-  m_LocalRotation: {x: 0.059509296, y: -0.02891564, z: 0.0017245306, w: 0.9978074}
-  m_LocalPosition: {x: 0.2, y: 1.8, z: -2}
+  m_LocalRotation: {x: 0.09794088, y: -0.049573503, z: 0.00488485, w: 0.99394476}
+  m_LocalPosition: {x: 0.19999969, y: 1.8, z: -2.0000005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

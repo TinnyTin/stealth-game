@@ -46,6 +46,7 @@ public class AIStateMachine : MonoBehaviour
     [Header("ScriptableObjects")]
     public AIManager aiManager;
     public GameEvent PlayerCaught;
+    public GameEvent PlayerDisable;
     public GameEvent AudioChannel;
     public PlayerData playerData;
 
@@ -240,6 +241,7 @@ public class AIStateMachine : MonoBehaviour
 
     IEnumerator CoroutineCatchPlayer(float delay)
     {
+        PlayerDisable.Raise();
         yield return new WaitForSeconds(delay);
         PlayerCaught.Raise();
     }
