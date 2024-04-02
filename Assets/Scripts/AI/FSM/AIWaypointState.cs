@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 /*
@@ -67,6 +68,9 @@ public class AIWaypointState : AIBaseState
 
     private bool setNextWaypoint(int idx)
     {
+        if (waypoints.Any() == false)
+            return false; 
+
         bool retval = false;
         currWaypoint = idx;
         // loop back to 0
@@ -75,6 +79,7 @@ public class AIWaypointState : AIBaseState
             currWaypoint = 0;
             retval = true;
         }
+
         Ctx.agent.SetDestination(waypoints[currWaypoint].transform.position);
         //Debug.Log("Set the destination to waypoint " + currWaypoint);
         return retval;

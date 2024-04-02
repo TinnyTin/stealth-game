@@ -84,6 +84,12 @@ public class AIStateMachine_Civilian : AIStateMachine
         base.OnDisable();
     }
 
+    void OnValidate()
+    {
+        if (waypoints.Any() == false)
+            _civilianType = CivilianType.Idle; 
+    }
+
     protected override void SetInitialState()
     {
         
