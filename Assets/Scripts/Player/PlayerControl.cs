@@ -251,7 +251,10 @@ public class PlayerControl : MonoBehaviour
     private void FixedUpdate()
     {
         if (!isPlayerControlEnabled || cameraDir == null)
-            return;
+        {
+            rbody.velocity = Vector3.Lerp(rbody.velocity, Vector3.zero, Time.fixedDeltaTime);
+        }
+
 
 
         // update the cinemachine camera based on inputs from mouse and right analog stick
@@ -380,7 +383,7 @@ public class PlayerControl : MonoBehaviour
         // This was initially modified since cinemachine camera's rotation was causing Player to michael-jackson lean towards the floor or ceiling
         //      Workaround masking the issue was the NavMesh agent snapping Player rotation back into place and preserving only the y-rotation
         //      Now, Navmesh agent has been removed, and this is the proper application of rotation
-        Quaternion yCameraRot = Quaternion.Euler(0, cameraDir.transform.eulerAngles.y, 0); 
+        Quaternion yCameraRot = Quaternion.Euler(0, cameraDir.transform.eulerAngles.y, 0);
         if (inputXZHeading.magnitude > 0.2f)
             transform.rotation = Quaternion.Lerp(transform.rotation,
                                                  yCameraRot * inputRotQuat,
