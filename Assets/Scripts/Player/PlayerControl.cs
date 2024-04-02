@@ -265,7 +265,7 @@ public class PlayerControl : MonoBehaviour
 
         // calculate new input axes relative to the camera's offset 
         // from the player's forward vector
-
+        if (isPlayerControlEnabled || cameraDir == null)
         {
             // the camera target gameobject follows the player
 
@@ -393,10 +393,14 @@ public class PlayerControl : MonoBehaviour
         //      Workaround masking the issue was the NavMesh agent snapping Player rotation back into place and preserving only the y-rotation
         //      Now, Navmesh agent has been removed, and this is the proper application of rotation
         Quaternion yCameraRot = Quaternion.Euler(0, cameraDir.transform.eulerAngles.y, 0);
-        if (inputXZHeading.magnitude > 0.2f)
-            transform.rotation = Quaternion.Lerp(transform.rotation,
-                                                 yCameraRot * inputRotQuat,
-                                                 0.3f);
+        if (isPlayerControlEnabled || cameraDir == null)
+        {
+            if (inputXZHeading.magnitude > 0.2f)
+                transform.rotation = Quaternion.Lerp(transform.rotation,
+                                                     yCameraRot * inputRotQuat,
+                                                     0.3f);
+        }
+
 
         // check if crouch state needs to be updated. Rate limited by a cooldown
         if (_playerActionCrouch && _playerActionCrouchCooldown == 0f)
