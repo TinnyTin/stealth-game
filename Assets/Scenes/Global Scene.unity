@@ -625,7 +625,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _audioClip: {fileID: 8300000, guid: 48b333d38dd06014db894a4fc89578b0, type: 3}
-  _volume: 0
+  _volume: 0.1
 --- !u!4 &1409508016
 Transform:
   m_ObjectHideFlags: 0
@@ -1162,7 +1162,7 @@ PrefabInstance:
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenesInBuild.Array.size
-      value: 4
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
@@ -1190,7 +1190,7 @@ PrefabInstance:
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
       propertyPath: _scenePlaylist.Array.data[0].guid
-      value: 8619c375b4ba6594dbf6009a2e07c8ad
+      value: 7beb9e9c3b807014398bce7ea2cc66b9
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
@@ -1219,9 +1219,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
+      propertyPath: _scenesInBuild.Array.data[4].guid
+      value: 01170b8e4c2f2794d81cb5e06a60642f
+      objectReference: {fileID: 0}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
       propertyPath: _scenePlaylist.Array.data[0].asset
       value: 
-      objectReference: {fileID: 102900000, guid: 8619c375b4ba6594dbf6009a2e07c8ad,
+      objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,
         type: 3}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
@@ -1252,6 +1257,12 @@ PrefabInstance:
       propertyPath: _scenesInBuild.Array.data[3].asset
       value: 
       objectReference: {fileID: 102900000, guid: 8619c375b4ba6594dbf6009a2e07c8ad,
+        type: 3}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
+      propertyPath: _scenesInBuild.Array.data[4].asset
+      value: 
+      objectReference: {fileID: 102900000, guid: 01170b8e4c2f2794d81cb5e06a60642f,
         type: 3}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}

@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 1759713684994853217}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3.0550222, y: 1.5091511, z: 1.5008}
+  m_LocalScale: {x: 3.0550222, y: 1.39, z: 1.5008}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -129,6 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   AudioClipCollision: {fileID: 8300000, guid: 86236203f34e1084d8253536d12458ae, type: 3}
+  delayToNextSound: 1
   impulseThreshold: 5
   soundEventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
   soundThreatEvent: {fileID: 11400000, guid: 0da2e8288a9ed8e4aba8d9cd74db75e6, type: 2}
