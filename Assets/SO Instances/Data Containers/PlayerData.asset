@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da1dba5bfba887b49a4d01042a1c941d, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  PlayerPosition: {x: -45.563946, y: 0.0048826337, z: -13.035221}
-  PlayerSprintStamina: 0.86199903
-  PlayerHasStolenObject: 1
+  PlayerPosition: {x: -25.727398, y: 0.029905796, z: -14.988389}
+  PlayerSprintStamina: 0.9429996
+  PlayerHasStolenObject: 0
