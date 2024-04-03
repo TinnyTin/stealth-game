@@ -39,21 +39,6 @@ public class ExtractionPoint : MonoBehaviour
             Debug.LogError("ExtractionPoint: No PlayerData SO");
         }
 
-        foreach (Transform child in transform)
-        {
-            if (child.name == "Default")
-                childDefault = child.GameObject();
-            else if (child.name == "Hilighted")
-                childHilighted = child.GameObject();
-        }
-        if (childDefault == null || childHilighted == null)
-        {
-            Debug.LogError("ExtractionPoint: Default, Hilight objects not found.");
-        }
-        else
-        {
-            SetHilight(false);
-        }
         hastExtracted = false;
     }
 
@@ -77,22 +62,5 @@ public class ExtractionPoint : MonoBehaviour
             eventToRaise.Raise(AudioClipExtract, AudioSourceParams.Default);
 
         PlayerReachedExit.Raise();
-    }
-
-    public void SetHilight(bool isHilighted)
-    {
-        if (childDefault == null || childHilighted == null)
-            return;
-
-        if (isHilighted)
-        {
-            childDefault.SetActive(false);
-            childHilighted.SetActive(true);
-        }
-        else
-        {
-            childDefault.SetActive(true);
-            childHilighted.SetActive(false);
-        }
     }
 }
