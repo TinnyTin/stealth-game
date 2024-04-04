@@ -240,7 +240,7 @@ public class PlayerControl : MonoBehaviour
     {
         if (!isPlayerControlEnabled || cameraDir == null)
         {
-            rbody.velocity = Vector3.Lerp(rbody.velocity, Vector3.zero, Time.fixedDeltaTime);
+            rbody.velocity = Vector3.Lerp(rbody.velocity, new Vector3(0,rbody.velocity.y,0), Time.fixedDeltaTime);
         }
 
         // update Crouch cooldown timer, prevents you from spamming other buttons like sprint when crouch is in progress
@@ -354,7 +354,7 @@ public class PlayerControl : MonoBehaviour
                                     Time.fixedDeltaTime * inputXZ.x * movementScaleFactor;
 
         // move using rbody velocity
-        rbody.velocity = PlayerSpeedMultiplier * forwardMoveVec + lateralMoveVec;
+        rbody.velocity = (PlayerSpeedMultiplier * forwardMoveVec + lateralMoveVec) + new Vector3(0,rbody.velocity.y,0);
 
         // update the animation controller with correct forward velocity.
         // lateral velocity is zero currently, can add later if we want
