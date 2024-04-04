@@ -10,11 +10,14 @@ using UnityEngine;
  *
  */
 
-public class TriggerDeActivateGameObject: MonoBehaviour
+public class TriggerDeActivateGameObject : MonoBehaviour
 {
     public GameObject[] GOs;
+    public float CooldownTimer = 3f;
 
     bool isDeactivated = false;
+
+    private float tCooldown = 0f;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -27,6 +30,14 @@ public class TriggerDeActivateGameObject: MonoBehaviour
             isDeactivated = true;
         }
 
-
+    }
+    private void Update()
+    {
+        tCooldown = Mathf.Max(0f, tCooldown - Time.deltaTime);
+        if (tCooldown == 0)
+        {
+            isDeactivated = false;
+            tCooldown = CooldownTimer;
+        }
     }
 }
