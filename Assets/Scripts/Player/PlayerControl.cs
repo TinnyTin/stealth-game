@@ -184,7 +184,7 @@ public class PlayerControl : MonoBehaviour
         else
         {
             playerMeshCapsuleCollider = playerMesh.GetComponent<CapsuleCollider>();
-            if (playerMeshCapsuleCollider != null)
+            if (playerMeshCapsuleCollider == null)
             {
                 Debug.LogError("PlayerControl: playerMesh has no CapsuleCollider.");
             }
