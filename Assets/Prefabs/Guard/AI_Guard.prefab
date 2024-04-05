@@ -2980,7 +2980,7 @@ MonoBehaviour:
   pursuitAutoSenseRadius: 3
   finalCaughtRadius: 1.5
   finalCaughtNavMeshTolerance: 1
-  isAIActive: 0
+  isAIActive: 1
   WaypointDistanceTolerance: 1
   waypoints:
   - {fileID: 8759923798512796713}
