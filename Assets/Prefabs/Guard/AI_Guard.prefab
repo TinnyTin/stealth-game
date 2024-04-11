@@ -385,8 +385,20 @@ MonoBehaviour:
   fadeInMeshviewAngleMultiplier: 1.1
   updateTransform: 1
   forceVisible: 0
-  meshResolution: 1
-  meshFadeInMultiplier: 1
+  meshResolution: 2
+  AIFOVSettings:
+  - name: Idle
+    Priority: 0
+    Color: {r: 0.5, g: 0.5, b: 0.5, a: 0}
+    Alpha: 0.1
+  - name: Investigate
+    Priority: 1
+    Color: {r: 0.6698113, g: 0.5321402, b: 0, a: 0}
+    Alpha: 0.2
+  - name: Pursuit
+    Priority: 2
+    Color: {r: 1, g: 0, b: 0.05156803, a: 0}
+    Alpha: 0.3
   viewMeshFilter: {fileID: 8759923797699422844}
   viewMeshRenderer: {fileID: 8759923797699422845}
   targetMask:
@@ -399,6 +411,7 @@ MonoBehaviour:
   ai: {fileID: 695267126702515523}
   threatmeter: {fileID: 8759923798378871559}
   anchor: {fileID: 4642304207773468597}
+  stateMachine: {fileID: 695267126702515523}
 --- !u!1 &8759923796965552695
 GameObject:
   m_ObjectHideFlags: 0
