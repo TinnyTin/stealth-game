@@ -44,7 +44,12 @@ public class AIPursuitState : AIBaseState
         }
 
         // pursue Target
-        Ctx.agent.SetDestination(Ctx.lastThreat);
+        if (!Ctx.agent.SetDestination(Ctx.lastThreat))
+        {
+            // Play defeated animation if no longer can reach last threat
+            AIBaseState animationDefeated = Factory.animationSubState("Defeated", "triggerDefeated", null, true);
+            SwitchSubState(animationDefeated);
+        }
 
         // All checks to make sure the player is able to get caught.
         // 1. agent is close enough to its destination by finalCaughtRadius AND
