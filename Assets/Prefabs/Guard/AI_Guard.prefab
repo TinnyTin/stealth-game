@@ -3106,6 +3106,7 @@ MonoBehaviour:
     min: 0
     max: 50
     threatChooseState: 2
+  playerData: {fileID: 11400000, guid: 15901981171d3984bad2e1974e5b7aa7, type: 2}
 --- !u!114 &9019845228498428912
 MonoBehaviour:
   m_ObjectHideFlags: 0

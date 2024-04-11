@@ -42,6 +42,9 @@ public class ThreatMeter : MonoBehaviour
     [Header("Behaviors")]
     public List<ThreatThreshold> ThreatBehaviorList;
 
+    [Header("ScriptableObjects")]
+    public PlayerData playerData;
+
     private AIStateMachine ai;
     private void Start()
     {
@@ -59,14 +62,14 @@ public class ThreatMeter : MonoBehaviour
     public void onSightThreat(Transform t, float interval)
     {
         ai.lastThreat = new Vector3(t.position.x, t.position.y, t.position.z);
-        changeThreat(sightThreatRate * interval * NeuroticMultiplier);
+        changeThreat(sightThreatRate * interval);
 
     }
     public void changeThreat(float val)
     {
         if (val > 0)
         {
-            threatLevel = Mathf.Clamp(threatLevel + val * NeuroticMultiplier, minThreatMeter, maxThreatMeter);
+            threatLevel = Mathf.Clamp(threatLevel + val * playerData.PlayerVisibility, minThreatMeter, maxThreatMeter);
         }
         else
         {
