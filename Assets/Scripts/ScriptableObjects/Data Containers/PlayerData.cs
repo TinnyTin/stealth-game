@@ -16,8 +16,8 @@ public class PlayerData : ScriptableObject
     public Vector3 PlayerPosition;
     public float PlayerSprintStamina;
     public bool PlayerHasStolenObject;
+    public bool IsCrouched;
     [Header("Player Visibility / Camo")]
-
     public float DefaultCamo = 0f;
     private float _playerCamouflage = 0f;
     private float _playerVisibility = 1f;

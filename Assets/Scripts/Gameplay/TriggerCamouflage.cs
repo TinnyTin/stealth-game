@@ -8,6 +8,7 @@ public class TriggerCamouflage : MonoBehaviour
 
     [Range(0f, 1f)]
     public float CamoAmount = 1f;
+    public bool requireCrouch = false;
 
     private void Start()
     {
@@ -15,11 +16,35 @@ public class TriggerCamouflage : MonoBehaviour
     }
     private void OnTriggerEnter(Collider other)
     {
-        playerData.SetPlayerCamo(CamoAmount);
+        UpdateCamoLevel();
+    }
+
+    private void OnTriggerStay(Collider other)
+    {
+        UpdateCamoLevel();
     }
 
     private void OnTriggerExit(Collider other)
     {
         playerData.ResetPlayerCamo();
+    }
+
+    private void UpdateCamoLevel()
+    {
+        if (!requireCrouch)
+        {
+            playerData.SetPlayerCamo(CamoAmount);
+        }
+        else
+        {
+            if (playerData.IsCrouched)
+            {
+                playerData.SetPlayerCamo(CamoAmount);
+            }
+            else
+            {
+                playerData.ResetPlayerCamo();
+            }
+        }
     }
 }
