@@ -10,6 +10,9 @@ using UnityEngine;
 
 public class LevelSelect : MonoBehaviour
 {
+    [SerializeField] 
+    private PlayerData _playerData; 
+
     [Header("Scene Names")]
     [SerializeField] private string _mainMenuSceneName = "MainMenu";
     [SerializeField] private string _level1SceneName = "Level1"; 
@@ -38,6 +41,9 @@ public class LevelSelect : MonoBehaviour
 
     public void restartLevel()
     {
-        SceneController.Instance.RestartScene();
+        if (_playerData != null)
+            SceneController.Instance.RestartScene(_playerData.LastCheckpoint);
+        else
+            SceneController.Instance.RestartScene();
     }
 }
