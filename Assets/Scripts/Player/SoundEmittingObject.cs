@@ -14,7 +14,7 @@ public class SoundEmittingObject : MonoBehaviour
     public float delayToNextSound = 1f;
     [Header("Physics")]
     public float impulseThreshold = 5f;
-    
+
     [Header("Events")]
     public GameEvent soundEventToRaise;
     public GameEvent soundThreatEvent;
@@ -46,13 +46,20 @@ public class SoundEmittingObject : MonoBehaviour
                 if (AudioClipCollision != null)
                 {
                     // raise sound event
-                    soundEventToRaise.Raise(AudioClipCollision, transform.position, AudioSourceParams.Default);
+                    if (soundEventToRaise != null)
+                    {
+                        soundEventToRaise.Raise(AudioClipCollision, transform.position, AudioSourceParams.Default);
+                    }
                     // raise threat increase event
-                    soundThreatEvent.Raise(transform.position, threatWeight);
+                    if (soundThreatEvent != null)
+                    {
+                        soundThreatEvent.Raise(transform.position, threatWeight);
+                    }
+
                 }
             }
-            
-                
+
+
         }
     }
 }
