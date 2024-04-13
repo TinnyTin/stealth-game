@@ -46,27 +46,37 @@ The following is a list of problems that you may experience while playing the ga
 Who did what, organised by team member names in alphabetical order. 
 
 ### Erik
-Erik’s main contributions were the player and camera control systems. Algorithmic contributions include:
-* Input system supporting game controller and keyboard input for third-person perspective control of the player. The player can walk or crouch-walk to navigate on the nav-mesh. The camera system is an interpolated follow-cam, which allows the player to naturally move using either the keyboard or game controller with dual analog sticks.
+Erik’s main contributions were the player and camera control systems, "stealable object", and the extraction point.  Algorithmic contributions include:
+* Input system supporting game controller and keyboard input for third-person perspective control of the player. The player can walk, crouch-walk, or sprint to navigate on the nav-mesh. The camera system is an interpolated follow-cam using Cinemachine, which allows the player to naturally move using the keyboard and mouse.
 * Animated introduction panning camera script
 * System for highlighting the target “stealable” object and extraction point based on player proximity.
 
 Erik also contributed to asset creation, including:
 * A test scene to prototype with the chosen low poly asset pack
-* Animation for player and some civilian NPCs
-* Audio for footsteps
+* Animation controllers for player and some civilian NPCs
+* Audio for footsteps and sprint stamina depletion
 
 #### Assets Implemented
 **Audio:**
-* Footsteps
+* Footstep sounds: https://freesound.org/people/marb7e/packs/34204/
+* "Out of breath" sound: https://freesound.org/people/saha213131/sounds/680766/
+* "Steal Object" chime: https://freesound.org/people/Samulis/sounds/192636/
+* "Reach extraction point" chime: https://freesound.org/people/Anthousai/sounds/398496/
 
 **Models and Animations:**
-* Agent animations (civilian clips and animation controllers)
-* Player animations (walk, run, crouch)
-* Player Animation Controller
+* From Mixamo.com:
+  * Agent animations (civilian clips and animation controllers)
+  * Player animations (walk, run, crouch)
+    * X_Bot@Standing.fbx
+    * X_Bot@Running.fbx
+    * X_Bot@Walking.fbx
+    * X_Bot@Sneak_Walk.fbx
+    * X_Bot@Crouching_Idle.fbx
+  * Dance animations: https://assetstore.unity.com/packages/3d/animations/dance-animations-free-161313
 
 **Scenes:**
 * Victorian Test Scene
+* contributed to Level1_Re scene
 
 **Prefabs:**
 * Player
@@ -84,10 +94,7 @@ Erik also contributed to asset creation, including:
 * SceneCameraController.cs
 * StealableObject.cs
 
-#### 3rd party credits
-* Footstep sounds: https://freesound.org/people/marb7e/packs/34204/
-* "Steal Object" chime: https://freesound.org/people/Samulis/sounds/192636/
-* "Reach extraction point" chime: https://freesound.org/people/Anthousai/sounds/398496/
+
 
 ### Jeesoo
 Jeesoo’s main contributions were level development and UI scenes.
