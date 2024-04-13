@@ -17297,6 +17297,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d136950f346c94349a47b0fb0299b623, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _playerData: {fileID: 0}
   _mainMenuSceneName: MainMenu
   _level1SceneName: Level1_Re
 --- !u!4 &1398887990 stripped
@@ -19287,6 +19288,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: boy-poor-steampunk
+      objectReference: {fileID: 0}
+    - target: {fileID: 2013551159137845616, guid: 86f76056d79582149887a201ce645484,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 86f76056d79582149887a201ce645484, type: 3}
@@ -22153,7 +22159,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1884511575
 Transform:
   m_ObjectHideFlags: 0
