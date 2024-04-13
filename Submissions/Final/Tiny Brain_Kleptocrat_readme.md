@@ -291,49 +291,53 @@ Added the ambient audio that can be heard throughout the level. Contributed to t
 * Assets\Scripts\ScriptableObjects\ScriptableObjectWithInit.cs
 
 #### 3rd party credits
+##### Packages
 * Hierarchy Folders Package: https://github.com/xsduan/unity-hierarchy-folders 
 * Eflatun.SceneReference Package: https://github.com/starikcetin/Eflatun.SceneReference
-* City Ambience Audio: https://freesound.org/people/klankbeeld/sounds/279041/
 
-Assets\Audio\Birds:
+##### Audio
+Assets\Audio\Birds\
 Bird songs cut from clips from: https://dl.allaboutbirds.org/free-bird-song-download-from-the-cornell-lab
 
-Assets\Audio\Music
+Assets\Audio\Music\
 Party room music: Quantum Jazz - https://freemusicarchive.org/music/Quantum_Jazz/End_of_Line/06_-_Quantum_Jazz_-_Balcarabic_Chicken/
 
-Assets\Audio\Phonograph
+Assets\Audio\Phonograph\
 All tracks taken from 'Antique Phonograph Music Program 01/05/2010` available at: https://freemusicarchive.org/music/Antique_Phonograph_Music_Program_Various_Artists/
 
-Assets\Audio\Scratches
+Assets\Audio\Scratches\
 Scratch sounds played on stealable gramophone taken from: https://freesound.org/people/jswonger/sounds/47924/
 
-Assets\Animations
-The following were all acquired from Mixamo
-Chicken Dance
-Guitar Playing
-Guitar Playing 2
-Identify Point
-Jumping Jacks
-Peering
-Shopping Cart Dance
-Smoking
-Thinking 
-Wild Dance
-
 Assets\Audio
-47924__jswonger__record-scratches: https://freesound.org/people/jswonger/sounds/47924/
-74222_girl_nonsense: https://freesound.org/people/Koen/sounds/74222/
-80928_door_slam: https://freesound.org/people/bennstir/sounds/80928/
-106486_car_engine: https://freesound.org/people/KlankOntwerp/sounds/106486/
-149193_tractor_idle: https://freesound.org/people/videog/sounds/149193/
-161607__xserra__alhambra-fountain-1: https://freesound.org/people/xserra/sounds/161607/
-219587_gate_shut: https://freesound.org/people/qubodup/sounds/219587/
-232175__szalonegacie__talking-people-2: https://freesound.org/people/szalonegacie/sounds/232175/
-277361_steam_hiss: https://freesound.org/people/beerbelly38/sounds/277361/
-413203__joepayne__clean-and-pompous-fanfare-trumpet: https://freesound.org/people/joepayne/sounds/413203/
-676638_plane_engine: https://freesound.org/people/Exoticgaming/sounds/676638/
-tindeck_1: https://www.myinstants.com/en/instant/metal-gear-solid-alert/
-wife_hmmm: https://freesound.org/people/esperar/sounds/170766/
+* 47924__jswonger__record-scratches: https://freesound.org/people/jswonger/sounds/47924/
+* 74222_girl_nonsense: https://freesound.org/people/Koen/sounds/74222/
+* 80928_door_slam: https://freesound.org/people/bennstir/sounds/80928/
+* 106486_car_engine: https://freesound.org/people/KlankOntwerp/sounds/106486/
+* 149193_tractor_idle: https://freesound.org/people/videog/sounds/149193/
+* 161607__xserra__alhambra-fountain-1: https://freesound.org/people/xserra/sounds/161607/
+* 219587_gate_shut: https://freesound.org/people/qubodup/sounds/219587/
+* 232175__szalonegacie__talking-people-2: https://freesound.org/people/szalonegacie/sounds/232175/
+* 277361_steam_hiss: https://freesound.org/people/beerbelly38/sounds/277361/
+* 413203__joepayne__clean-and-pompous-fanfare-trumpet: https://freesound.org/people/joepayne/sounds/413203/
+* 676638_plane_engine: https://freesound.org/people/Exoticgaming/sounds/676638/
+* city_ambience: https://freesound.org/people/klankbeeld/sounds/279041/
+* tindeck_1: https://www.myinstants.com/en/instant/metal-gear-solid-alert/
+* wife_hmmm: https://freesound.org/people/esperar/sounds/170766/
 
-Assets\Studio Nik
+##### Animations
+Assets\Animations
+* The following were all acquired from Mixamo
+* Chicken Dance
+* Guitar Playing
+* Guitar Playing 2
+* Identify Point
+* Jumping Jacks
+* Peering
+* Shopping Cart Dance
+* Smoking
+* Thinking 
+* Wild Dance
+
+##### Models
+Assets\Studio Nik\
 Guitar models: https://assetstore.unity.com/packages/3d/props/low-poly-guitars-pack-161857
