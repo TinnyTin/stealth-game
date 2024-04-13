@@ -29,8 +29,7 @@ public class TriggerSoundEmittingObject : MonoBehaviour
         }
     }
 
-    // TODO: make this on fall, and vary sounds
-    public void OnCollisionEnter(Collision c)
+    private void OnTriggerEnter(Collider other)
     {
         // make sure we can't spam the sound with infinite collisions per second
         if (Time.time > nextSound)
