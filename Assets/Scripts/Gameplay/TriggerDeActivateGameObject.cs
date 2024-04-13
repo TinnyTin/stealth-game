@@ -40,4 +40,9 @@ public class TriggerDeActivateGameObject : MonoBehaviour
             tCooldown = CooldownTimer;
         }
     }
+
+    public void ManuallyTrigger()
+    {
+        OnTriggerEnter(null);
+    }
 }

@@ -87,6 +87,9 @@ public class SceneController : MonoBehaviour
     [Header("Global Scene Camera Overridden?")]
     [SerializeField] private bool _overridePersistentSceneCamera = false;
 
+    private bool _activateCheckpointOnSceneLoad = false;
+    private int _checkpointToActivate = -1; 
+
     // Use this for initialization
     void Start()
     {
@@ -328,6 +331,10 @@ public class SceneController : MonoBehaviour
         // re-initialize Scriptable Objects
         ReInitScriptableObjects();
 
+        // Activate checkpoint
+        if (_activateCheckpointOnSceneLoad)
+            ActivateCheckpoint();
+
         // Hide the loading screen 
         loadingScreen.SetActive(false);
     }
@@ -366,5 +373,36 @@ public class SceneController : MonoBehaviour
     public void RestartScene()
     {   
         ChangeScene(_activeScene); 
+    }
+
+    public void RestartScene(int checkpointNumber)
+    {
+        ChangeScene(_activeScene);
+
+        if (checkpointNumber > 0)
+        {
+            // Flag that we need to activate a checkpoint
+            _activateCheckpointOnSceneLoad = true;
+            _checkpointToActivate = checkpointNumber;
+        }
+    }
+
+    private void ActivateCheckpoint()
+    {
+        GameObject checkpoints = GameObject.Find("Checkpoints");
+        List<Checkpoint> checkpoints_ = checkpoints.gameObject.GetComponentsInChildren<Checkpoint>().ToList();
+
+        Checkpoint theCheckpoint = checkpoints_.FirstOrDefault(checkpoint => checkpoint.CheckpointNumber == _checkpointToActivate);
+
+        if (theCheckpoint != null)
+        {
+            // Set player position
+            //int a = 0; 
+
+            theCheckpoint.ManuallyTrigger();
+        }
+
+        _activateCheckpointOnSceneLoad = false;
+        _checkpointToActivate = -1; 
     }
 }
