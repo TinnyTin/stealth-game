@@ -232,6 +232,7 @@ public class PlayerControl : MonoBehaviour
         if (playerData != null)
         {
             playerData.PlayerPosition = transform.position;
+            playerData.PlayerRotation = transform.rotation;
             playerData.IsCrouched = isCrouched;
         }
 

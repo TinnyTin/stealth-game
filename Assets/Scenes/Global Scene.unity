@@ -1072,6 +1072,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
         type: 3}
+      propertyPath: _playerData
+      value: 
+      objectReference: {fileID: 11400000, guid: 15901981171d3984bad2e1974e5b7aa7,
+        type: 2}
+    - target: {fileID: 3042039951656423745, guid: a0afa5af0cc4c6c4685a5d98edbf457e,
+        type: 3}
       propertyPath: _activeScene
       value: 
       objectReference: {fileID: 102900000, guid: 7beb9e9c3b807014398bce7ea2cc66b9,

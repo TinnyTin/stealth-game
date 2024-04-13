@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 /*
@@ -25,45 +26,53 @@ public class Checkpoint : MonoBehaviour
 
     private bool _checkpointReached = false;
 
+    [SerializeField]
+    private TextMeshProUGUI _pauseMenuRestartLevelUITextElem;
 
-    //private Canvas test; 
+    [SerializeField]
+    private TextMeshProUGUI _missionSummaryRestartLevelUITextElem;
 
     // Start is called before the first frame update
     void Start()
     {
-        // test = GetComponent<Canvas>(); 
-        //test.transform.parent.gameObject.SetActive(false);
+       
     }
 
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Checkpoint trigger enter");
-        Debug.Log($"{PlayerData.PlayerPosition}");
+        if (other.transform.parent.gameObject.name != "Player Model")
+            return; 
 
         if (_checkpointReached)
             return;
         
-        ActivateCheckpoint(true);
+        ActivateCheckpoint(true, true);
     }
 
-    private void ActivateCheckpoint(bool showNotification)
+    private void ActivateCheckpoint(bool showNotification, bool updatePlayerPosition)
     {
         _checkpointReached = true;
 
-        if (PlayerData != null)
+        if (PlayerData != null && updatePlayerPosition)
         {
             PlayerData.LastCheckpoint = CheckpointNumber;
             PlayerData.LastCheckpointPos = PlayerData.PlayerPosition;
+            PlayerData.LastCheckpointRot = PlayerData.PlayerRotation; 
         }
 
         foreach (GameObject trigger in Triggers)
         {
+            // Check for a null trigger, this will happen when there
+            // is an empty array element in the inspector view. 
+            if (trigger == null)
+                continue; 
+
             // Try to get a TriggerActiveGameObject and TriggerDeactiveateGameObject script
             TriggerActivateGameObject tago = trigger.GetComponent<TriggerActivateGameObject>();
             if (tago != null)
@@ -79,9 +88,13 @@ public class Checkpoint : MonoBehaviour
             NotificationUIText.SetActive(true);
             StartCoroutine(HideNotification(NotificationVisibleTime));
         }
+
+        // Update UI element text to reflect that a checkpoint was reached
+        _pauseMenuRestartLevelUITextElem.text = "Restart Level From Checkpoint";
+        _missionSummaryRestartLevelUITextElem.text = "Restart Level From Checkpoint";
     }
 
-    private IEnumerator HideNotification(float delay)
+private IEnumerator HideNotification(float delay)
     {
         yield return new WaitForSeconds(delay);
         NotificationUIText.gameObject.SetActive(false);
@@ -89,6 +102,6 @@ public class Checkpoint : MonoBehaviour
 
     public void ManuallyTrigger()
     {
-        ActivateCheckpoint(false);
+        ActivateCheckpoint(false, false);
     }
 }
