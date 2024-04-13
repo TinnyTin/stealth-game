@@ -1489,13 +1489,13 @@ MonoBehaviour:
   cameraPitchMax: 40
   cameraPitchMin: -40
   invertMouseY: 1
-  movementSpeedWalk: 0.7
+  movementSpeedWalk: 1.1
   movementSpeedSprint: 2
-  movementSpeedCrouch: 0.4
+  movementSpeedCrouch: 0.8
   CrouchCoolDownAmount: 0.5
-  sprintStaminaDepletionRate: 0.15
+  sprintStaminaDepletionRate: 0.115
   sprintStaminaRechargeRate: 0.15
-  sprintStamina: 1
+  sprintStamina: 1.3
   audioEventToRaise: {fileID: 11400000, guid: 10c10e04fa8277d40a7de6f675683373, type: 2}
   sprintStaminaOutOfBreathAudioClip: {fileID: 8300000, guid: 3f8b382c3c28f444b9070b5964819762,
     type: 3}
@@ -2982,8 +2982,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7660907511649920119}
-  m_LocalRotation: {x: 0.09794092, y: -0.049573563, z: 0.004884857, w: 0.99394476}
-  m_LocalPosition: {x: 0.20000008, y: 1.8, z: -2.0000002}
+  m_LocalRotation: {x: 0.059509296, y: -0.02891564, z: 0.0017245306, w: 0.9978074}
+  m_LocalPosition: {x: 0.2, y: 1.8, z: -2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
