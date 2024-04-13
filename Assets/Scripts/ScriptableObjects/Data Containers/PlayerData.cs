@@ -10,6 +10,7 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO's/PlayerData")]
 public class PlayerData : ScriptableObject
 {
+    public GameObject Player; 
 
     //public float PlayerHealth = 10.0f;
     [Space]
@@ -23,6 +24,11 @@ public class PlayerData : ScriptableObject
     private float _playerVisibility = 1f;
     public float PlayerCamouflage { get { return _playerCamouflage; } } // if the player is fully camo'd, then the AI basically cannot sense them??
     public float PlayerVisibility { get { return _playerVisibility; } }
+
+    [Header("Checkpoint Data")] 
+    public int LastCheckpoint = -1; 
+    public Vector3 LastCheckpointPos = Vector3.zero;
+    public Vector3 LastCheckpointRot = Vector3.zero;
 
     public void SetPlayerCamo(float camo)
     {
