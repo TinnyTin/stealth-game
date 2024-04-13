@@ -2,31 +2,25 @@
 ## Team: Tiny Brain
 ## Game: Kleptocrat
 
-## Start Scene
-### Global Scene ###
-The game will not be visible in the editor with just GlobalScene loaded. MainMenu and Level1 will be loaded additively at runtime. 
+## Starting Scene File
+The game requires additive scene loading to work correctly, however you can load up just `Level1_Re` and the game will be playable, albeit with some sounds missing and only the 'Exit Game' option in the menus functional. 
+
+To get the full game experience you need to have `Global Scene` loaded in the hierachy view in Unity. By default `Global Scene\Managers\Scene Controller` should have the `MainMenu` scene as the only element in the scene playlist. This setup will allow the game to function correctly from start to finish with all functionality present. 
 
 ## How to Play
-The game can be played with a keyboard or mouse. 
+The game can be played with a keyboard and mouse. Joypad support has been deprecated since the alpha. 
 
 ### Keyboard/Mouse Controls
 * W,A,S,D to move the player
-* Space to crouch
+* C to crouch
+* Shift to sprint
 * Left click to pick up stealable item
-* Mouse move to rotate camera around player up axis
-
-### Joypad Controls
-Tested with Xbox One controller
-* Left stick to move player 
-  * Player movement speed is determined by stick angle
-* Y to crouch
-* A to pick up stealable item
-* Right stick to rotate camera around player up axis
+* Mouse move to rotate camera to look around the player
 
 ### Gameplay Loop
-At the beginning of the level the camera will be focused on the extraction point. It will then do a flythrough of the level to show the player the location of the item they need to collect. The player must sneak through the level, collect the item and then proceed to the extraction point. 
+At the beginning of the level the camera will do a short pan to show the player the location of the item they need to steal. The player must sneak through the level, collect the item and then proceed to the extraction point. 
 
-But be careful, there are AI guards patrolling the area. They will become suspicious if they see you in a secure area, and will chase you if they identify you as a threat. To make matters worse, the feckless citizens have left their trash scattered around the town and the corporate tycoons have fired all the street cleaners. Kicking the detritus that litters the area can draw attention to your position, so tread carefully. 
+But be careful, there are AI guards patrolling the area. They will become suspicious if they see you in a secure area, and will chase you if they identify you as a threat. To make matters worse, the feckless citizens have left their trash scattered around the town and the corporate tycoons have fired all the street cleaners. Kicking the detritus that litters the area can draw attention to your position, so tread carefully. You can use your abilities to hide behind objects, sprint away from guards and even hide in trees and grassy areas. 
 
 If you are caught by the guards it's game over for you. Keep trying until you've successfully absconded with that shiny new gramophone that your lady wife wants so badly. No doubt you'll be tasked with stealing records for it in the near future, that new Jiles Gravis album is hot property. 
 
@@ -40,17 +34,14 @@ If you are caught by the guards it's game over for you. Keep trying until you've
 * Footsteps and knocked items emit one shot sounds as 3D audio sources
 
 ### Known Problem Areas
-The alpha showcases the majority of our technical requirements that are required to build the final game. Due to the short time frame of the alpha the level is small and the gameplay loop is short. However, with the features implemented so far the game will scale up during the next development phase. 
+The final build showcases the majority the features we hoped to include in the game. Unfortunately due to time constraints and the loss of a team member post-alpha we had to focus on polishing a single level and abandoned efforts to include a second playable level. 
 
-Some problems that may be observed during gameplay:
-* Animations are still a work in progress, some issues such as akward poses and buggy feet movement are to be expected
-* The camera can clip through walls
-* There is some notable z-fighting with certain textures
-* The glass cones don't always emit sound when expected due to an impulse issue
-* Not all NPC's have animations applied
+The following is a list of problems that you may experience while playing the game:
+* The camera may at times clip through certain walls
+* Guards have been known to clip through gates and walls on rare occasions 
 
 ## Manifest
-Who did what, organised by team member names in alphabetical order. Assets that aren't listed here below aren't relevant to what can be seen in the alpha. 
+Who did what, organised by team member names in alphabetical order. 
 
 ### Erik
 Erik’s main contributions were the player and camera control systems. Algorithmic contributions include:
@@ -258,7 +249,7 @@ Primarily worked on systems to support the development of the game. These system
 
 Implemented Global Scene, which is the persistent scene into which all others are additively loaded at runtime. Global Scene contains manager scripts that are required to persist across scenes, this prevents wasted effort duplicating reused managers into each scene. 
 
-Also added the ambient audio that can be heard throughout the level. 
+Added the ambient audio that can be heard throughout the level. Contributed to the decoration of the main level including static items in the library and stealable object room and NPCs in the main street. 
 
 #### Assets Implemented
 * Assets\Audio\city_ambience
@@ -304,3 +295,45 @@ Also added the ambient audio that can be heard throughout the level.
 * Eflatun.SceneReference Package: https://github.com/starikcetin/Eflatun.SceneReference
 * City Ambience Audio: https://freesound.org/people/klankbeeld/sounds/279041/
 
+Assets\Audio\Birds:
+Bird songs cut from clips from: https://dl.allaboutbirds.org/free-bird-song-download-from-the-cornell-lab
+
+Assets\Audio\Music
+Party room music: Quantum Jazz - https://freemusicarchive.org/music/Quantum_Jazz/End_of_Line/06_-_Quantum_Jazz_-_Balcarabic_Chicken/
+
+Assets\Audio\Phonograph
+All tracks taken from 'Antique Phonograph Music Program 01/05/2010` available at: https://freemusicarchive.org/music/Antique_Phonograph_Music_Program_Various_Artists/
+
+Assets\Audio\Scratches
+Scratch sounds played on stealable gramophone taken from: https://freesound.org/people/jswonger/sounds/47924/
+
+Assets\Animations
+The following were all acquired from Mixamo
+Chicken Dance
+Guitar Playing
+Guitar Playing 2
+Identify Point
+Jumping Jacks
+Peering
+Shopping Cart Dance
+Smoking
+Thinking 
+Wild Dance
+
+Assets\Audio
+47924__jswonger__record-scratches: https://freesound.org/people/jswonger/sounds/47924/
+74222_girl_nonsense: https://freesound.org/people/Koen/sounds/74222/
+80928_door_slam: https://freesound.org/people/bennstir/sounds/80928/
+106486_car_engine: https://freesound.org/people/KlankOntwerp/sounds/106486/
+149193_tractor_idle: https://freesound.org/people/videog/sounds/149193/
+161607__xserra__alhambra-fountain-1: https://freesound.org/people/xserra/sounds/161607/
+219587_gate_shut: https://freesound.org/people/qubodup/sounds/219587/
+232175__szalonegacie__talking-people-2: https://freesound.org/people/szalonegacie/sounds/232175/
+277361_steam_hiss: https://freesound.org/people/beerbelly38/sounds/277361/
+413203__joepayne__clean-and-pompous-fanfare-trumpet: https://freesound.org/people/joepayne/sounds/413203/
+676638_plane_engine: https://freesound.org/people/Exoticgaming/sounds/676638/
+tindeck_1: https://www.myinstants.com/en/instant/metal-gear-solid-alert/
+wife_hmmm: https://freesound.org/people/esperar/sounds/170766/
+
+Assets\Studio Nik
+Guitar models: https://assetstore.unity.com/packages/3d/props/low-poly-guitars-pack-161857
