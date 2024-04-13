@@ -10,11 +10,10 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "SO's/PlayerData")]
 public class PlayerData : ScriptableObject
 {
-    public GameObject Player; 
-
     //public float PlayerHealth = 10.0f;
     [Space]
     public Vector3 PlayerPosition;
+    public Quaternion PlayerRotation;
     public float PlayerSprintStamina;
     public bool PlayerHasStolenObject;
     public bool IsCrouched;
@@ -28,7 +27,7 @@ public class PlayerData : ScriptableObject
     [Header("Checkpoint Data")] 
     public int LastCheckpoint = -1; 
     public Vector3 LastCheckpointPos = Vector3.zero;
-    public Vector3 LastCheckpointRot = Vector3.zero;
+    public Quaternion LastCheckpointRot = Quaternion.identity;
 
     public void SetPlayerCamo(float camo)
     {

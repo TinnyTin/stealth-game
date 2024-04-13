@@ -1,14 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Drawing;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 
 /*
  * CS6457 Attributions
  * Tiny Brain
  * Original Author:     Erik
- * Contributors:        Martin
+ * Contributors:        Martin, Tom
  */
 
 [RequireComponent(typeof(BoxCollider))]
@@ -23,6 +20,12 @@ public class ExtractionPoint : MonoBehaviour
     public GameEvent PlayerReachedExit;
 
     public PlayerData playerData;
+
+    [SerializeField]
+    private TextMeshProUGUI _pauseMenuRestartLevelUITextElem;
+
+    [SerializeField]
+    private TextMeshProUGUI _missionSummaryRestartLevelUITextElem;
 
     private bool hastExtracted = false;
 
@@ -51,6 +54,15 @@ public class ExtractionPoint : MonoBehaviour
             {
                 Extract();
                 hastExtracted = true;
+
+                // Reset UI text elements to no longer mention checkpoints
+                _pauseMenuRestartLevelUITextElem.text = "Restart Level";
+                _missionSummaryRestartLevelUITextElem.text = "Restart Level";
+
+                // Update the player to have no longer reached a checkpoint, 
+                // this will cause the level to reload at the start instead
+                // of the last reached checkpoint
+                playerData.LastCheckpoint = -1; 
             }
 
         }

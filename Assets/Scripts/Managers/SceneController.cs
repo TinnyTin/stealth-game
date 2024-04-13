@@ -44,6 +44,9 @@ public class SceneController : MonoBehaviour
     }
 
     // Inspector Visible Variables
+    [SerializeField]
+    private PlayerData _playerData;
+
     [Tooltip("The scene that is persistent across the lifetime of the game.")]
     [SerializeField] private SceneReference _persistentScene;
 
@@ -88,7 +91,10 @@ public class SceneController : MonoBehaviour
     [SerializeField] private bool _overridePersistentSceneCamera = false;
 
     private bool _activateCheckpointOnSceneLoad = false;
-    private int _checkpointToActivate = -1; 
+    private int _checkpointToActivate = -1;
+
+    private GameObject _player;
+    private bool _previouslyFoundPlayer = false; 
 
     // Use this for initialization
     void Start()
@@ -331,6 +337,9 @@ public class SceneController : MonoBehaviour
         // re-initialize Scriptable Objects
         ReInitScriptableObjects();
 
+        // Find the player
+        FindPlayer(); 
+
         // Activate checkpoint
         if (_activateCheckpointOnSceneLoad)
             ActivateCheckpoint();
@@ -371,20 +380,21 @@ public class SceneController : MonoBehaviour
     }
 
     public void RestartScene()
-    {   
+    {
+        _playerData.LastCheckpoint = -1; 
         ChangeScene(_activeScene); 
     }
 
     public void RestartScene(int checkpointNumber)
     {
-        ChangeScene(_activeScene);
-
         if (checkpointNumber > 0)
         {
             // Flag that we need to activate a checkpoint
             _activateCheckpointOnSceneLoad = true;
             _checkpointToActivate = checkpointNumber;
         }
+
+        ChangeScene(_activeScene);
     }
 
     private void ActivateCheckpoint()
@@ -398,11 +408,34 @@ public class SceneController : MonoBehaviour
         {
             // Set player position
             //int a = 0; 
+            UpdatePlayerWaypointTransform();
 
             theCheckpoint.ManuallyTrigger();
         }
 
         _activateCheckpointOnSceneLoad = false;
         _checkpointToActivate = -1; 
+    }
+
+    private void FindPlayer()
+    {
+        _player = GameObject.Find("Player");
+
+        if (_player != null && _previouslyFoundPlayer == false)
+        {
+            // Just started the level, ensure that the player 
+            // data related to checkpoints gets reset
+            _playerData.LastCheckpoint = -1; 
+            _previouslyFoundPlayer = true; 
+        }
+    }
+
+    private void UpdatePlayerWaypointTransform()
+    {
+        if (_player != null)
+        {
+            _player.transform.position = _playerData.LastCheckpointPos; 
+            _player.transform.rotation = _playerData.LastCheckpointRot;
+        }
     }
 }
