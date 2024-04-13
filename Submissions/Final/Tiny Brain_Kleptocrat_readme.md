@@ -1,4 +1,4 @@
-# Final Submission Readme
+# Final Submission Readme/Manifest
 ## Team: Tiny Brain
 ## Game: Kleptocrat
 
@@ -16,6 +16,7 @@ The game can be played with a keyboard and mouse. Joypad support has been deprec
 * Shift to sprint
 * Left click to pick up stealable item
 * Mouse move to rotate camera to look around the player
+* Escape to bring up pause menu
 
 ### Gameplay Loop
 At the beginning of the level the camera will do a short pan to show the player the location of the item they need to steal. The player must sneak through the level, collect the item and then proceed to the extraction point. 
@@ -24,14 +25,15 @@ But be careful, there are AI guards patrolling the area. They will become suspic
 
 If you are caught by the guards it's game over for you. Keep trying until you've successfully absconded with that shiny new gramophone that your lady wife wants so badly. No doubt you'll be tasked with stealing records for it in the near future, that new Jiles Gravis album is hot property. 
 
-### Observable Technology Requirements
+### Observable Technology Requirements 
 * Menu at the start of the game allows you to enter the level or exit the game
-* Menu when the player succeeds or is caught allow you to restart the level or exit the game
-* The player character showcases root motion animation, player control via keyboard/mouse and joypad and camera control
+* Menu when the player succeeds or fails the mission allow you to restart the level or exit the game
+* In game HUD shows the alert status of the AI guards, the mission objective, and a mini-map
+* The player character showcases root motion animation and control via keyboard and mouse
 * AI Guards showcase root motion animation, NPC steering, AI behaviours and states
 * Level detritus is modelled with rigid body physics objects that can be moved by the player to create cover, and can be knocked over by both the player and guards
-* Background music and ambient audio are implemented as 2D audio sources
-* Footsteps and knocked items emit one shot sounds as 3D audio sources
+* Main menu music and some sound effects are implemented as 2D audio sources
+* Footsteps, knocked items, ambient sound effects and in-level music tracks are one shot and looping 3D audio sources
 
 ### Known Problem Areas
 The final build showcases the majority the features we hoped to include in the game. Unfortunately due to time constraints and the loss of a team member post-alpha we had to focus on polishing a single level and abandoned efforts to include a second playable level. 
