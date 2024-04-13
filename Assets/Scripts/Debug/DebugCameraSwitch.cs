@@ -1,6 +1,16 @@
 using Cinemachine;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:   Tom  
+ * Contributors:        
+ *
+ * External
+ * Source Credit:
+ */
+
 public class DebugCameraSwitch : MonoBehaviour
 {
     private FreeCam freecam;

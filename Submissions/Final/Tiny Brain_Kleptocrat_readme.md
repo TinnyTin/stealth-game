@@ -1,11 +1,11 @@
-# Alpha Submission Readme
+# Final Submission Readme
 ## Team: Tiny Brain
 ## Game: Kleptocrat
 
 ## Starting Scene File
 The game requires additive scene loading to work correctly, however you can load up just `Level1_Re` and the game will be playable, albeit with some sounds missing and only the 'Exit Game' option in the menus functional. 
 
-To get the full game experience you need to have `Global Scene` loaded in the hierachy view in Unity. By default `Global Scene\Managers\Scene Controller` should have the `MainMenu` scene as the only element in the scene playlist. This setup will allow the game to function correctly from start to finish with all functionality present. 
+To get the full game experience you need to have `Global Scene` loaded in the hierachy view in Unity. By default `Global Scene\Managers\Scene Controller` in the hierarchy view should have the `MainMenu` scene as the only element in the scene playlist. This setup will allow the game to function correctly from start to finish with all functionality present. 
 
 ## How to Play
 The game can be played with a keyboard and mouse. Joypad support has been deprecated since the alpha. 
@@ -252,25 +252,37 @@ Implemented Global Scene, which is the persistent scene into which all others ar
 Added the ambient audio that can be heard throughout the level. Contributed to the decoration of the main level including static items in the library and stealable object room and NPCs in the main street. 
 
 #### Assets Implemented
-* Assets\Audio\city_ambience
-* Assets\Prefabs\AmbientSound2D
-* Assets\Prefabs\Audio Manager
-* Assets\Prefabs\Audio Test Capsule
-* Assets\Prefabs\EventSound2D
-* Assets\Prefabs\EventSound3d
+* Assets\Prefabs\Audio\AmbientSound2D
+* Assets\Prefabs\Audio\AmbientSound3D
+* Assets\Prefabs\Audio\Audio Test Capsule
+* Assets\Prefabs\Audio\EventSound2D
+* Assets\Prefabs\Audio\EventSound3d
+* Assets\Prefabs\Civilians\AI_Civilian
+* Assets\Prefabs\Managers\Audio Manager
+* Assets\Prefabs\Managers\Game Manager
+* Assets\Prefabs\Managers\Scene Controller
+* Assets\Prefabs\Wife_AI
 * Assets\Scenes\Global Scene
 * Assets\SO Instances\Events\OneShotAudio2D
 * Assets\SO Instances\Events\OneShotAudio3D
 * Assets\SO Instances\Events\OneShotAudio3DWithString
 * Assets\SO Instances\Events\SceneLoadComplete
 
-#### Scripts Implemented
+#### Scripts Implemented/Contributed To
+* Assets\Scripts\AI\AIIdleState_Civilian.cs
+* Assets\Scripts\AI\AIInvestigateState_Wife.cs
+* Assets\Scripts\AI\AIPursuitState_Wife.cs
+* Assets\Scripts\AI\AIStateFactory.cs
+* Assets\Scripts\AI\AIStateMachine_Civilian.cs
+* Assets\Scripts\AI\AIStateMachine_Wife.cs
 * Assets\Scripts\Audio\AmbientAudioTest.cs
 * Assets\Scripts\Audio\AmbientSound2D.cs
+* Assets\Scripts\Audio\AmbientSound3D.cs
 * Assets\Scripts\Audio\AudioSourceParams.cs
 * Assets\Scripts\Audio\AudioTestCapsule.cs
 * Assets\Scripts\Audio\EventSound2D.cs
 * Assets\Scripts\Audio\EventSound3D.cs
+* Assets\Scripts\Debug\DebugCameraSwitch.cs
 * Assets\Scripts\Events\GameEventListener.cs
 * Assets\Scripts\Events\GameEventListener1.cs
 * Assets\Scripts\Events\GameEventListener2.cs
@@ -283,10 +295,23 @@ Added the ambient audio that can be heard throughout the level. Contributed to t
 * Assets\Scripts\Events\OneShotAudio2DEventListener.cs
 * Assets\Scripts\Events\OneShotAudio3DEventListener.cs
 * Assets\Scripts\Events\OneShotAudio3DEventListenerWithString.cs
+* Assets\Scripts\Events\PlayerCaughtListener.cs
+* Assets\Scripts\Events\PlayerGoalCameraPanCompletedListener.cs
+* Assets\Scripts\Events\PlayerGoalCameraPanStartedListener.cs
+* Assets\Scripts\Events\PlayerReachedExitListener.cs
+* Assets\Scripts\Events\PlayerStoleItemListener.cs
 * Assets\Scripts\Events\SceneLoadCompletedListener.cs
+* Assets\Scripts\Game Save\GameSave.cs
+* Assets\Scripts\Game Save\GameSaveUtil.cs
+* Assets\Scripts\Gameplay\Checkpoint.cs
+* Assets\Scripts\Gameplay\MissionTimer.cs
+* Assets\Scripts\Gameplay\TriggerActiveGameObject.cs
 * Assets\Scripts\Managers\AudioManager.cs
 * Assets\Scripts\Managers\GameManager.cs
 * Assets\Scripts\Managers\SceneController.cs
+* Assets\Scripts\Player\ExtractionPoint.cs
+* Assets\Scripts\UI\DisableCursor.cs
+* Assets\Scripts\UI\EnableCursor.cs
 * Assets\Scripts\ScriptableObjects\Events\GameEvent.cs
 * Assets\Scripts\ScriptableObjects\ScriptableObjectWithInit.cs
 
