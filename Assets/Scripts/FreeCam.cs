@@ -55,49 +55,55 @@ public class FreeCam : MonoBehaviour
     /// </summary>
     private bool looking = false;
 
+
+    public PlayerControl player;
+    public GameObject HUD;
+
     void Update()
     {
         var fastMode = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
         var movementSpeed = fastMode ? this.fastMovementSpeed : this.movementSpeed;
-
-        if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+        if (looking)
         {
-            transform.position = transform.position + (-transform.right * movementSpeed * Time.deltaTime);
-        }
+            if (Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow))
+            {
+                transform.position = transform.position + (-transform.right * movementSpeed * Time.deltaTime);
+            }
 
-        if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
-        {
-            transform.position = transform.position + (transform.right * movementSpeed * Time.deltaTime);
-        }
+            if (Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow))
+            {
+                transform.position = transform.position + (transform.right * movementSpeed * Time.deltaTime);
+            }
 
-        if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
-        {
-            transform.position = transform.position + (transform.forward * movementSpeed * Time.deltaTime);
-        }
+            if (Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow))
+            {
+                transform.position = transform.position + (transform.forward * movementSpeed * Time.deltaTime);
+            }
 
-        if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
-        {
-            transform.position = transform.position + (-transform.forward * movementSpeed * Time.deltaTime);
-        }
+            if (Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow))
+            {
+                transform.position = transform.position + (-transform.forward * movementSpeed * Time.deltaTime);
+            }
 
-        if (Input.GetKey(KeyCode.E))
-        {
-            transform.position = transform.position + (transform.up * movementSpeed * Time.deltaTime);
-        }
+            if (Input.GetKey(KeyCode.E))
+            {
+                transform.position = transform.position + (transform.up * movementSpeed * Time.deltaTime);
+            }
 
-        if (Input.GetKey(KeyCode.Q))
-        {
-            transform.position = transform.position + (-transform.up * movementSpeed * Time.deltaTime);
-        }
+            if (Input.GetKey(KeyCode.Q))
+            {
+                transform.position = transform.position + (-transform.up * movementSpeed * Time.deltaTime);
+            }
 
-        if (Input.GetKey(KeyCode.R) || Input.GetKey(KeyCode.PageUp))
-        {
-            transform.position = transform.position + (Vector3.up * movementSpeed * Time.deltaTime);
-        }
+            if (Input.GetKey(KeyCode.R) || Input.GetKey(KeyCode.PageUp))
+            {
+                transform.position = transform.position + (Vector3.up * movementSpeed * Time.deltaTime);
+            }
 
-        if (Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.PageDown))
-        {
-            transform.position = transform.position + (-Vector3.up * movementSpeed * Time.deltaTime);
+            if (Input.GetKey(KeyCode.F) || Input.GetKey(KeyCode.PageDown))
+            {
+                transform.position = transform.position + (-Vector3.up * movementSpeed * Time.deltaTime);
+            }
         }
 
         if (looking)
@@ -124,9 +130,22 @@ public class FreeCam : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        if (HUD != null)
+        {
+            HUD.SetActive(false);
+        }
+    }
     void OnDisable()
     {
         StopLooking();
+        Cursor.visible = false;
+        Cursor.lockState = CursorLockMode.Locked;
+        if (HUD != null)
+        {
+            HUD.SetActive(true);
+        }
     }
 
     /// <summary>
@@ -137,6 +156,10 @@ public class FreeCam : MonoBehaviour
         looking = true;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+        if (player != null)
+        {
+            player.isPlayerControlEnabled = false;
+        }
     }
 
     /// <summary>
@@ -147,5 +170,9 @@ public class FreeCam : MonoBehaviour
         looking = false;
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        if (player != null)
+        {
+            player.isPlayerControlEnabled = true;
+        }
     }
 }

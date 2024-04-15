@@ -136,8 +136,10 @@ Jeesoo’s main contributions were level development and UI scenes.
 * Poly Steampunk Pack by Polyperfect: https://assetstore.unity.com/packages/3d/props/poly-steampunk-pack-265079
 
 ### Justin
-Justin’s contributions were heavily in the AI system. Algorithm contributions include:
-* Hierarchical FSM system for AI behavior states
+
+**Algorithm Contributions** 
+
+* Authored Hierarchical FSM system for AI behavior states
 * Audio sensory through sound listener based on listening radius
 * FOV Sight sensory using physics radius, view angle & non-blocked raycasting from AI head to player 
 * FOV conic view visualisation through dynamic mesh renderer
@@ -145,36 +147,57 @@ Justin’s contributions were heavily in the AI system. Algorithm contributions 
 * Threat-meter based behavior switching system, and UI displaying threat bar
 * AI Manager creating events in Scriptable Object (highest elevated AI hostile state, AI requests player caught)
 
-Other notable contributions:
-* Enhancement on Erik’s footstep emitter- now the randomized collection-based footsteps can be chosen based on passed-in ground surface + movement type (not yet fully utilized in the alpha)
+**Other Script contributions**
 
-#### Assets Implemented
-**Controller:**
-* AI_guard.controller
+* Fixed player control bugs using Rigid body force/velocity instead of direct transform updates
+* ScriptableObject communication for player/AI/gameplay
+* Trigger scripts for doors, sounds, collapsing boxes and hiding zones
+* Improved Erik’s footstep emitter- now the randomized collection-based footsteps can be chosen based on passed-in ground surface + movement type (not yet fully utilized in the alpha)
 
-**Animation:**
-* From milestone 1:
-  * Walkback.fbx
-  * Walkbackandturn.fbx
-  * Walkforward.fbx
-  * Runs.fbx
-  * Idles.fbx
-  * Y_Bot@left_turn_90.fbx
-  * Y_Bot@right_turn_90.fbx
-* From Mixamo.com:
-  * Nervously Look Around.fbx
-  * Surprised.fbx
-  * Terrified.fbx
-  * Reacting.fbx
+**Other contributions**
+* Level whiteboxing and set decoration
+* Trailer + Gameplay videos
 
-**Audio:**
-* Fail-trumpet-sound-effect.mp3 https://www.youtube.com/watch?v=z8Jn3qnPOGg
-* Male-gasp.mp3 https://www.youtube.com/watch?v=g9xXaDyi5_E
+**Scripts Implemented**
 
-**Prefab:**
-* AI_Guard.prefab
-* MovableCrouchCover.prefab
-* PathDebugger.prefab
+* Assets\Scripts\AI\ThreatMeter.cs
+* Assets\Scripts\AI\Waypoint.cs
+* Assets\Scripts\AI\Audio\AIAudioListener.cs
+* Assets\Scripts\AI\Audio\FootstepEmitter.cs
+* Assets\Scripts\AI\Debuggers\CanvasLookatCamera.cs
+* Assets\Scripts\AI\Debuggers\PathDebugger.cs
+* Assets\Scripts\AI\Debuggers\TemplateAIThreatChangeCallback.cs
+* Assets\Scripts\AI\Debuggers\testSetAIActiveState.cs
+* Assets\Scripts\AI\FOV\FieldOfView.cs
+* Assets\Scripts\AI\FOV\Editor\FieldOfViewEditor.cs
+* Assets\Scripts\AI\FSM\AIAnimationSubState.cs
+* Assets\Scripts\AI\FSM\AIBaseState.cs
+* Assets\Scripts\AI\FSM\AIEmptySubState.cs
+* Assets\Scripts\AI\FSM\AIInvestigateState.cs
+* Assets\Scripts\AI\FSM\AIPursuitState.cs
+* Assets\Scripts\AI\FSM\AIStateFactory.cs
+* Assets\Scripts\AI\FSM\AIStateMachine.cs
+* Assets\Scripts\AI\FSM\AIWaypointState.cs
+* Assets\Scripts\Audio\FootStepCollection.cs
+* Assets\Scripts\Audio\FootStepFactory.cs
+* Assets\Scripts\Events\AIThreatChangeEventListener.cs
+* Assets\Scripts\Events\SoundThreatEventListener.cs1
+* Assets\Scripts\Gameplay\TriggerActivateGameObject.cs
+* Assets\Scripts\Gameplay\TriggerCamouflage.cs
+* Assets\Scripts\Gameplay\TriggerDeActivateGameObject.cs
+* Assets\Scripts\Gameplay\triggerDisableCollider.cs
+* Assets\Scripts\Managers\AIManager.cs
+* Assets\Scripts\ScriptableObjects\Data Containers\MainCameraData.cs
+
+**Also Contributed to:**
+* Assets\Scripts\Player\PlayerControl.cs
+* Assets\Scripts\ScriptableObjects\Data Containers\PlayerData.cs
+
+**Shaders:**
+* URPStylizedWater.shadergraph
+* WindLeaves.shadergraph
+* DepthFade.shadergraph
+* Movement.shadergraph
 
 **ScriptableObjects:**
 * AIGlobalData.asset
@@ -185,26 +208,33 @@ Other notable contributions:
 * FootstepEmitter.asset
 * FailSound.asset
 
+**Prefab Assets:**
+* AI_Guard.prefab
+* MovableCrouchCover.prefab
+* PathDebugger.prefab
+* TriggerAIActiveState.prefab
+* WaterShaderFountain.prefab
+* Broken Glass.prefab
+* Chest.prefab
+* GlassBottle.prefab
+
+**Animations:** From Mixamo.com
+  * Nervously Look Around.fbx
+  * Surprised.fbx
+  * Terrified.fbx
+  * Reacting.fbx
+
+**Audio:**
+* Fail-trumpet-sound-effect.mp3 https://www.youtube.com/watch?v=z8Jn3qnPOGg
+* Male-gasp.mp3 https://www.youtube.com/watch?v=g9xXaDyi5_E
+* glassbreak.mp3 https://freesound.org/people/scholzi982/sounds/566197/
+
 **Scenes:**
+* Level1_Re - Whiteboxing and initial set dressing, trigger placements.
 * ai-algorithm (test, not used in alpha)
 
-#### Scripts Implemented
-* AIStateMachine.cs
-* AIStateFactory.cs
-* AIBaseState.cs
-* AIInvestigateState.cs
-* AIPursuitState.cs
-* AIWaypointState.cs
-* AIAudioListener.cs
-* CanvasLookatCamera.cs
-* PathDebugger.cs
-* ThreatMeter.cs
-* Waypoint.cs
-* FootStepFactory.cs
-* FootStepCollection.cs
-* AIData.cs
-* PlayerCaughtListener.cs
-* AIThreatChangeEventListener.cs
+**Controller:**
+* AI_guard.controller
 
 #### 3rd party credits
 * Heirarchical FSM - https://www.youtube.com/watch?v=kV06GiJgFhc&t=1535s

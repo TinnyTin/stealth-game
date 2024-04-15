@@ -1,5 +1,16 @@
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: disables colliders 
+ * External
+ * Source Credit:       
+ *                      
+ */
+
 public class triggerDisableCollider : MonoBehaviour
 {
     public GameObject GO;

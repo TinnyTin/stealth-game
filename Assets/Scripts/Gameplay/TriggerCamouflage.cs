@@ -1,7 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: Camoflauge zones decreasing player visibility using trigger enter/stay/exit
+ * External
+ * Source Credit:       
+ *                      
+ */
 public class TriggerCamouflage : MonoBehaviour
 {
     public PlayerData playerData;

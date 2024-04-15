@@ -1,6 +1,17 @@
 using UnityEditor;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Justin Wu
+ * Contributors:
+ * Description: Editor Gizmos for view of view
+ * External
+ * Source Credit:       
+ *                      
+ */
+
 [CustomEditor(typeof(FieldOfView))]
 public class FieldOfViewEditor : Editor
 {
