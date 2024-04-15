@@ -253,6 +253,7 @@ Worked on end-user game flow, all UI logic and animations, and assistance with m
 * Ability and text to skip the intro cutscene.
 * Gameplay Bundle prefab
 * Pause Menu
+* Designed Level1_Re and diagrams conceptually.
 Piecing together navigation flow for the user from start to end of experience.
 
 #### Assets Implemented
@@ -262,7 +263,7 @@ Piecing together navigation flow for the user from start to end of experience.
 
 **Scenes:**
 * MainMenu
-* Level1 (Contributor)
+* Level1_Re (Contributor)
 
 **Prefabs:**
 * Gameplay Bundle.prefab
