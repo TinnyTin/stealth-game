@@ -245,11 +245,14 @@ Jeesoo’s main contributions were level development and UI scenes.
 Worked on end-user game flow, all UI logic and animations, and assistance with merging game systems together.
 * Authored MainMenu scene, logic and animations.
 * Mission Summary screen (exit, restart, return to menus) and associated camera logic.
-* Minimap, ObjectiveTracker, and Alert status for the HUD.
+* Minimap, ObjectiveTracker, Sprint Stamina Bar and Alert status for the HUD.
+* Extraction Zone distance and the Extraction zone's appearance.
 * Loading screen implementation.
 * Scripts for the user's success and game-over conditions.
 * Ensuring controllers can navigate all menus in the game.
 * Ability and text to skip the intro cutscene.
+* Gameplay Bundle prefab
+* Pause Menu
 Piecing together navigation flow for the user from start to end of experience.
 
 #### Assets Implemented
@@ -262,20 +265,34 @@ Piecing together navigation flow for the user from start to end of experience.
 * Level1 (Contributor)
 
 **Prefabs:**
+* Gameplay Bundle.prefab
 * Minimap Camera.prefab
 * HUD Canvas.prefab
 * Mission Summary Canvas.prefab
+* ExtractionPooint.prefab
+PauseMenu
 
 #### Scripts Implemented
-* Most can be found under Scripts/UI/*
+* All scripts found under Scripts/UI/*
 * AlertStatus.cs
 * ChangeMissionText.cs
+* DisableCursor.cs
+* ExtractionDistance.cs
+* LevelSelect.cs
 * GameQuitter.cs
 * LimitCamera.cs
 * MainMenuTransition.cs
 * MainMenuCamera.cs
 * MissionSummary.cs
 * ObjectiveTracker.cs
+* PauseMenu.cs
+* SprintBar.cs
+
+Contributions:
+* SceneCameraController.cs
+* PlayerControl.cs
+* StealableObject.cs
+* ExtractionPoint.cs
 
 #### 3rd party credits
 * Milestone assignment for the GameQuitter

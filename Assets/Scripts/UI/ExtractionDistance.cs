@@ -2,6 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * CS6457 Attributions
+ * Tiny Brain
+ * Original Author:     Martin
+ * Contributors:        
+ * 
+ * Calculates and displays the distance to extraction zone.
+ */
+
 public class ExtractionDistance : MonoBehaviour
 {
     public GameObject extractionPoint;
